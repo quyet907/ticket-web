@@ -4,7 +4,7 @@ import NavBar from "./NavBar/NavBar";
 import TopBar from "./TopBar";
 import Statistic from "../../Statistic";
 import { Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
-import CustomerListView from "../../Cutstomer";
+import Cutstomer from "../../../customer/CustomerListView/Cutstomer";
 
 const useStyles = makeStyles((theme: Theme) => ({
 	root: {
@@ -51,7 +51,7 @@ function DashboardLayout() {
 					<div className={classes.content}>
 						<Switch>
 							<Route exact path={`/dashboard`} component={Statistic} />
-							<Route exact path={`/staff`} component={CustomerListView} />
+							<Route exact path={`/staff`} component={Cutstomer} />
 							<Route path="*">
 								<Redirect to="/dashboard" />
 							</Route>

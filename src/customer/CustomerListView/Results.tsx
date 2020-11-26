@@ -16,8 +16,10 @@ import {
 	TableRow,
 	Typography,
 	makeStyles,
+	IconButton,
 } from "@material-ui/core";
 // import getInitials from "src/utils/getInitials";
+import EditIcon from "@material-ui/icons/Edit";
 
 const useStyles = makeStyles((theme) => ({
 	root: {},
@@ -34,7 +36,7 @@ type Props = {
 const Results = (props: Props) => {
 	const classes = useStyles();
 	const [selectedCustomerIds, setSelectedCustomerIds] = useState<any[]>([]);
-	const [limit, setLimit] = useState(10);
+	const [limit, setLimit] = useState(5);
 	const [page, setPage] = useState(0);
 
 	const handleSelectAll = (e: any) => {
@@ -85,22 +87,11 @@ const Results = (props: Props) => {
 					<Table>
 						<TableHead>
 							<TableRow>
-								<TableCell padding="checkbox">
-									<Checkbox
-										checked={selectedCustomerIds.length === props.customers.length}
-										color="primary"
-										indeterminate={
-											selectedCustomerIds.length > 0 &&
-											selectedCustomerIds.length < props.customers.length
-										}
-										onChange={handleSelectAll}
-									/>
-								</TableCell>
 								<TableCell>Name</TableCell>
 								<TableCell>Email</TableCell>
-								<TableCell>Location</TableCell>
 								<TableCell>Phone</TableCell>
 								<TableCell>Registration date</TableCell>
+								<TableCell>Actions</TableCell>
 							</TableRow>
 						</TableHead>
 						<TableBody>
@@ -110,17 +101,6 @@ const Results = (props: Props) => {
 									key={customer.id}
 									selected={selectedCustomerIds.indexOf(customer.id) !== -1}
 								>
-									<TableCell padding="checkbox">
-										<Checkbox
-											checked={
-												selectedCustomerIds.indexOf(customer.id) !== -1
-											}
-											onChange={(event) =>
-												handleSelectOne(event, customer.id)
-											}
-											value="true"
-										/>
-									</TableCell>
 									<TableCell>
 										<Box alignItems="center" display="flex">
 											<Avatar
@@ -135,12 +115,14 @@ const Results = (props: Props) => {
 										</Box>
 									</TableCell>
 									<TableCell>{customer.email}</TableCell>
-									<TableCell>
-										{`${customer.address.city}, ${customer.address.state}, ${customer.address.country}`}
-									</TableCell>
 									<TableCell>{customer.phone}</TableCell>
 									<TableCell>
 										{moment(customer.createdAt).format("DD/MM/YYYY")}
+									</TableCell>
+									<TableCell>
+										<IconButton>
+											<EditIcon fontSize="small"/>
+										</IconButton>
 									</TableCell>
 								</TableRow>
 							))}
@@ -160,6 +142,5 @@ const Results = (props: Props) => {
 		</Card>
 	);
 };
-
 
 export default Results;
