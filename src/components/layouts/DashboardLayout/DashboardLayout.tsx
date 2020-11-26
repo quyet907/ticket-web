@@ -4,7 +4,7 @@ import NavBar from "./NavBar/NavBar";
 import TopBar from "./TopBar";
 import Statistic from "../../Statistic";
 import { Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
-import Cutstomer from "../../../customer/CustomerListView/Cutstomer";
+import Cutstomer from "../../../customer/Customer/Cutstomer";
 
 const useStyles = makeStyles((theme: Theme) => ({
 	root: {

@@ -3,6 +3,7 @@ import { Box, Container, makeStyles } from "@material-ui/core";
 import data from "./data";
 import Results from "./Results";
 import Toolbar from "./Toolbar";
+import AddOrEditDialog from "../../components/dialogs/AddOrEditDialog";
 // import Page from 'src/components/Page';
 
 const useStyles = makeStyles((theme) => ({
@@ -17,11 +18,21 @@ const useStyles = makeStyles((theme) => ({
 const Cutstomer = () => {
 	const classes = useStyles();
 	const [customers] = useState(data);
+	const [isOpenDialog, setIsOpenDialog] = useState<boolean>(false);
 
 	return (
 		// <Page className={classes.root} title="Customers">
 		<Container maxWidth={false}>
-			<Toolbar />
+			<AddOrEditDialog
+				onSave={() => setIsOpenDialog(false)}
+				onClose={() => setIsOpenDialog(false)}
+				isDisplay={isOpenDialog}
+			></AddOrEditDialog>
+			<Toolbar
+				onOpenDialog={() => {
+					setIsOpenDialog(true);
+				}}
+			/>
 			<Box mt={3}>
 				<Results customers={customers} />
 			</Box>

@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
 
 type Props = {
 	className?: string;
+	onOpenDialog(): void;
 };
 
 const Toolbar = (props: Props) => {
@@ -57,8 +58,8 @@ const Toolbar = (props: Props) => {
 			<Box mt={3} display="flex" justifyContent="flex-end">
 				<Button className={classes.importButton}>Import</Button>
 				<Button className={classes.exportButton}>Export</Button>
-				<Button color="primary" variant="contained">
-					Add
+				<Button color="primary" variant="contained" onClick={() => props.onOpenDialog()}>
+					Thêm mới
 				</Button>
 			</Box>
 		</div>
