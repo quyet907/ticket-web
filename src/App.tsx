@@ -1,14 +1,26 @@
 import React from "react";
 // import logo from "./logo.svg";
 import "./App.css";
-import { Route, BrowserRouter, Switch } from "react-router-dom";
+// import { Home } from "react-feather";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import DashboardLayout from "./components/layouts/DashboardLayout/DashboardLayout";
+import Statistic from "./components/Statistic";
+import { ThemeProvider } from "@material-ui/core/styles";
+import theme from "./theme/MuiTheme";
+import GlobalStyles from "./theme/GlobalStyles";
 
-export default function App() {
+const App = () => {
 	return (
-		<BrowserRouter>
-			<Switch>
-				<Route></Route>
-			</Switch>
-		</BrowserRouter>
+		<ThemeProvider theme={theme}>
+			<GlobalStyles></GlobalStyles>
+			<Router>
+				<Switch>
+					<Route exact path="/login" component={Statistic} />
+					<Route exact path="*" component={DashboardLayout} />
+				</Switch>
+			</Router>
+		</ThemeProvider>
 	);
-}
+};
+
+export default App;
