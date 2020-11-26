@@ -1,3 +1,12 @@
+# Iit project
+1. run first :  - npm install
+                - git submodule update --init
+2. update module mới : git submodule update --remote
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
