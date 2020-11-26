@@ -32,13 +32,6 @@ const Toolbar = (props: Props) => {
 
 	return (
 		<div className={clsx(classes.root, props.className)}>
-			<Box display="flex" justifyContent="flex-end">
-				<Button className={classes.importButton}>Import</Button>
-				<Button className={classes.exportButton}>Export</Button>
-				<Button color="primary" variant="contained">
-					Add customer
-				</Button>
-			</Box>
 			<Box mt={3}>
 				<Card>
 					<CardContent>
@@ -61,9 +54,15 @@ const Toolbar = (props: Props) => {
 					</CardContent>
 				</Card>
 			</Box>
+			<Box mt={3} display="flex" justifyContent="flex-end">
+				<Button className={classes.importButton}>Import</Button>
+				<Button className={classes.exportButton}>Export</Button>
+				<Button color="primary" variant="contained">
+					Add
+				</Button>
+			</Box>
 		</div>
 	);
 };
-
 
 export default Toolbar;

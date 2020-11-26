@@ -20,6 +20,8 @@ import {
 } from "@material-ui/core";
 // import getInitials from "src/utils/getInitials";
 import EditIcon from "@material-ui/icons/Edit";
+import HighlightOffIcon from "@material-ui/icons/HighlightOff";
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const useStyles = makeStyles((theme) => ({
 	root: {},
@@ -91,7 +93,8 @@ const Results = (props: Props) => {
 								<TableCell>Email</TableCell>
 								<TableCell>Phone</TableCell>
 								<TableCell>Registration date</TableCell>
-								<TableCell>Actions</TableCell>
+								<TableCell>Edit</TableCell>
+								<TableCell>Remove</TableCell>
 							</TableRow>
 						</TableHead>
 						<TableBody>
@@ -121,7 +124,12 @@ const Results = (props: Props) => {
 									</TableCell>
 									<TableCell>
 										<IconButton>
-											<EditIcon fontSize="small"/>
+											<EditIcon fontSize="small" />
+										</IconButton>
+									</TableCell>
+									<TableCell>
+										<IconButton>
+											<DeleteIcon />
 										</IconButton>
 									</TableCell>
 								</TableRow>
