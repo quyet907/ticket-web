@@ -17,11 +17,12 @@ import {
 	Typography,
 	makeStyles,
 	IconButton,
+	Button,
 } from "@material-ui/core";
 // import getInitials from "src/utils/getInitials";
 import EditIcon from "@material-ui/icons/Edit";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
-import DeleteIcon from '@material-ui/icons/Delete';
+import DeleteIcon from "@material-ui/icons/Delete";
 
 const useStyles = makeStyles((theme) => ({
 	root: {},
@@ -123,14 +124,16 @@ const Results = (props: Props) => {
 										{moment(customer.createdAt).format("DD/MM/YYYY")}
 									</TableCell>
 									<TableCell>
-										<IconButton>
-											<EditIcon fontSize="small" />
-										</IconButton>
+										<Button color="primary" size="small"  variant="contained">
+											{/* <DeleteIcon /> */}
+											<Typography variant="h6">SUA</Typography>
+										</Button>
 									</TableCell>
 									<TableCell>
-										<IconButton>
-											<DeleteIcon />
-										</IconButton>
+										<Button color="inherit" size="small" variant="contained">
+											{/* <DeleteIcon /> */}
+											<Typography variant="h6">Xoa</Typography>
+										</Button>
 									</TableCell>
 								</TableRow>
 							))}
