@@ -23,6 +23,9 @@ import {
 import EditIcon from "@material-ui/icons/Edit";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import DeleteIcon from "@material-ui/icons/Delete";
+import { IList } from "../../base-ticket-team/query/IList";
+import { PositionStaff } from "../../base-ticket-team/base-carOwner/PositionStaff";
+import { Paging } from "../../base-ticket-team/query/Paging";
 
 const useStyles = makeStyles((theme) => ({
 	root: {},
@@ -33,54 +36,23 @@ const useStyles = makeStyles((theme) => ({
 
 type Props = {
 	className?: string;
-	customers: any[];
+	position: Paging<PositionStaff>;
+	query : IList;
+	onQuery(query : IList) :void ;
+	onCreateOrUpdate(position: PositionStaff ): void;
+	onDelete(id : string) :void;
 };
 
 const Results = (props: Props) => {
 	const classes = useStyles();
 	const [selectedCustomerIds, setSelectedCustomerIds] = useState<any[]>([]);
-	const [limit, setLimit] = useState(5);
-	const [page, setPage] = useState(0);
 
-	const handleSelectAll = (e: any) => {
-		let newSelectedCustomerIds;
+	const handleLimitChange = ((event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+		props.onQuery({...props.query,pageSize: parseInt(event.target.value)});
+	});
 
-		if (e.target.checked) {
-			newSelectedCustomerIds = props.customers.map((customer) => customer.id);
-		} else {
-			newSelectedCustomerIds = [];
-		}
-
-		setSelectedCustomerIds(newSelectedCustomerIds);
-	};
-
-	const handleSelectOne = (e: any, id: string) => {
-		// 		const selectedIndex = selectedCustomerIds.indexOf(id);
-		// 		let newSelectedCustomerIds = [];
-		//
-		// 		if (selectedIndex === -1) {
-		// 			newSelectedCustomerIds = newSelectedCustomerIds.concat(selectedCustomerIds, id);
-		// 		} else if (selectedIndex === 0) {
-		// 			newSelectedCustomerIds = newSelectedCustomerIds.concat(selectedCustomerIds.slice(1));
-		// 		} else if (selectedIndex === selectedCustomerIds.length - 1) {
-		// 			newSelectedCustomerIds = newSelectedCustomerIds.concat(
-		// 				selectedCustomerIds.slice(0, -1)
-		// 			);
-		// 		} else if (selectedIndex > 0) {
-		// 			newSelectedCustomerIds = newSelectedCustomerIds.concat(
-		// 				selectedCustomerIds.slice(0, selectedIndex),
-		// 				selectedCustomerIds.slice(selectedIndex + 1)
-		// 			);
-		// 		}
-		// setSelectedCustomerIds(newSelectedCustomerIds);
-	};
-
-	const handleLimitChange = (event: any) => {
-		setLimit(event.target.value);
-	};
-
-	const handlePageChange = (event: any, newPage: any) => {
-		setPage(newPage);
+	const handlePageChange = (event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, page: number) => {
+		props.onQuery({...props.query,page : page+1})
 	};
 
 	return (
@@ -90,49 +62,57 @@ const Results = (props: Props) => {
 					<Table>
 						<TableHead>
 							<TableRow>
-								<TableCell>Name</TableCell>
-								<TableCell>Email</TableCell>
-								<TableCell>Phone</TableCell>
-								<TableCell>Registration date</TableCell>
+								<TableCell>Tên chức vụ</TableCell>
+								<TableCell>Mô tả</TableCell>
+								<TableCell>Mặc định</TableCell>
 								<TableCell>Edit</TableCell>
 								<TableCell>Remove</TableCell>
 							</TableRow>
 						</TableHead>
+
 						<TableBody>
-							{props.customers.slice(0, limit).map((customer) => (
+							{props.position.rows.map((position) => (
 								<TableRow
 									hover
-									key={customer.id}
-									selected={selectedCustomerIds.indexOf(customer.id) !== -1}
+									key={position._id}
+									selected={selectedCustomerIds.indexOf(position._id) !== -1}
 								>
 									<TableCell>
 										<Box alignItems="center" display="flex">
 											<Avatar
 												className={classes.avatar}
-												src={customer.avatarUrl}
+												src={""}
 											>
-												{customer.name}
+												
 											</Avatar>
 											<Typography color="textPrimary" variant="body1">
-												{customer.name}
+												{position.name}
 											</Typography>
 										</Box>
 									</TableCell>
-									<TableCell>{customer.email}</TableCell>
-									<TableCell>{customer.phone}</TableCell>
+									<TableCell> {position.description} </TableCell>
 									<TableCell>
-										{moment(customer.createdAt).format("DD/MM/YYYY")}
+									{"TRUE"}
 									</TableCell>
 									<TableCell>
-										<Button color="primary" size="small"  variant="contained">
+										<Button color="primary"
+											size="small"
+										 	variant="contained"
+											 onClick = {()=>props.onCreateOrUpdate(position)}
+											 >
+											
 											{/* <DeleteIcon /> */}
-											<Typography variant="h6">SUA</Typography>
+											<Typography variant="h6">Sửa</Typography>
 										</Button>
 									</TableCell>
 									<TableCell>
-										<Button color="inherit" size="small" variant="contained">
+										<Button color="inherit" 
+											size="small" 
+											variant="contained"
+											onClick = {()=>props.onDelete(position._id||"")}
+											>
 											{/* <DeleteIcon /> */}
-											<Typography variant="h6">Xoa</Typography>
+											<Typography variant="h6">Xóa</Typography>
 										</Button>
 									</TableCell>
 								</TableRow>
@@ -143,11 +123,11 @@ const Results = (props: Props) => {
 			</PerfectScrollbar>
 			<TablePagination
 				component="div"
-				count={props.customers.length}
+				count={props.position.total}
 				onChangePage={handlePageChange}
 				onChangeRowsPerPage={handleLimitChange}
-				page={page}
-				rowsPerPage={limit}
+				page={props.query.page-1||0}
+				rowsPerPage={props.query.pageSize|| 5}
 				rowsPerPageOptions={[5, 10, 25]}
 			/>
 		</Card>

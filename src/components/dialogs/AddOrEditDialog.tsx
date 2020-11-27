@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { createStyles, Theme, withStyles, WithStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -13,6 +13,7 @@ import * as Yup from "yup";
 import { Formik } from "formik";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import { Link } from "react-router-dom";
+import { PositionStaff } from "../../base-ticket-team/base-carOwner/PositionStaff";
 
 const styles = (theme: Theme) =>
 	createStyles({
@@ -61,38 +62,47 @@ const DialogActions = withStyles((theme: Theme) => ({
 }))(MuiDialogActions);
 
 type Props = {
+	data : PositionStaff;
 	isDisplay: boolean;
 	onClose(): void;
-	onSave(): void;
+	onSave(position: PositionStaff): void;
 };
 
 export default function AddOrEditDialog(props: Props) {
-	const [open, setOpen] = React.useState(false);
+	const [data, setData] = useState<PositionStaff>({})
+
+	useEffect(() => {
+		setData(props.data)
+	}, [props.data])
 
 	return (
 		<Dialog fullWidth maxWidth="sm" onClose={props.onClose} open={props.isDisplay}>
-			<DialogTitle onClose={props.onClose}>Them nhan vien</DialogTitle>
+			<DialogTitle onClose={props.onClose}>Edit chức vụ</DialogTitle>
 			<DialogContent dividers>
 				<TextField
 					fullWidth
 					label="Email Address"
 					margin="normal"
-					name="email"
-					type="email"
+					name="Tên chức vụ"
+					type="text"
 					variant="outlined"
+					value = {data.name}
+					onChange = {(e)=> setData({...data,name : e.target.value})}
 				/>
 				<TextField
 					fullWidth
 					label="Password"
 					margin="normal"
-					name="password"
-					type="password"
+					name="Mô tả"
+					type="text"
 					variant="outlined"
+					value = {data.description}
+					onChange = {(e)=> setData({...data,description : e.target.value})}
 				/>
 			</DialogContent>
 			<DialogActions>
 				<Button
-					onClick={() => props.onSave()}
+					onClick={() => props.onSave(data)}
 					type="submit"
 					variant="contained"
 					color="primary"
