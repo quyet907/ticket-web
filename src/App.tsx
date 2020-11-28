@@ -8,6 +8,8 @@ import Statistic from "./components/Statistic";
 import { ThemeProvider } from "@material-ui/core/styles";
 import theme from "./theme/MuiTheme";
 import GlobalStyles from "./theme/GlobalStyles";
+import LoginView from "./components/auth/Login";
+import RegisterView from "./components/auth/Register";
 
 const App = () => {
 	return (
@@ -15,7 +17,8 @@ const App = () => {
 			<GlobalStyles></GlobalStyles>
 			<Router>
 				<Switch>
-					<Route exact path="/login" component={Statistic} />
+					<Route exact path="/login" component={LoginView} />
+					<Route exact path="/register" component={RegisterView} />
 					<Route exact path="*" component={DashboardLayout} />
 				</Switch>
 			</Router>

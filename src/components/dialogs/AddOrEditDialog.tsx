@@ -14,6 +14,7 @@ import { Formik } from "formik";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import { Link } from "react-router-dom";
 import { PositionStaff } from "../../base-ticket-team/base-carOwner/PositionStaff";
+// import { PositionStaff } from "../../base-ticket-team/base-carOwner/PositionStaff";
 
 const styles = (theme: Theme) =>
 	createStyles({
@@ -69,7 +70,7 @@ type Props = {
 };
 
 export default function AddOrEditDialog(props: Props) {
-	const [data, setData] = useState<PositionStaff>({})
+	const [data, setData] = useState<PositionStaff>({} as PositionStaff)
 
 	useEffect(() => {
 		setData(props.data)
@@ -77,7 +78,7 @@ export default function AddOrEditDialog(props: Props) {
 
 	return (
 		<Dialog fullWidth maxWidth="sm" onClose={props.onClose} open={props.isDisplay}>
-			<DialogTitle onClose={props.onClose}>Edit chức vụ</DialogTitle>
+			<DialogTitle onClose={props.onClose}>Sua chức vụ</DialogTitle>
 			<DialogContent dividers>
 				<TextField
 					fullWidth

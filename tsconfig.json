@@ -21,10 +21,8 @@
     "jsx": "react"
   },
   "include": [
-    "src", "src/customer/CustomerListView/.js"
-  ]
-   ,
-  "paths": {
+    "src", "src/customer/Customer/.js"
+  ],  "paths": {
     "@Core/*": ["src/base-ticket-team/*"],
     "@Service/*": ["src/service/*"],
     "@Config/*" : ["src/config/*"]
