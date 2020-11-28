@@ -50,7 +50,7 @@ const PositionStaffContainer = () => {
 
 	function onSave(position: PositionStaff){
 		positionStaffController.create(position).then(res=>{
-			setQuery({...query})
+			setQuery({...query});
 			setShowForm(false)
 		})
 	}
@@ -78,10 +78,10 @@ const PositionStaffContainer = () => {
 	function onFilter(nameField: string, type: "up" | "down"){
 		var sort: string [] =query.sort || [];
 		 
-		if(type== "up"){
+		if(type === "up"){
 			sort.push(nameField);
 		}
-		if(type == "down"){
+		if(type === "down"){
 			sort.push(`-${nameField}`);
 		}
 		setQuery({...query,
