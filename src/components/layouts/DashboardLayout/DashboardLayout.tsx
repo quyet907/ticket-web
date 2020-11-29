@@ -51,7 +51,10 @@ function DashboardLayout() {
 					<div className={classes.content}>
 						<Switch>
 							<Route exact path={`/dashboard`} component={Statistic} />
-							<Route exact path={`/position`} component={Cutstomer} />
+							<Route exact path={`/positions`} component={Cutstomer} />
+							<Route exact path={`/staffs`} component={Cutstomer} />
+							<Route exact path={`/trips`} component={Cutstomer} />
+
 							<Route path="*">
 								<Redirect to="/dashboard" />
 							</Route>

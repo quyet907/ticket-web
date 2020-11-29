@@ -18,6 +18,7 @@ import {
 	makeStyles,
 	IconButton,
 	Button,
+	Chip,
 } from "@material-ui/core";
 // import getInitials from "src/utils/getInitials";
 import EditIcon from "@material-ui/icons/Edit";

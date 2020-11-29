@@ -28,7 +28,7 @@ export class Controller<T> {
   }
 
   public find(params: IFind): Promise<T[]> {
-    return this.client.get(`${this.serviceURL}/find/${this.basePath}`, {
+    return this.client.get(`${this.serviceURL}/${this.basePath}/find`, {
       params: params,
     })
     .then(res=>{
@@ -44,7 +44,7 @@ export class Controller<T> {
   }
 
   public getById(params: string): Promise<T> {
-    return this.client.get(`${this.serviceURL}/${this.basePath}/${params}`,)
+    return this.client.get(`${this.serviceURL}/${this.basePath}/${params}`)
     .then(res=>{
         return res.data
     })
@@ -58,7 +58,10 @@ export class Controller<T> {
   }
 
   public count(params : ICount): Promise<number>{
-    return this.client.get(`${this.serviceURL}/count/${this.basePath}`,)
+    return this.client.get(`${this.serviceURL}/${this.basePath}/count`,{
+      params : params,
+
+    })
     .then(res=>{
         return res.data
     })
