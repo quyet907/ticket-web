@@ -36,6 +36,7 @@
     "yup": "^0.31.0"
   },
   "scripts": {
+    "init": "git checkout develop; git submodule update --init;  npm install ; npm start",
     "start": "REACT_APP_ENV=local PORT=3344 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

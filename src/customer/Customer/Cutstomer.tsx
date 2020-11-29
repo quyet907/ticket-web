@@ -11,15 +11,15 @@ import { Paging } from "../../base-ticket-team/query/Paging";
 // import Page from 'src/components/Page';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    backgroundColor: theme.palette.background.dark,
-    minHeight: "100%",
-    paddingBottom: theme.spacing(3),
-    paddingTop: theme.spacing(3),
-  },
+	root: {
+		backgroundColor: theme.palette.background.default,
+		minHeight: "100%",
+		paddingBottom: theme.spacing(3),
+		paddingTop: theme.spacing(3),
+	},
 }));
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
+
 
 export default function PositionStaffContainer() {
   const [object, setObject] = useState<Paging<PositionStaff>>({
@@ -68,14 +68,17 @@ export default function PositionStaffContainer() {
     setQuery({ ...query, search: search });
   }
 
-  useEffect(() => {
-    positionStaffController.list(query).then((res) => {
-      setObject(res);
-    });
-  }, [query]);
-
-  function onFilter(nameField: string, type: "up" | "down") {
-    var sort: string[] = query.sort || [];
+// 	function onFilter(nameField: string, type: "up" | "down") {
+// 		var sort: string[] = query.sort || [];
+// 
+// 		if (type === "up") {
+// 			sort.push(nameField);
+// 		}
+// 		if (type === "down") {
+// 			sort.push(`-${nameField}`);
+// 		}
+// 		setQuery({ ...query, sort });
+// 	}
 
     function onFilter(nameField: string, type: "up" | "down") {
       var sort: string[] = query.sort || [];
@@ -116,4 +119,4 @@ export default function PositionStaffContainer() {
       // </Page>
     );
   }
-}
+

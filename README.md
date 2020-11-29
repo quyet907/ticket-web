@@ -4,8 +4,9 @@ npm start
 # Init project
 
 # 1. For first run :  
-npm install
 git submodule update --init
+npm install
+npm start
 
 # 2. Update module : 
 git submodule update --remote
