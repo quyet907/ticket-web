@@ -1,7 +1,6 @@
 import { BaseModel } from "../base-ticket-team/query/BaseModel";
 import { Button, Typography } from "@material-ui/core";
 import React from "react";
-import { IBaseTable } from "../customer/Customer/BaseTable";
 
 export class ActionHelper {
   public static getActionDelete<T extends BaseModel>(

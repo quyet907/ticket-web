@@ -187,7 +187,6 @@ export default function BaseTable<T>(props: Props<T>) {
       getSort.push(label);
     } else {
       getSort = props.query?.sort || [];
-      console.log(getSort)
       var check = getSort?.findIndex(
         (sort) => sort === `${label}` || sort === `-${label}`
       );
@@ -195,7 +194,6 @@ export default function BaseTable<T>(props: Props<T>) {
         getSort.push(label);
       }
       if (check !== undefined && check >= 0) {
-        console.log(getSort[check] === `${label}`)
         if (getSort[check] === `${label}`) {
           getSort[check] = `-${label}`;
         }
@@ -204,7 +202,6 @@ export default function BaseTable<T>(props: Props<T>) {
         }
         
       }
-      console.log(getSort)
     }
 
     props.onQuery({ ...props.query, sort: getSort });
@@ -219,7 +216,7 @@ export default function BaseTable<T>(props: Props<T>) {
               <TableRow>
                 {props
                   .iTable(props.data.rows)
-                  .header.map((header: HeadCell) => {
+                  .header.map((header: HeadCell<T>) => {
                     return (
                       <TableCell
                         key={"dfjjk"}
@@ -228,10 +225,10 @@ export default function BaseTable<T>(props: Props<T>) {
                         // sortDirection={"asc"}
                       >
                         <TableSortLabel
-                          active={checkActionSort(header.id)}
-                          direction={checkDirection(header.id)}
+                          active={checkActionSort(header.id.toString())}
+                          direction={checkDirection(header.id.toString())}
                           onClick={(e) => {
-                            onSort(header.id);
+                            onSort(header.id.toString());
                           }}
                         >
                           {header.label}
@@ -276,18 +273,16 @@ export default function BaseTable<T>(props: Props<T>) {
   );
 }
 
-export interface HeadCell {
+export interface HeadCell<T> {
   // disablePadding: boolean;
-  // id: string;
-  // label: string;
   // numeric: boolean;
-  id: string;
+  id: keyof T | "" ;
   label: string;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export interface IBaseTable<T> {
-  header: HeadCell[];
+  header: HeadCell<T>[];
   value: Array<T[]>;
   paging: Paging<T>;
 }

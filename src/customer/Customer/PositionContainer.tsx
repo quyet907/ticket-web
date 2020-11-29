@@ -83,7 +83,7 @@ export default function PositionStaffContainer() {
 
   
 
-  function convertDataToTable(data: PositionStaff[]): IBaseTable<dataConvertPosition> {
+  function convertDataToTable(data: PositionStaff[]): IBaseTable<PositionStaff> {
     const createValue = data.map((item: PositionStaff) => {
       var value: any[] = [];
       value.push(item.name || "");
@@ -93,12 +93,12 @@ export default function PositionStaffContainer() {
       return value;
     });
 
-    const getTable: IBaseTable<dataConvertPosition> = {
+    const getTable: IBaseTable<PositionStaff> = {
       header: [
         { id: "name", label: "Name" },
         { id: "description", label: "Description" },
-        { id: "delete", label: "Delete" },
-        { id: "edit", label: "Edit" },
+        { id: "", label: "Delete" },
+        { id: "", label: "Edit" },
       ],
       paging: { ...object, rows: [] },
       value: createValue,
@@ -134,10 +134,7 @@ export default function PositionStaffContainer() {
   );
 };
 
-export interface dataConvertPosition {
-  // ! change name interface here
-  name: string;
-  description: string;
+export interface dataConvertPosition extends PositionStaff{
   actionDelete: React.Component;
   actionEdit: React.Component;
 }
