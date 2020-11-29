@@ -2,9 +2,9 @@ import { AxiosInstance } from "axios";
 import { PositionStaff } from "../base-ticket-team/base-carOwner/PositionStaff";
 import { IList } from "../base-ticket-team/query/IList";
 import { Paging } from "../base-ticket-team/query/Paging";
-import { Controller } from "./Controller";
+import { BaseController } from "./BaseController";
 
-export class PositionStaffService extends Controller<PositionStaff> {
+export class PositionStaffService extends BaseController<PositionStaff> {
   public constructor(
     serviceURL: string,
     basePath: string,

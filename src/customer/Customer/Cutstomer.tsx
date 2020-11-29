@@ -12,7 +12,7 @@ import { Paging } from "../../base-ticket-team/query/Paging";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		backgroundColor: theme.palette.background.dark,
+		backgroundColor: theme.palette.background.default,
 		minHeight: "100%",
 		paddingBottom: theme.spacing(3),
 		paddingTop: theme.spacing(3),
@@ -34,7 +34,7 @@ const PositionStaffContainer = () => {
 		search: "",
 		// sort : ["-createAt"]
 	});
-	const [selected, setSelected] = useState<PositionStaff>({});
+	const [selected, setSelected] = useState<PositionStaff>({} as PositionStaff);
 	const [showForm, setShowForm] = useState<boolean>(false);
 
 	function onCreateOrUpdate(position: PositionStaff) {
@@ -73,17 +73,17 @@ const PositionStaffContainer = () => {
 		});
 	}, [query]);
 
-	function onFilter(nameField: string, type: "up" | "down") {
-		var sort: string[] = query.sort || [];
-
-		if (type === "up") {
-			sort.push(nameField);
-		}
-		if (type === "down") {
-			sort.push(`-${nameField}`);
-		}
-		setQuery({ ...query, sort });
-	}
+// 	function onFilter(nameField: string, type: "up" | "down") {
+// 		var sort: string[] = query.sort || [];
+// 
+// 		if (type === "up") {
+// 			sort.push(nameField);
+// 		}
+// 		if (type === "down") {
+// 			sort.push(`-${nameField}`);
+// 		}
+// 		setQuery({ ...query, sort });
+// 	}
 
 	return (
 		// <Page className={classes.root} title="Customers">

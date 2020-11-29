@@ -8,7 +8,7 @@ import Cutstomer from "../../../customer/Customer/Cutstomer";
 
 const useStyles = makeStyles((theme: Theme) => ({
 	root: {
-		backgroundColor: theme.palette.background.dark,
+		backgroundColor: theme.palette.background.default,
 		display: "flex",
 		height: "100%",
 		overflow: "hidden",

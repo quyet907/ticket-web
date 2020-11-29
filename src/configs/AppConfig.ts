@@ -5,14 +5,14 @@ export interface IConfig {
 
 const localConfig: IConfig = {
 	apiGatewayUrl: "http://localhost:3344",
-	applicationUrl: "http://localhost:3002",
+	applicationUrl: "http://localhost:3001",
 };
 
 const developmentConfig: IConfig = {
 	apiGatewayUrl: "http://localhost:3344",
-	applicationUrl: "http://localhost:3002",
+	applicationUrl: "http://localhost:3001",
 };
 
-const config = process.env.REACT_APP_ENV === "local" ? localConfig : developmentConfig;
+const appConfig = process.env.REACT_APP_ENV === "local" ? localConfig : developmentConfig;
 
-export default config;
+export default appConfig;

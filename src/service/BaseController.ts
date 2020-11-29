@@ -4,7 +4,7 @@ import { IFind } from "../base-ticket-team/query/IFind";
 import { IList } from "../base-ticket-team/query/IList";
 import { Paging } from "../base-ticket-team/query/Paging";
 
-export class Controller<T> {
+export class BaseController<T> {
   protected serviceURL: string;
   protected basePath: string;
   protected client: AxiosInstance;

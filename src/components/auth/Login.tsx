@@ -22,7 +22,8 @@ import Google from "../../icons/Google";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		backgroundColor: theme.palette.background.dark,
+		// backgroundColor: "#F4F6F8",
+		backgroundColor: theme.palette.background.default,
 		height: "100%",
 		paddingBottom: theme.spacing(3),
 		paddingTop: theme.spacing(3),
@@ -116,7 +117,7 @@ const LoginView = () => {
 								name="email"
 								onBlur={handleBlur}
 								onChange={handleChange}
-								type="email"
+								// type="email"
 								value={values.email}
 								variant="outlined"
 							/>
