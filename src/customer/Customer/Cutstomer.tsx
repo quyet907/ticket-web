@@ -8,6 +8,7 @@ import { PositionStaff } from "../../base-ticket-team/base-carOwner/PositionStaf
 import { IList } from "../../base-ticket-team/query/IList";
 import { object } from "yup";
 import { Paging } from "../../base-ticket-team/query/Paging";
+import BaseTable from "./BaseTable";
 // import Page from 'src/components/Page';
 
 const useStyles = makeStyles((theme) => ({
@@ -60,7 +61,7 @@ const PositionStaffContainer = () => {
 	}
 
 	function onQuery(query: IList) {
-		setQuery({ ...query });
+		setQuery(query);
 	}
 
 	function onSearch(search: string) {
@@ -68,22 +69,24 @@ const PositionStaffContainer = () => {
 	}
 
 	useEffect(() => {
-		positionStaffController.list(query).then((res) => {
+		positionStaffController.list(query).then((res: Paging<PositionStaff>) => {
 			setObject(res);
+
+			console.log(res);
 		});
 	}, [query]);
 
-// 	function onFilter(nameField: string, type: "up" | "down") {
-// 		var sort: string[] = query.sort || [];
-// 
-// 		if (type === "up") {
-// 			sort.push(nameField);
-// 		}
-// 		if (type === "down") {
-// 			sort.push(`-${nameField}`);
-// 		}
-// 		setQuery({ ...query, sort });
-// 	}
+	// 	function onFilter(nameField: string, type: "up" | "down") {
+	// 		var sort: string[] = query.sort || [];
+	//
+	// 		if (type === "up") {
+	// 			sort.push(nameField);
+	// 		}
+	// 		if (type === "down") {
+	// 			sort.push(`-${nameField}`);
+	// 		}
+	// 		setQuery({ ...query, sort });
+	// 	}
 
 	return (
 		// <Page className={classes.root} title="Customers">
@@ -97,13 +100,13 @@ const PositionStaffContainer = () => {
 
 			<SearchAndAdd<PositionStaff> onCreate={onCreateOrUpdate} onSearch={onSearch} />
 			<Box mt={3}>
-				<Results
+				<BaseTable
 					position={object}
 					query={query}
 					onCreateOrUpdate={onCreateOrUpdate}
 					onDelete={onDelete}
 					onQuery={onQuery}
-				/>
+				></BaseTable>
 			</Box>
 		</Container>
 		// </Page>
