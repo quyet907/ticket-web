@@ -73,17 +73,6 @@ const PositionStaffContainer = () => {
 		});
 	}, [query]);
 
-	function onFilter(nameField: string, type: "up" | "down") {
-		var sort: string[] = query.sort || [];
-
-		if (type === "up") {
-			sort.push(nameField);
-		}
-		if (type === "down") {
-			sort.push(`-${nameField}`);
-		}
-		setQuery({ ...query, sort });
-	}
 
 	return (
 		// <Page className={classes.root} title="Customers">
