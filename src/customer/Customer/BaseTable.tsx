@@ -33,8 +33,8 @@ import { useTheme } from "@material-ui/core/styles";
 import TableContainer from "@material-ui/core/TableContainer";
 import Paper from "@material-ui/core/Paper";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
-import { Paging } from "../../base-ticket-team/base-ticket-team/query/Paging";
-import { IList } from "../../base-ticket-team/base-ticket-team/query/IList";
+import { Paging } from "../../base-ticket-team/query/Paging";
+import { IList } from "../../base-ticket-team/query/IList";
 
 const useStyles = makeStyles((theme) => ({
 	root: {

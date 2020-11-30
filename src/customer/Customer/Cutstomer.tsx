@@ -5,14 +5,14 @@ import SearchAndAdd from "./SearchAndAdd";
 import AddOrEditDialog from "../../components/dialogs/AddOrEditDialog";
 import { positionStaffController } from "../../service";
 import { object } from "yup";
-import { Paging } from "../../base-ticket-team/base-ticket-team/query/Paging";
-import { PositionStaff } from "../../base-ticket-team/base-ticket-team/base-carOwner/PositionStaff";
-import { IList } from "../../base-ticket-team/base-ticket-team/query/IList";
+import { Paging } from "../../base-ticket-team/query/Paging";
+import { PositionStaff } from "../../base-ticket-team/base-carOwner/PositionStaff";
+import { IList } from "../../base-ticket-team/query/IList";
 // import Page from 'src/components/Page';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		backgroundColor: theme.palette.background.dark,
+		backgroundColor: theme.palette.background.default,
 		minHeight: "100%",
 		paddingBottom: theme.spacing(3),
 		paddingTop: theme.spacing(3),
