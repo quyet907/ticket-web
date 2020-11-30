@@ -1,9 +1,10 @@
 import { AxiosInstance } from "axios";
 import { Car } from "../base-ticket-team/base-carOwner/Car";
+import { ChairCar } from "../base-ticket-team/base-carOwner/ChairCar";
 import { Staff } from "../base-ticket-team/base-carOwner/Staff";
 import { BaseController } from "./BaseController";
 
-export class CarService extends BaseController<Car> {
+export class ChairCarService extends BaseController<ChairCar> {
   public constructor(
     serviceURL: string,
     basePath: string,

@@ -4,11 +4,11 @@ import NavBar from "./NavBar/NavBar";
 import TopBar from "./TopBar";
 import Statistic from "../../Statistic";
 import { Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
-import Cutstomer from "../../../customer/Customer/Cutstomer";
+import PositionContainer from "../../../customer/Customer/PositionContainer";
 
 const useStyles = makeStyles((theme: Theme) => ({
 	root: {
-		backgroundColor: theme.palette.background.dark,
+		backgroundColor: theme.palette.background.default,
 		display: "flex",
 		height: "100%",
 		overflow: "hidden",
@@ -40,7 +40,6 @@ function DashboardLayout() {
 	const [isMobileNavOpen, setMobileNavOpen] = useState(false);
 
 	const { path } = useRouteMatch();
-	console.log(path);
 
 	return (
 		<div className={classes.root}>
@@ -51,9 +50,9 @@ function DashboardLayout() {
 					<div className={classes.content}>
 						<Switch>
 							<Route exact path={`/dashboard`} component={Statistic} />
-							<Route exact path={`/positions`} component={Cutstomer} />
-							<Route exact path={`/staffs`} component={Cutstomer} />
-							<Route exact path={`/trips`} component={Cutstomer} />
+							<Route exact path={`/positions`} component={PositionContainer} />
+							<Route exact path={`/staffs`} component={PositionContainer} />
+							<Route exact path={`/trips`} component={PositionContainer} />
 
 							<Route path="*">
 								<Redirect to="/dashboard" />
