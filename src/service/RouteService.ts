@@ -1,7 +1,5 @@
 import { AxiosInstance } from "axios";
-import { Car } from "../base-ticket-team/base-carOwner/Car";
-import { Route } from "../base-ticket-team/base-carOwner/Route";
-import { Staff } from "../base-ticket-team/base-carOwner/Staff";
+import { Route } from "../base-ticket-team/base-ticket-team/base-carOwner/Route";
 import { BaseController } from "./BaseController";
 
 export class RouteService extends BaseController<Route> {

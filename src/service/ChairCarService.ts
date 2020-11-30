@@ -1,7 +1,5 @@
 import { AxiosInstance } from "axios";
-import { Car } from "../base-ticket-team/base-carOwner/Car";
-import { ChairCar } from "../base-ticket-team/base-carOwner/ChairCar";
-import { Staff } from "../base-ticket-team/base-carOwner/Staff";
+import { ChairCar } from "../base-ticket-team/base-ticket-team/base-carOwner/ChairCar";
 import { BaseController } from "./BaseController";
 
 export class ChairCarService extends BaseController<ChairCar> {

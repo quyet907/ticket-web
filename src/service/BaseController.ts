@@ -1,8 +1,9 @@
 import { AxiosInstance } from "axios";
-import { ICount } from "../base-ticket-team/query/ICount";
-import { IFind } from "../base-ticket-team/query/IFind";
-import { IList } from "../base-ticket-team/query/IList";
-import { Paging } from "../base-ticket-team/query/Paging";
+import { ICount } from "../base-ticket-team/base-ticket-team/query/ICount";
+import { IFind } from "../base-ticket-team/base-ticket-team/query/IFind";
+import { IList } from "../base-ticket-team/base-ticket-team/query/IList";
+import { Paging } from "../base-ticket-team/base-ticket-team/query/Paging";
+
 
 export class BaseController<T> {
   protected serviceURL: string;
@@ -19,7 +20,7 @@ export class BaseController<T> {
     this.client = client;
   }
   public list(params: IList): Promise<Paging<T>> {
-    params = { ...params, sort: this.convertSort(params.sort) };
+    params = { ...params, sort: this.convertSort(params.sort)};
     return this.client
       .get(`${this.serviceURL}/${this.basePath}`, {
         params: params,

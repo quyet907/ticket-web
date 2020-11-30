@@ -13,7 +13,7 @@ import * as Yup from "yup";
 import { Formik } from "formik";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import { Link } from "react-router-dom";
-import { PositionStaff } from "../../base-ticket-team/base-carOwner/PositionStaff";
+import { PositionStaff } from "../../base-ticket-team/base-ticket-team/base-carOwner/PositionStaff";
 // import { PositionStaff } from "../../base-ticket-team/base-carOwner/PositionStaff";
 
 const styles = (theme: Theme) =>
@@ -63,18 +63,18 @@ const DialogActions = withStyles((theme: Theme) => ({
 }))(MuiDialogActions);
 
 type Props = {
-	data : PositionStaff;
+	data: PositionStaff;
 	isDisplay: boolean;
 	onClose(): void;
 	onSave(position: PositionStaff): void;
 };
 
 export default function AddOrEditDialog(props: Props) {
-	const [data, setData] = useState<PositionStaff>({} as PositionStaff)
+	const [data, setData] = useState<PositionStaff>({} as PositionStaff);
 
 	useEffect(() => {
-		setData(props.data)
-	}, [props.data])
+		setData(props.data);
+	}, [props.data]);
 
 	return (
 		<Dialog fullWidth maxWidth="sm" onClose={props.onClose} open={props.isDisplay}>
@@ -87,8 +87,8 @@ export default function AddOrEditDialog(props: Props) {
 					name="Tên chức vụ"
 					type="text"
 					variant="outlined"
-					value = {data.name}
-					onChange = {(e)=> setData({...data,name : e.target.value})}
+					value={data.name}
+					onChange={(e) => setData({ ...data, name: e.target.value })}
 				/>
 				<TextField
 					fullWidth
@@ -97,8 +97,8 @@ export default function AddOrEditDialog(props: Props) {
 					name="Mô tả"
 					type="text"
 					variant="outlined"
-					value = {data.description}
-					onChange = {(e)=> setData({...data,description : e.target.value})}
+					value={data.description}
+					onChange={(e) => setData({ ...data, description: e.target.value })}
 				/>
 			</DialogContent>
 			<DialogActions>

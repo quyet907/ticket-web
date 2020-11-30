@@ -24,9 +24,9 @@ import {
 import EditIcon from "@material-ui/icons/Edit";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { IList } from "../../base-ticket-team/query/IList";
-import { PositionStaff } from "../../base-ticket-team/base-carOwner/PositionStaff";
-import { Paging } from "../../base-ticket-team/query/Paging";
+import { PositionStaff } from "../../base-ticket-team/base-ticket-team/base-carOwner/PositionStaff";
+import { IList } from "../../base-ticket-team/base-ticket-team/query/IList";
+import { Paging } from "../../base-ticket-team/base-ticket-team/query/Paging";
 
 const useStyles = makeStyles((theme) => ({
 	root: {},

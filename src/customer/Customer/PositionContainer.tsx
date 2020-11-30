@@ -4,12 +4,12 @@ import Results from "./Results";
 import SearchAndAdd from "./SearchAndAdd";
 import AddOrEditDialog from "../../components/dialogs/AddOrEditDialog";
 import { positionStaffController } from "../../service";
-import { PositionStaff } from "../../base-ticket-team/base-carOwner/PositionStaff";
-import { IList } from "../../base-ticket-team/query/IList";
 import { object } from "yup";
-import { Paging } from "../../base-ticket-team/query/Paging";
 import BaseTable, { IBaseTable } from "./BaseTable";
 import { ActionHelper } from "../../comon/ActionHelper";
+import { PositionStaff } from "../../base-ticket-team/base-ticket-team/base-carOwner/PositionStaff";
+import { IList } from "../../base-ticket-team/base-ticket-team/query/IList";
+import { Paging } from "../../base-ticket-team/base-ticket-team/query/Paging";
 // import Page from 'src/components/Page';
 
 const useStyles = makeStyles((theme) => ({
