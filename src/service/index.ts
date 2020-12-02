@@ -3,6 +3,7 @@ import appConfig from "../configs/AppConfig";
 import { CarService } from "./CarService";
 import { PositionStaffService } from "./PositionStaffService";
 import { StaffService } from "./StaffService";
+import { TripService } from "./TripService";
 export const appClient = axios.create({
 	baseURL: "",
 	timeout: 10000,
@@ -49,3 +50,7 @@ export const URL = appConfig.applicationUrl;
 export const staffController = new StaffService(URL, "staff", appClient);
 export const positionStaffController = new PositionStaffService(URL, "position_staff", appClient);
 export const carController = new CarService(URL, "car", appClient);
+export const tripController = new TripService(URL, "trip", appClient);
+
+
+

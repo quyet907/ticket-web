@@ -5,6 +5,9 @@ import TopBar from "./TopBar";
 import Statistic from "../../Statistic";
 import { Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
 import PositionContainer from "../../../customer/Customer/PositionContainer";
+import Staff from "../../../customer/Customer/Staff";
+import StaffView from "../../../customer/Customer/Staff";
+import TripContainer from "../../../customer/Customer/TripContainer";
 
 const useStyles = makeStyles((theme: Theme) => ({
 	root: {
@@ -51,8 +54,8 @@ function DashboardLayout() {
 						<Switch>
 							<Route exact path={`/dashboard`} component={Statistic} />
 							<Route exact path={`/positions`} component={PositionContainer} />
-							<Route exact path={`/staffs`} component={PositionContainer} />
-							<Route exact path={`/trips`} component={PositionContainer} />
+							<Route exact path={`/staffs`} component={StaffView} />
+							<Route exact path={`/trips`} component={TripContainer} />
 
 							<Route path="*">
 								<Redirect to="/dashboard" />

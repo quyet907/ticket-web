@@ -3,7 +3,7 @@ import { Box, Button, Container, makeStyles, Typography } from "@material-ui/cor
 import Results from "./Results";
 import SearchAndAdd from "./SearchAndAdd";
 import AddOrEditDialog from "../../components/dialogs/AddOrEditDialog";
-import { positionStaffController } from "../../service";
+import { positionStaffController, staffController, tripController } from "../../service";
 import { object } from "yup";
 import BaseTable, { IBaseTable } from "./BaseTable";
 import { ActionHelper } from "../../comon/ActionHelper";
@@ -11,6 +11,8 @@ import { PositionStaff } from "../../base-ticket-team/base-carOwner/PositionStaf
 import { IList } from "../../base-ticket-team/query/IList";
 import { Paging } from "../../base-ticket-team/query/Paging";
 import BaseDialogs from "../../components/dialogs/BaseDialogs";
+import { Staff } from "../../base-ticket-team/base-carOwner/Staff";
+import { Trip } from "../../base-ticket-team/base-carOwner/Trip";
 // import Page from 'src/components/Page';
 
 const useStyles = makeStyles((theme) => ({
@@ -23,8 +25,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
-export default function PositionStaffContainer() {
-	const [object, setObject] = useState<Paging<PositionStaff>>({
+export default function TripContainer() {
+	const [object, setObject] = useState<Paging<Trip>>({
 		page: 1,
 		pageSize: 5,
 		rows: [],
@@ -37,11 +39,11 @@ export default function PositionStaffContainer() {
 		search: "",
 		// sort : ["-createAt"]
 	});
-	const [selected, setSelected] = useState<PositionStaff>({} as PositionStaff);
+	const [selected, setSelected] = useState<Trip>({} as Trip);
 	const [showForm, setShowForm] = useState<boolean>(false);
 
-	function onCreateOrUpdate(position: PositionStaff) {
-		setSelected(position);
+	function onCreateOrUpdate(staff: Trip) {
+		setSelected(staff);
 		setShowForm(true);
 	}
 
@@ -49,8 +51,8 @@ export default function PositionStaffContainer() {
 		setShowForm(false);
 	}
 
-	function onSave(position: PositionStaff) {
-		positionStaffController.create(position).then((res) => {
+	function onSave(trip: Trip) {
+		tripController.create(trip).then((res) => {
 			setQuery({ ...query });
 			setShowForm(false);
 		});
@@ -71,27 +73,27 @@ export default function PositionStaffContainer() {
 	}
 
 	useEffect(() => {
-		positionStaffController.list(query).then((res: Paging<PositionStaff>) => {
+		staffController.list(query).then((res: Paging<Trip>) => {
 			setObject(res);
 		});
 	}, [query]);
 
-	function convertDataToTable(data: PositionStaff[]): IBaseTable<PositionStaff> {
-		const createValue = data.map((item: PositionStaff) => {
+	function convertDataToTable(data: Trip[]): IBaseTable<Trip> {
+		const createValue = data.map((item: Trip) => {
 			var value: any[] = [];
-			value.push(item.name || "");
-			value.push(item.description || "");
-			value.push(ActionHelper.getActionDelete(item, onDelete));
+			value.push(item.price || "");
+			value.push(item.timeStart);
 			value.push(ActionHelper.getActionUpdate(item, onCreateOrUpdate));
+			value.push(ActionHelper.getActionDelete(item, onDelete));
 			return value;
 		});
 
-		const getTable: IBaseTable<PositionStaff> = {
+		const getTable: IBaseTable<Trip> = {
 			header: [
-				{ id: "name", label: "Name" },
-				{ id: "description", label: "Description" },
-				{ id: "", label: "Delete" },
+				{ id: "price", label: "Gia" },
+				{ id: "timeStart", label: "Gio khoi hanh" },
 				{ id: "", label: "Edit" },
+				{ id: "", label: "Delete" },
 			],
 			paging: { ...object, rows: [] },
 			value: createValue,
