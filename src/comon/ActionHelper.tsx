@@ -1,6 +1,6 @@
 import { Button, Typography } from "@material-ui/core";
 import React from "react";
-import { BaseModel } from "../base-ticket-team/query/BaseModel";
+import { BaseModel } from "../submodules/base-ticket-team/query/BaseModel";
 
 export class ActionHelper {
   public static getActionDelete<T extends BaseModel>(

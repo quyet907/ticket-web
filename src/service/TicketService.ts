@@ -1,5 +1,5 @@
 import { AxiosInstance } from "axios";
-import { Ticket } from "../base-ticket-team/base-carOwner/Ticket";
+import { Ticket } from "../submodules/base-ticket-team/base-carOwner/Ticket";
 import { BaseController } from "./BaseController";
 
 export class TicketService extends BaseController<Ticket> {

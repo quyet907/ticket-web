@@ -7,10 +7,11 @@ import { positionStaffController } from "../../service";
 import { object } from "yup";
 import BaseTable, { IBaseTable } from "./BaseTable";
 import { ActionHelper } from "../../comon/ActionHelper";
-import { PositionStaff } from "../../base-ticket-team/base-carOwner/PositionStaff";
-import { IList } from "../../base-ticket-team/query/IList";
-import { Paging } from "../../base-ticket-team/query/Paging";
 import BaseDialogs from "../../components/dialogs/BaseDialogs";
+import { PositionStaff } from "../../submodules/base-ticket-team/base-carOwner/PositionStaff";
+import { IList } from "../../submodules/base-ticket-team/query/IList";
+import { Paging } from "../../submodules/base-ticket-team/query/Paging";
+
 // import Page from 'src/components/Page';
 
 const useStyles = makeStyles((theme) => ({
@@ -22,7 +23,6 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
 export default function PositionStaffContainer() {
 	const [object, setObject] = useState<Paging<PositionStaff>>({
 		page: 1,

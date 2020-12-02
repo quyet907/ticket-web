@@ -7,12 +7,12 @@ import { positionStaffController, staffController, tripController } from "../../
 import { object } from "yup";
 import BaseTable, { IBaseTable } from "./BaseTable";
 import { ActionHelper } from "../../comon/ActionHelper";
-import { PositionStaff } from "../../base-ticket-team/base-carOwner/PositionStaff";
-import { IList } from "../../base-ticket-team/query/IList";
-import { Paging } from "../../base-ticket-team/query/Paging";
 import BaseDialogs from "../../components/dialogs/BaseDialogs";
-import { Staff } from "../../base-ticket-team/base-carOwner/Staff";
-import { Trip } from "../../base-ticket-team/base-carOwner/Trip";
+import { PositionStaff } from "../../submodules/base-ticket-team/base-carOwner/PositionStaff";
+import { Trip } from "../../submodules/base-ticket-team/base-carOwner/Trip";
+import { IList } from "../../submodules/base-ticket-team/query/IList";
+import { Paging } from "../../submodules/base-ticket-team/query/Paging";
+
 // import Page from 'src/components/Page';
 
 const useStyles = makeStyles((theme) => ({
@@ -24,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
 export default function TripContainer() {
 	const [object, setObject] = useState<Paging<Trip>>({
 		page: 1,

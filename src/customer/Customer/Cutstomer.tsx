@@ -5,9 +5,10 @@ import SearchAndAdd from "./SearchAndAdd";
 import AddOrEditDialog from "../../components/dialogs/AddOrEditDialog";
 import { positionStaffController } from "../../service";
 import { object } from "yup";
-import { Paging } from "../../base-ticket-team/query/Paging";
-import { PositionStaff } from "../../base-ticket-team/base-carOwner/PositionStaff";
-import { IList } from "../../base-ticket-team/query/IList";
+import { PositionStaff } from "../../submodules/base-ticket-team/base-carOwner/PositionStaff";
+import { IList } from "../../submodules/base-ticket-team/query/IList";
+import { Paging } from "../../submodules/base-ticket-team/query/Paging";
+
 // import Page from 'src/components/Page';
 
 const useStyles = makeStyles((theme) => ({

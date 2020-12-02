@@ -15,7 +15,7 @@ import SaveIcon from "@material-ui/icons/Save";
 import CloseIcon from "@material-ui/icons/Close";
 import { useFormik } from "formik";
 import { useGlobalStyles } from "../../styles/GlobalStyle";
-import { PositionStaff } from "../../base-ticket-team/base-carOwner/PositionStaff";
+import { PositionStaff } from "../../submodules/base-ticket-team/base-carOwner/PositionStaff";
 
 export default function BaseDialogs(props: Props) {
 	const globalStyles = useGlobalStyles();

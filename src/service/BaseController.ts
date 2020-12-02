@@ -1,8 +1,9 @@
 import { AxiosInstance } from "axios";
-import { ICount } from "../base-ticket-team/query/ICount";
-import { IFind } from "../base-ticket-team/query/IFind";
-import { IList } from "../base-ticket-team/query/IList";
-import { Paging } from "../base-ticket-team/query/Paging";
+import { ICount } from "../submodules/base-ticket-team/query/ICount";
+import { IFind } from "../submodules/base-ticket-team/query/IFind";
+import { IList } from "../submodules/base-ticket-team/query/IList";
+import { Paging } from "../submodules/base-ticket-team/query/Paging";
+
 
 
 export class BaseController<T> {

@@ -13,8 +13,7 @@ import * as Yup from "yup";
 import { Formik } from "formik";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import { Link } from "react-router-dom";
-import { PositionStaff } from "../../base-ticket-team/base-carOwner/PositionStaff";
-// import { PositionStaff } from "../../base-ticket-team/base-carOwner/PositionStaff";
+import { PositionStaff } from "../../submodules/base-ticket-team/base-carOwner/PositionStaff";
 
 const styles = (theme: Theme) =>
 	createStyles({
