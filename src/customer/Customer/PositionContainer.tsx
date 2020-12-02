@@ -133,8 +133,3 @@ export default function PositionStaffContainer() {
     // </Page>
   );
 };
-
-export interface dataConvertPosition extends PositionStaff{
-  actionDelete: React.Component;
-  actionEdit: React.Component;
-}

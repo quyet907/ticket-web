@@ -145,7 +145,7 @@ export default function BaseTable<T>(props: Props<T>) {
   ) => {
     props.onQuery({ ...props.query, page: page + 1 });
   };
-
+  
   function checkActionSort(label: string): boolean {
     if (typeof props.query.sort == "string") {
       if (

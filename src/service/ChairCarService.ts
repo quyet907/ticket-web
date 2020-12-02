@@ -12,4 +12,20 @@ export class ChairCarService extends BaseController<ChairCar> {
   ) {
     super(serviceURL, basePath, client);
   }
+
+  public async getByCarId(carId: string): Promise<any> {
+    return this.client
+      .get(`${this.serviceURL}/${this.basePath}/byCar/${carId}`)
+      .then((res) => res)
+      .catch((err) => null);
+  }
+
+  public async autoCreate(params: any): Promise<any> {
+    return this.client
+      .get(`${this.serviceURL}/${this.basePath}/autoCreateChair`, {
+        params: params,
+      })
+      .then((res) => res)
+      .catch((res) => null);
+  }
 }
