@@ -2,16 +2,17 @@ import React, { useEffect, useState } from "react";
 import { Box, Button, Container, makeStyles, Typography } from "@material-ui/core";
 import Results from "./Results";
 import SearchAndAdd from "./SearchAndAdd";
-import AddOrEditDialog from "../../components/dialogs/AddOrEditDialog";
-import { positionStaffController, staffController, tripController } from "../../service";
 import { object } from "yup";
 import BaseTable, { IBaseTable } from "./BaseTable";
-import { ActionHelper } from "../../comon/ActionHelper";
-import BaseDialogs from "../../components/dialogs/BaseDialogs";
-import { PositionStaff } from "../../submodules/base-ticket-team/base-carOwner/PositionStaff";
-import { Trip } from "../../submodules/base-ticket-team/base-carOwner/Trip";
-import { IList } from "../../submodules/base-ticket-team/query/IList";
-import { Paging } from "../../submodules/base-ticket-team/query/Paging";
+import { ActionHelper } from "../comon/ActionHelper";
+import { routeController, positionStaffController, staffController } from "../service";
+import { PositionStaff } from "../submodules/base-ticket-team/base-carOwner/PositionStaff";
+import { IList } from "../submodules/base-ticket-team/query/IList";
+import { Paging } from "../submodules/base-ticket-team/query/Paging";
+import BaseDialogs from "./dialogs/BaseDialogs";
+import { Route } from "../submodules/base-ticket-team/base-carOwner/Route";
+import PopUpEditStaff from "./dialogs/PopUpEditStaff";
+
 
 // import Page from 'src/components/Page';
 
@@ -24,8 +25,8 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function TripContainer() {
-	const [object, setObject] = useState<Paging<Trip>>({
+export default function RouteContainer() {
+	const [object, setObject] = useState<Paging<Route>>({
 		page: 1,
 		pageSize: 5,
 		rows: [],
@@ -38,10 +39,10 @@ export default function TripContainer() {
 		search: "",
 		// sort : ["-createAt"]
 	});
-	const [selected, setSelected] = useState<Trip>({} as Trip);
+	const [selected, setSelected] = useState<Route>({} as Route);
 	const [showForm, setShowForm] = useState<boolean>(false);
 
-	function onCreateOrUpdate(staff: Trip) {
+	function onCreateOrUpdate(staff: Route) {
 		setSelected(staff);
 		setShowForm(true);
 	}
@@ -50,8 +51,8 @@ export default function TripContainer() {
 		setShowForm(false);
 	}
 
-	function onSave(trip: Trip) {
-		tripController.create(trip).then((res) => {
+	function onSave(Route: Route) {
+		routeController.create(Route).then((res) => {
 			setQuery({ ...query });
 			setShowForm(false);
 		});
@@ -72,25 +73,29 @@ export default function TripContainer() {
 	}
 
 	useEffect(() => {
-		staffController.list(query).then((res: Paging<Trip>) => {
+		staffController.list(query).then((res: Paging<Route>) => {
 			setObject(res);
 		});
 	}, [query]);
 
-	function convertDataToTable(data: Trip[]): IBaseTable<Trip> {
-		const createValue = data.map((item: Trip) => {
+	function convertDataToTable(data: Route[]): IBaseTable<Route> {
+		const createValue = data.map((item: Route) => {
 			var value: any[] = [];
-			value.push(item.price || "");
-			value.push(item.timeStart);
+			value.push(item.localStart);
+			value.push(item.localEnd);
+			value.push(item.startAt);
+			value.push(item.sumTimeRun);
 			value.push(ActionHelper.getActionUpdate(item, onCreateOrUpdate));
 			value.push(ActionHelper.getActionDelete(item, onDelete));
 			return value;
 		});
 
-		const getTable: IBaseTable<Trip> = {
+		const getTable: IBaseTable<Route> = {
 			header: [
-				{ id: "price", label: "Gia" },
-				{ id: "timeStart", label: "Gio khoi hanh" },
+				{ id: "localStart", label: "Xuat phat" },
+				{ id: "localEnd", label: "Diem den" },
+				{ id: "startAt", label: "Gio khoi hanh" },
+				{ id: "sumTimeRun", label: "Tong thoi gian du kien" },
 				{ id: "", label: "Edit" },
 				{ id: "", label: "Delete" },
 			],
@@ -110,12 +115,12 @@ export default function TripContainer() {
 				isDisplay={showForm}
 			></AddOrEditDialog> */}
 
-			<BaseDialogs
-				data={selected}
+			{/* <PopUpEditStaff
+				obj={selected}
 				onSave={onSave}
 				onCancel={onCloseForm}
 				isDisplay={showForm}
-			></BaseDialogs>
+			></PopUpEditStaff> */}
 
 			<SearchAndAdd<PositionStaff> onCreate={onCreateOrUpdate} onSearch={onSearch} />
 

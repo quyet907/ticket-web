@@ -54,6 +54,34 @@ const theme = createMuiTheme({
 			fontWeight: 500,
 		},
 	},
+	overrides: {
+		MuiButton: {
+			containedSizeLarge: {
+				padding: "12px 24px",
+			}
+		},
+		MuiDialog: {
+			paper: {
+				padding: "16px",
+			},
+		},
+		MuiDialogTitle: {
+			root: {
+				padding: "24px 24px",
+				minHeight: "24px"
+			},
+		},
+		MuiDialogContent: {
+			root: {
+				padding: "0px 24px",
+			},
+		},
+		MuiDialogActions: {
+			root: {
+				padding: "8px 24px 24px 24px",
+			},
+		},
+	},
 });
 
 export default theme;

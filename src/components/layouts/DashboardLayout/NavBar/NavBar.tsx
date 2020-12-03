@@ -28,27 +28,27 @@ const items = [
 		title: "Thống kê",
 	},
 	{
-		href: "/positions",
+		href: "/position",
 		icon: Users,
 		title: "Chức vụ",
 	},
 	{
-		href: "/staffs",
+		href: "/staff",
 		icon: Users,
 		title: "Nhân viên",
 	},
 	{
-		href: "/trips",
+		href: "/trip",
 		icon: MapPin,
 		title: "Chuyến đi",
 	},
 	{
-		href: "/round",
+		href: "/route",
 		icon: Map,
 		title: "Lộ trình",
 	},
 	{
-		href: "/settings",
+		href: "/setting",
 		icon: Truck,
 		title: "Xe",
 	},

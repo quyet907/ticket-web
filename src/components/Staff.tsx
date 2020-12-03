@@ -2,16 +2,18 @@ import React, { useEffect, useState } from "react";
 import { Box, Button, Container, makeStyles, Typography } from "@material-ui/core";
 import Results from "./Results";
 import SearchAndAdd from "./SearchAndAdd";
-import AddOrEditDialog from "../../components/dialogs/AddOrEditDialog";
-import { positionStaffController, staffController } from "../../service";
+import AddOrEditDialog from "../components/dialogs/AddOrEditDialog";
+import { positionStaffController, staffController } from "../service";
 import { object } from "yup";
 import BaseTable, { IBaseTable } from "./BaseTable";
-import { ActionHelper } from "../../comon/ActionHelper";
-import BaseDialogs from "../../components/dialogs/BaseDialogs";
-import { PositionStaff } from "../../submodules/base-ticket-team/base-carOwner/PositionStaff";
-import { Staff } from "../../submodules/base-ticket-team/base-carOwner/Staff";
-import { IList } from "../../submodules/base-ticket-team/query/IList";
-import { Paging } from "../../submodules/base-ticket-team/query/Paging";
+import { ActionHelper } from "../comon/ActionHelper";
+import BaseDialogs from "../components/dialogs/PopUpEditPositionStaff";
+import { PositionStaff } from "../submodules/base-ticket-team/base-carOwner/PositionStaff";
+import { Staff } from "../submodules/base-ticket-team/base-carOwner/Staff";
+import { IList } from "../submodules/base-ticket-team/query/IList";
+import { Paging } from "../submodules/base-ticket-team/query/Paging";
+import PopUpEditPositionStaff from "../components/dialogs/PopUpEditPositionStaff";
+import PopUpEditStaff from "../components/dialogs/PopUpEditStaff";
 
 // import Page from 'src/components/Page';
 
@@ -110,12 +112,12 @@ export default function StaffView() {
 				isDisplay={showForm}
 			></AddOrEditDialog> */}
 
-			<BaseDialogs
-				data={selected}
+			<PopUpEditStaff
+				obj={selected}
 				onSave={onSave}
 				onCancel={onCloseForm}
 				isDisplay={showForm}
-			></BaseDialogs>
+			></PopUpEditStaff>
 
 			<SearchAndAdd<PositionStaff> onCreate={onCreateOrUpdate} onSearch={onSearch} />
 

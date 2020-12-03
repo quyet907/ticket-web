@@ -2,15 +2,15 @@ import React, { useEffect, useState } from "react";
 import { Box, Button, Container, makeStyles, Typography } from "@material-ui/core";
 import Results from "./Results";
 import SearchAndAdd from "./SearchAndAdd";
-import AddOrEditDialog from "../../components/dialogs/AddOrEditDialog";
-import { positionStaffController } from "../../service";
+import AddOrEditDialog from "../components/dialogs/AddOrEditDialog";
+import { positionStaffController } from "../service";
 import { object } from "yup";
 import BaseTable, { IBaseTable } from "./BaseTable";
-import { ActionHelper } from "../../comon/ActionHelper";
-import BaseDialogs from "../../components/dialogs/BaseDialogs";
-import { PositionStaff } from "../../submodules/base-ticket-team/base-carOwner/PositionStaff";
-import { IList } from "../../submodules/base-ticket-team/query/IList";
-import { Paging } from "../../submodules/base-ticket-team/query/Paging";
+import { ActionHelper } from "../comon/ActionHelper";
+import BaseDialogs from "../components/dialogs/PopUpEditPositionStaff";
+import { PositionStaff } from "../submodules/base-ticket-team/base-carOwner/PositionStaff";
+import { IList } from "../submodules/base-ticket-team/query/IList";
+import { Paging } from "../submodules/base-ticket-team/query/Paging";
 
 // import Page from 'src/components/Page';
 
@@ -101,32 +101,33 @@ export default function PositionStaffContainer() {
 
 	return (
 		// <Page className={classes.root} title="Customers">
-		<Container maxWidth={false}>
-			{/* <AddOrEditDialog
+			<Container maxWidth={false}>
+				{/* <AddOrEditDialog
 				data={selected}
 				onSave={onSave}
 				onClose={onCloseForm}
 				isDisplay={showForm}
 			></AddOrEditDialog> */}
 
-			<BaseDialogs
-				data={selected}
-				onSave={onSave}
-				onCancel={onCloseForm}
-				isDisplay={showForm}
-			></BaseDialogs>
+				<BaseDialogs
+		
+					obj={selected}
+					onSave={onSave}
+					onCancel={onCloseForm}
+					isDisplay={showForm}
+				></BaseDialogs>
 
-			<SearchAndAdd<PositionStaff> onCreate={onCreateOrUpdate} onSearch={onSearch} />
+				<SearchAndAdd<PositionStaff> onCreate={onCreateOrUpdate} onSearch={onSearch} />
 
-			<Box mt={3}>
-				<BaseTable
-					data={object}
-					query={query}
-					onQuery={onQuery}
-					iTable={convertDataToTable}
-				></BaseTable>
-			</Box>
-		</Container>
+				<Box mt={3}>
+					<BaseTable
+						data={object}
+						query={query}
+						onQuery={onQuery}
+						iTable={convertDataToTable}
+					></BaseTable>
+				</Box>
+			</Container>
 		// </Page>
 	);
 }

@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Box, Container, makeStyles } from "@material-ui/core";
 import Results from "./Results";
 import SearchAndAdd from "./SearchAndAdd";
-import AddOrEditDialog from "../../components/dialogs/AddOrEditDialog";
-import { positionStaffController } from "../../service";
+import AddOrEditDialog from "../components/dialogs/AddOrEditDialog";
+import { positionStaffController } from "../service";
 import { object } from "yup";
-import { PositionStaff } from "../../submodules/base-ticket-team/base-carOwner/PositionStaff";
-import { IList } from "../../submodules/base-ticket-team/query/IList";
-import { Paging } from "../../submodules/base-ticket-team/query/Paging";
+import { PositionStaff } from "../submodules/base-ticket-team/base-carOwner/PositionStaff";
+import { IList } from "../submodules/base-ticket-team/query/IList";
+import { Paging } from "../submodules/base-ticket-team/query/Paging";
 
 // import Page from 'src/components/Page';
 
