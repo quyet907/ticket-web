@@ -20,4 +20,11 @@ export class PositionStaffService extends BaseController<PositionStaff> {
     return super.list(l);
   }
 
+  async getDrivers(): Promise<PositionStaff[]>{
+    return this.client
+    .get(`${this.serviceURL}/${this.basePath}/autoCreateChair`)
+    .then((res) => res.data)
+    .catch((res) => [] as PositionStaff[]);
+  }
+
 }
