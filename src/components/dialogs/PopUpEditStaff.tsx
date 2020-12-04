@@ -1,21 +1,11 @@
 import {
-	Box,
-	Button,
 	Dialog,
-	DialogActions,
 	DialogContent,
-	DialogTitle,
 	Grid,
-	IconButton,
 	TextField,
-	Typography,
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-import SaveIcon from "@material-ui/icons/Save";
-import CloseIcon from "@material-ui/icons/Close";
-import { useFormik } from "formik";
 import { useGlobalStyles } from "../../styles/GlobalStyle";
-import { PositionStaff } from "../../submodules/base-ticket-team/base-carOwner/PositionStaff";
 import { Staff } from "../../submodules/base-ticket-team/base-carOwner/Staff";
 import { BaseDialogActions, BaseDialogTitle } from "./BaseDialogs";
 import Autocomplete from "@material-ui/lab/Autocomplete";
@@ -30,7 +20,7 @@ interface Props {
 
 export default function PopUpEditStaff(props: Props) {
 	const globalStyles = useGlobalStyles();
-	const { isDisplay, onCancel, onSave, titlePopup, obj } = props;
+	const { isDisplay, onCancel, onSave, titlePopup } = props;
 	const [data, setData] = useState<Staff>({} as Staff);
 
 	useEffect(() => {

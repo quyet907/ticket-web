@@ -58,7 +58,7 @@ function DashboardLayout() {
 							<Route exact path={`/staff`} component={StaffView} />
 							<Route exact path={`/trip`} component={TripContainer} />
 							<Route exact path={`/route`} component={RouteContainer} />
-
+							{/* <Route exact path={`/ticket`} component={TicketContainer} /> */}
 							<Route path="*">
 								<Redirect to="/dashboard" />
 							</Route>

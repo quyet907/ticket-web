@@ -2,18 +2,16 @@ import React, { useEffect, useState } from "react";
 import { Box, Button, Container, makeStyles, Typography } from "@material-ui/core";
 import Results from "./Results";
 import SearchAndAdd from "./SearchAndAdd";
-import AddOrEditDialog from "../components/dialogs/AddOrEditDialog";
-import { positionStaffController, staffController } from "../service";
+import AddOrEditDialog from "./dialogs/AddOrEditDialog";
+import { positionStaffController, staffController, tripController } from "../service";
 import { object } from "yup";
 import BaseTable, { IBaseTable } from "./BaseTable";
 import { ActionHelper } from "../comon/ActionHelper";
-import BaseDialogs from "../components/dialogs/PopUpEditPositionStaff";
+import BaseDialogs from "./dialogs/PopUpEditPositionStaff";
 import { PositionStaff } from "../submodules/base-ticket-team/base-carOwner/PositionStaff";
-import { Staff } from "../submodules/base-ticket-team/base-carOwner/Staff";
+import { Trip } from "../submodules/base-ticket-team/base-carOwner/Trip";
 import { IList } from "../submodules/base-ticket-team/query/IList";
 import { Paging } from "../submodules/base-ticket-team/query/Paging";
-import PopUpEditPositionStaff from "../components/dialogs/PopUpEditPositionStaff";
-import PopUpEditStaff from "../components/dialogs/PopUpEditStaff";
 
 // import Page from 'src/components/Page';
 
@@ -26,8 +24,8 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function StaffView() {
-	const [object, setObject] = useState<Paging<Staff>>({
+export default function TripContainer() {
+	const [object, setObject] = useState<Paging<Trip>>({
 		page: 1,
 		pageSize: 5,
 		rows: [],
@@ -40,10 +38,10 @@ export default function StaffView() {
 		search: "",
 		// sort : ["-createAt"]
 	});
-	const [selected, setSelected] = useState<Staff>({} as Staff);
+	const [selected, setSelected] = useState<Trip>({} as Trip);
 	const [showForm, setShowForm] = useState<boolean>(false);
 
-	function onCreateOrUpdate(staff: Staff) {
+	function onCreateOrUpdate(staff: Trip) {
 		setSelected(staff);
 		setShowForm(true);
 	}
@@ -52,8 +50,8 @@ export default function StaffView() {
 		setShowForm(false);
 	}
 
-	function onSave(position: Staff) {
-		positionStaffController.create(position).then((res) => {
+	function onSave(trip: Trip) {
+		tripController.create(trip).then((res) => {
 			setQuery({ ...query });
 			setShowForm(false);
 		});
@@ -74,36 +72,28 @@ export default function StaffView() {
 	}
 
 	useEffect(() => {
-		staffController.list(query).then((res: Paging<Staff>) => {
+		staffController.list(query).then((res: Paging<Trip>) => {
 			setObject(res);
 		});
 	}, [query]);
 
-	function convertDataToTable(data: Staff[]): IBaseTable<Staff> {
-		const createValue = data.map((item: Staff) => {
+	function convertDataToTable(data: Trip[]): IBaseTable<Trip> {
+		const createValue = data.map((item: Trip) => {
 			var value: any[] = [];
-			value.push(item.name || "");
-			value.push(item.birthAt);
-			value.push(item.address);
-			value.push(item.phoneNumber);
-			value.push(item.identityCard);
-			value.push(item.metaMapping?.position?.name);
+			value.push(item.price || "");
+			value.push(item.timeStart);
 			// value.push(ActionHelper.getActionUpdate(item, onCreateOrUpdate));
 			// value.push(ActionHelper.getActionDelete(item, onDelete));
 			value.push(ActionHelper.getActionUpdateAndDelete(item , onCreateOrUpdate, onDelete))
-
 			return value;
 		});
 
-		const getTable: IBaseTable<Staff> = {
+		const getTable: IBaseTable<Trip> = {
 			header: [
-				{ id: "name", label: "Ho ten" },
-				{ id: "birthAt", label: "Ngay sinh" },
-				{ id: "address", label: "Dia chi" },
-				{ id: "phoneNumber", label: "So dien thoai" },
-				{ id: "identityCard", label: "CMND" },
-				{ id: "positionId", label: "Chuc vu" },
-				{ id: "", label: "Hanh dong" },
+				{ id: "price", label: "Gia" },
+				{ id: "timeStart", label: "Gio khoi hanh" },
+				{ id: "", label: "Edit" },
+				{ id: "", label: "Delete" },
 			],
 			paging: { ...object, rows: [] },
 			value: createValue,
@@ -121,12 +111,12 @@ export default function StaffView() {
 				isDisplay={showForm}
 			></AddOrEditDialog> */}
 
-			<PopUpEditStaff
+			<BaseDialogs
 				obj={selected}
 				onSave={onSave}
 				onCancel={onCloseForm}
 				isDisplay={showForm}
-			></PopUpEditStaff>
+			></BaseDialogs>
 
 			<SearchAndAdd<PositionStaff> onCreate={onCreateOrUpdate} onSearch={onSearch} />
 

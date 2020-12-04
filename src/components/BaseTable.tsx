@@ -212,7 +212,7 @@ export default function BaseTable<T>(props: Props<T>) {
 										selected={selectedCustomerIds.indexOf("") !== -1}
 									>
 										{valueTable.map((label: React.ReactNode) => (
-											<TableCell>{label} </TableCell>
+											<TableCell >{label} </TableCell>
 										))}
 									</TableRow>
 								))}

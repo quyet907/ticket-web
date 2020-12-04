@@ -12,6 +12,7 @@ import { Paging } from "../submodules/base-ticket-team/query/Paging";
 import BaseDialogs from "./dialogs/BaseDialogs";
 import { Route } from "../submodules/base-ticket-team/base-carOwner/Route";
 import PopUpEditStaff from "./dialogs/PopUpEditStaff";
+import PopUpEditRoute from "./dialogs/PopUpEditRoute";
 
 
 // import Page from 'src/components/Page';
@@ -115,12 +116,12 @@ export default function RouteContainer() {
 				isDisplay={showForm}
 			></AddOrEditDialog> */}
 
-			{/* <PopUpEditStaff
+			<PopUpEditRoute
 				obj={selected}
 				onSave={onSave}
 				onCancel={onCloseForm}
 				isDisplay={showForm}
-			></PopUpEditStaff> */}
+			></PopUpEditRoute>
 
 			<SearchAndAdd<PositionStaff> onCreate={onCreateOrUpdate} onSearch={onSearch} />
 

@@ -58,7 +58,7 @@ const items = [
 		title: "Login",
 	},
 	{
-		href: "/register",
+		href: "/ticket",
 		icon: Bookmark,
 		title: "Bán vé",
 	},
