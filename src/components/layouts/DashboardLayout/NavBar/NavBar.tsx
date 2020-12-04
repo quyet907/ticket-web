@@ -12,13 +12,25 @@ import {
 	Typography,
 	makeStyles,
 } from "@material-ui/core";
-import { AlertCircle, BarChart, Bookmark, Lock, Map, MapPin, Settings, Truck, UserPlus, Users } from "react-feather";
+import {
+	AlertCircle,
+	BarChart,
+	Bookmark,
+	Lock,
+	Map,
+	MapPin,
+	Settings,
+	Star,
+	Truck,
+	UserPlus,
+	Users,
+} from "react-feather";
 import NavItem from "./NavItem";
 
 const user = {
-	avatar: "/static/images/avatars/avatar_6.png",
-	jobTitle: "Senior Developer",
-	name: "Katarina Smith",
+	avatar: "https://picsum.photos/200/300",
+	jobTitle: "Admin",
+	name: "Smith",
 };
 
 const items = [
@@ -34,7 +46,7 @@ const items = [
 	},
 	{
 		href: "/position",
-		icon: Users,
+		icon: Star,
 		title: "Chức vụ",
 	},
 	{
@@ -114,12 +126,14 @@ const NavBar = (props: Props) => {
 					src={user.avatar}
 					to="/app/account"
 				/>
-				<Typography color="textPrimary" variant="h5">
-					{user.name}
-				</Typography>
-				<Typography color="textSecondary" variant="body2">
-					{user.jobTitle}
-				</Typography>
+				<Box mt={1} alignItems="center" display="flex" flexDirection="column">
+					<Typography color="textPrimary" variant="h5">
+						{user.name}
+					</Typography>
+					<Typography color="textSecondary" variant="body2">
+						{user.jobTitle}
+					</Typography>
+				</Box>
 			</Box>
 			<Divider />
 			<Box p={2}>

@@ -15,7 +15,9 @@ import { Search as SearchIcon } from "react-feather";
 import _ from "lodash";
 
 const useStyles = makeStyles((theme) => ({
-	root: {},
+	root: {
+		marginLeft: theme.spacing(2.5)
+	},
 	importButton: {
 		marginRight: theme.spacing(1),
 	},
