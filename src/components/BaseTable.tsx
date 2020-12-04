@@ -227,7 +227,7 @@ export default function BaseTable<T>(props: Props<T>) {
 				count={props.data.total || 0}
 				onChangePage={handlePageChange}
 				onChangeRowsPerPage={handleLimitChange}
-				page={props.query.page - 1 || 0}
+				page={(props.query?.page || 0 ) -1 }
 				rowsPerPage={props.query.pageSize || 5}
 				rowsPerPageOptions={[5, 10, 25, { label: "ALL", value: -1 }]}
 				ActionsComponent={TablePaginationActions}

@@ -1,6 +1,6 @@
 import { AxiosInstance } from "axios";
-import { ChairCar } from "../base-ticket-team/base-carOwner/ChairCar";
-import { CreateChairCar } from "../base-ticket-team/controller.ts/CreateChairCar";
+import { ChairCar } from "../submodules/base-ticket-team/base-carOwner/ChairCar";
+import { CreateChairCar } from "../submodules/base-ticket-team/controller.ts/CreateChairCar";
 import { BaseController } from "./BaseController";
 
 export class ChairCarService extends BaseController<ChairCar> {

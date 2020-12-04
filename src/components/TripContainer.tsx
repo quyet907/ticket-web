@@ -57,7 +57,7 @@ export default function TripContainer() {
 	}
 
 	function onDelete(id: string) {
-		positionStaffController.delete(id).then((res) => {
+		tripController.delete(id).then((res) => {
 			setQuery({ ...query });
 		});
 	}
@@ -71,7 +71,7 @@ export default function TripContainer() {
 	}
 
 	useEffect(() => {
-		staffController.list(query).then((res: Paging<Trip>) => {
+		tripController.list(query).then((res: Paging<Trip>) => {
 			setObject(res);
 		});
 	}, [query]);
