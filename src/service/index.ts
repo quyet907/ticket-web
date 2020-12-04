@@ -49,6 +49,7 @@ export const URL = appConfig.applicationUrl;
 
 export const staffController = new StaffService(URL, "staff", appClient);
 export const positionStaffController = new PositionStaffService(URL, "position_staff", appClient);
-export const carController = new CarService(URL, "car", appClient);
 export const tripController = new TripService(URL, "trip", appClient);
 export const routeController = new TripService(URL, "route", appClient);
+export const carController = new CarService(URL, "car", appClient);
+

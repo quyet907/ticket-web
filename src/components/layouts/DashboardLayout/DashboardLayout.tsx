@@ -8,6 +8,7 @@ import Statistic from "../../Statistic";
 import TripContainer from "../../TripContainer";
 import PositionStaffContainer from "../../PositionStaffContainer";
 import RouteContainer from "../../Route";
+import CarContainer from "../../CarContainer";
 
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -58,7 +59,7 @@ function DashboardLayout() {
 							<Route exact path={`/staff`} component={StaffView} />
 							<Route exact path={`/trip`} component={TripContainer} />
 							<Route exact path={`/route`} component={RouteContainer} />
-
+							<Route exact path={`/car`} component={CarContainer}/>
 							<Route path="*">
 								<Redirect to="/dashboard" />
 							</Route>
