@@ -48,7 +48,7 @@ const items = [
 		title: "Lộ trình",
 	},
 	{
-		href: "/setting",
+		href: "/car",
 		icon: Truck,
 		title: "Xe",
 	},
