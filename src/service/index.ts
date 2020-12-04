@@ -1,8 +1,15 @@
 import axios from "axios";
+import { Route } from "react-router";
+import { serviceName } from "../base-ticket-team/query/NameService";
 import appConfig from "../configs/AppConfig";
 import { CarService } from "./CarService";
+import { ChairCarService } from "./ChairCarService";
+import { CustomerService } from "./CustomerService";
 import { PositionStaffService } from "./PositionStaffService";
+import { RouteService } from "./RouteService";
 import { StaffService } from "./StaffService";
+import { TicketService } from "./TicketService";
+import { TripService } from "./TripService";
 export const appClient = axios.create({
 	baseURL: "",
 	timeout: 10000,
@@ -46,6 +53,11 @@ appClient.interceptors.response.use(
 
 export const URL = appConfig.applicationUrl;
 
-export const staffController = new StaffService(URL, "staff", appClient);
-export const positionStaffController = new PositionStaffService(URL, "position_staff", appClient);
-export const carController = new CarService(URL, "car", appClient);
+export const staffController = new StaffService(URL, serviceName.staff, appClient);
+export const positionStaffController = new PositionStaffService(URL,serviceName.position , appClient);
+export const carController = new CarService(URL, serviceName.car, appClient);
+export const chairCarController = new ChairCarService(URL, serviceName.chairCar, appClient);
+export const customerController = new CustomerService(URL, serviceName.car, appClient);
+export const routeController = new RouteService(URL, serviceName.car, appClient);
+export const ticketController = new TicketService(URL, serviceName.car, appClient);
+export const tripController = new TripService(URL, serviceName.car, appClient);

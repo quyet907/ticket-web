@@ -1,5 +1,4 @@
 import { AxiosInstance } from "axios";
-import { Car } from "../base-ticket-team/base-carOwner/Car";
 import { Customer } from "../base-ticket-team/base-carOwner/Customer";
 import { BaseController } from "./BaseController";
 

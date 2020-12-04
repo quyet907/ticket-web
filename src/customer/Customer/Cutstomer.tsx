@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Box, Button, Container, makeStyles, Typography } from "@material-ui/core";
+import { Box, Container, makeStyles } from "@material-ui/core";
 import Results from "./Results";
 import SearchAndAdd from "./SearchAndAdd";
 import AddOrEditDialog from "../../components/dialogs/AddOrEditDialog";
 import { positionStaffController } from "../../service";
 import { object } from "yup";
-import BaseTable, { IBaseTable } from "./BaseTable";
-import { ActionHelper } from "../../comon/ActionHelper";
+import { Paging } from "../../base-ticket-team/query/Paging";
 import { PositionStaff } from "../../base-ticket-team/base-carOwner/PositionStaff";
 import { IList } from "../../base-ticket-team/query/IList";
-import { Paging } from "../../base-ticket-team/query/Paging";
 // import Page from 'src/components/Page';
 
 const useStyles = makeStyles((theme) => ({
@@ -22,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
-export default function PositionStaffContainer() {
+const PositionStaffContainer = () => {
 	const [object, setObject] = useState<Paging<PositionStaff>>({
 		page: 1,
 		pageSize: 5,
@@ -36,7 +34,7 @@ export default function PositionStaffContainer() {
 		search: "",
 		// sort : ["-createAt"]
 	});
-	const [selected, setSelected] = useState<PositionStaff>({} as PositionStaff);
+	const [selected, setSelected] = useState<PositionStaff>({});
 	const [showForm, setShowForm] = useState<boolean>(false);
 
 	function onCreateOrUpdate(position: PositionStaff) {
@@ -62,7 +60,7 @@ export default function PositionStaffContainer() {
 	}
 
 	function onQuery(query: IList) {
-		setQuery(query);
+		setQuery({ ...query });
 	}
 
 	function onSearch(search: string) {
@@ -70,33 +68,10 @@ export default function PositionStaffContainer() {
 	}
 
 	useEffect(() => {
-		positionStaffController.list(query).then((res: Paging<PositionStaff>) => {
+		positionStaffController.list(query).then((res) => {
 			setObject(res);
 		});
 	}, [query]);
-
-	function convertDataToTable(data: PositionStaff[]): IBaseTable<PositionStaff> {
-		const createValue = data.map((item: PositionStaff) => {
-			var value: any[] = [];
-			value.push(item.name || "");
-			value.push(item.description || "");
-			value.push(ActionHelper.getActionDelete(item, onDelete));
-			value.push(ActionHelper.getActionUpdate(item, onCreateOrUpdate));
-			return value;
-		});
-
-		const getTable: IBaseTable<PositionStaff> = {
-			header: [
-				{ id: "name", label: "Name" },
-				{ id: "description", label: "Description" },
-				{ id: "", label: "Delete" },
-				{ id: "", label: "Edit" },
-			],
-			paging: { ...object, rows: [] },
-			value: createValue,
-		};
-		return getTable;
-	}
 
 	return (
 		// <Page className={classes.root} title="Customers">
@@ -109,17 +84,18 @@ export default function PositionStaffContainer() {
 			></AddOrEditDialog>
 
 			<SearchAndAdd<PositionStaff> onCreate={onCreateOrUpdate} onSearch={onSearch} />
-
 			<Box mt={3}>
-				<BaseTable
-					data={object}
+				<Results
+					position={object}
 					query={query}
+					onCreateOrUpdate={onCreateOrUpdate}
+					onDelete={onDelete}
 					onQuery={onQuery}
-					iTable={convertDataToTable}
-				></BaseTable>
+				/>
 			</Box>
 		</Container>
 		// </Page>
 	);
-}
+};
 
+export default PositionStaffContainer;

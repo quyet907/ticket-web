@@ -1,7 +1,6 @@
 import { AxiosInstance } from "axios";
-import { Car } from "../base-ticket-team/base-carOwner/Car";
 import { ChairCar } from "../base-ticket-team/base-carOwner/ChairCar";
-import { Staff } from "../base-ticket-team/base-carOwner/Staff";
+import { CreateChairCar } from "../base-ticket-team/controller.ts/CreateChairCar";
 import { BaseController } from "./BaseController";
 
 export class ChairCarService extends BaseController<ChairCar> {
@@ -20,12 +19,12 @@ export class ChairCarService extends BaseController<ChairCar> {
       .catch((err) => null);
   }
 
-  public async autoCreate(params: any): Promise<any> {
+  public async autoCreate(params: CreateChairCar): Promise<any> {
     return this.client
       .get(`${this.serviceURL}/${this.basePath}/autoCreateChair`, {
         params: params,
       })
-      .then((res) => res)
+      .then((res) => res.data)
       .catch((res) => null);
   }
 }

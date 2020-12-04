@@ -2,6 +2,7 @@ import { AxiosInstance } from "axios";
 import { PositionStaff } from "../base-ticket-team/base-carOwner/PositionStaff";
 import { IList } from "../base-ticket-team/query/IList";
 import { Paging } from "../base-ticket-team/query/Paging";
+
 import { BaseController } from "./BaseController";
 
 export class PositionStaffService extends BaseController<PositionStaff> {
@@ -17,6 +18,13 @@ export class PositionStaffService extends BaseController<PositionStaff> {
   async list(l : IList): Promise<Paging<PositionStaff>>{
     l = {...l,searchFields: ["name", "description"]}
     return super.list(l);
+  }
+
+  async getDrivers(): Promise<PositionStaff[]>{
+    return this.client
+    .get(`${this.serviceURL}/${this.basePath}/autoCreateChair`)
+    .then((res) => res.data)
+    .catch((res) => [] as PositionStaff[]);
   }
 
 }
