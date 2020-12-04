@@ -10,6 +10,7 @@ import PositionStaffContainer from "../../PositionStaffContainer";
 import RouteContainer from "../../Route";
 import CarContainer from "../../CarContainer";
 import TicketContainer from "../../TicketContainer"
+import Customers from "../../Customer";
 
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -56,6 +57,7 @@ function DashboardLayout() {
 					<div className={classes.content}>
 						<Switch>
 							<Route exact path={`/dashboard`} component={Statistic} />
+							<Route exact path={`/customer`} component={Customers} />
 							<Route exact path={`/position`} component={PositionStaffContainer} />
 							<Route exact path={`/staff`} component={StaffView} />
 							<Route exact path={`/trip`} component={TripContainer} />

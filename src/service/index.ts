@@ -1,6 +1,7 @@
 import axios from "axios";
 import appConfig from "../configs/AppConfig";
 import { CarService } from "./CarService";
+import { CustomerService } from "./CustomerService";
 import { PositionStaffService } from "./PositionStaffService";
 import { StaffService } from "./StaffService";
 import { TripService } from "./TripService";
@@ -52,4 +53,6 @@ export const positionStaffController = new PositionStaffService(URL, "position_s
 export const tripController = new TripService(URL, "trip", appClient);
 export const routeController = new TripService(URL, "route", appClient);
 export const carController = new CarService(URL, "car", appClient);
+export const customerController = new CustomerService(URL, "customer", appClient);
+
 

@@ -28,6 +28,11 @@ const items = [
 		title: "Thống kê",
 	},
 	{
+		href: "/customer",
+		icon: Users,
+		title: "Khach hang",
+	},
+	{
 		href: "/position",
 		icon: Users,
 		title: "Chức vụ",

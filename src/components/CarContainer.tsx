@@ -6,7 +6,6 @@ import {
   makeStyles,
   Typography,
 } from "@material-ui/core";
-import Results from "./Results";
 import SearchAndAdd from "./SearchAndAdd";
 import AddOrEditDialog from "./dialogs/AddOrEditDialog";
 import {

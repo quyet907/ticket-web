@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Box, Button, Container, makeStyles, Typography } from "@material-ui/core";
-import Results from "./Results";
 import SearchAndAdd from "./SearchAndAdd";
 import { object } from "yup";
 import BaseTable, { IBaseTable } from "./BaseTable";
@@ -74,7 +73,7 @@ export default function RouteContainer() {
 	}
 
 	useEffect(() => {
-		staffController.list(query).then((res: Paging<Route>) => {
+		routeController.list(query).then((res: Paging<Route>) => {
 			setObject(res);
 		});
 	}, [query]);
@@ -86,8 +85,9 @@ export default function RouteContainer() {
 			value.push(item.localEnd);
 			value.push(item.startAt);
 			value.push(item.sumTimeRun);
-			value.push(ActionHelper.getActionUpdate(item, onCreateOrUpdate));
-			value.push(ActionHelper.getActionDelete(item, onDelete));
+		
+			value.push(ActionHelper.getActionUpdateAndDelete(item, onCreateOrUpdate, onDelete));
+
 			return value;
 		});
 
@@ -97,8 +97,8 @@ export default function RouteContainer() {
 				{ id: "localEnd", label: "Diem den" },
 				{ id: "startAt", label: "Gio khoi hanh" },
 				{ id: "sumTimeRun", label: "Tong thoi gian du kien" },
-				{ id: "", label: "Edit" },
-				{ id: "", label: "Delete" },
+				{ id: "", label: "Hanh dong" },
+		
 			],
 			paging: { ...object, rows: [] },
 			value: createValue,

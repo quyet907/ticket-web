@@ -101,7 +101,7 @@ export function BaseDialogActions(props: DialogActionsProps) {
 							startIcon={<SaveIcon />}
 							type={"submit"}
 							color="primary"
-							onClick={onCancel}
+							onClick={onSave}
 						>
 							Save
 						</Button>

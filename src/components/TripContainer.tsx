@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Box, Button, Container, makeStyles, Typography } from "@material-ui/core";
-import Results from "./Results";
 import SearchAndAdd from "./SearchAndAdd";
 import AddOrEditDialog from "../components/dialogs/AddOrEditDialog";
 import { positionStaffController, staffController, tripController } from "../service";
@@ -82,8 +81,8 @@ export default function TripContainer() {
 			var value: any[] = [];
 			value.push(item.price || "");
 			value.push(item.timeStart);
-			value.push(ActionHelper.getActionUpdate(item, onCreateOrUpdate));
-			value.push(ActionHelper.getActionDelete(item, onDelete));
+			value.push(ActionHelper.getActionUpdateAndDelete(item, onCreateOrUpdate, onDelete));
+
 			return value;
 		});
 
@@ -91,8 +90,7 @@ export default function TripContainer() {
 			header: [
 				{ id: "price", label: "Gia" },
 				{ id: "timeStart", label: "Gio khoi hanh" },
-				{ id: "", label: "Edit" },
-				{ id: "", label: "Delete" },
+				{ id: "", label: "Hanh dong" },
 			],
 			paging: { ...object, rows: [] },
 			value: createValue,

@@ -1,29 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { Box, Button, Container, makeStyles, Typography } from "@material-ui/core";
+import { Box, Container, makeStyles } from "@material-ui/core";
 import SearchAndAdd from "./SearchAndAdd";
-import AddOrEditDialog from "./dialogs/AddOrEditDialog";
-import { positionStaffController } from "../service";
-import { object } from "yup";
+import { customerController } from "../service";
 import BaseTable, { IBaseTable } from "./BaseTable";
 import { ActionHelper } from "../comon/ActionHelper";
 import BaseDialogs from "./dialogs/PopUpEditPositionStaff";
-import { PositionStaff } from "../submodules/base-ticket-team/base-carOwner/PositionStaff";
 import { IList } from "../submodules/base-ticket-team/query/IList";
 import { Paging } from "../submodules/base-ticket-team/query/Paging";
+import { Customer } from "../submodules/base-ticket-team/base-carOwner/Customer";
 
 // import Page from 'src/components/Page';
 
-const useStyles = makeStyles((theme) => ({
-	root: {
-		backgroundColor: theme.palette.background.default,
-		minHeight: "100%",
-		paddingBottom: theme.spacing(3),
-		paddingTop: theme.spacing(3),
-	},
-}));
 
-export default function PositionStaffContainer() {
-	const [object, setObject] = useState<Paging<PositionStaff>>({
+export default function Customers() {
+	const [object, setObject] = useState<Paging<Customer>>({
 		page: 1,
 		pageSize: 5,
 		rows: [],
@@ -36,10 +26,10 @@ export default function PositionStaffContainer() {
 		search: "",
 		// sort : ["-createAt"]
 	});
-	const [selected, setSelected] = useState<PositionStaff>({} as PositionStaff);
+	const [selected, setSelected] = useState<Customer>({} as Customer);
 	const [showForm, setShowForm] = useState<boolean>(false);
 
-	function onCreateOrUpdate(position: PositionStaff) {
+	function onCreateOrUpdate(position: Customer) {
 		setSelected(position);
 		setShowForm(true);
 	}
@@ -48,15 +38,15 @@ export default function PositionStaffContainer() {
 		setShowForm(false);
 	}
 
-	function onSave(position: PositionStaff) {
-		positionStaffController.create(position).then((res) => {
+	function onSave(customer: Customer) {
+		customerController.create(customer).then(() => {
 			setQuery({ ...query });
 			setShowForm(false);
 		});
 	}
 
 	function onDelete(id: string) {
-		positionStaffController.delete(id).then((res) => {
+		customerController.delete(id).then(() => {
 			setQuery({ ...query });
 		});
 	}
@@ -70,26 +60,25 @@ export default function PositionStaffContainer() {
 	}
 
 	useEffect(() => {
-		positionStaffController.list(query).then((res: Paging<PositionStaff>) => {
+		customerController.list(query).then((res: Paging<Customer>) => {
 			setObject(res);
 		});
 	}, [query]);
 
-	function convertDataToTable(data: PositionStaff[]): IBaseTable<PositionStaff> {
-		const createValue = data.map((item: PositionStaff) => {
+	function convertDataToTable(data: Customer[]): IBaseTable<Customer> {
+		const createValue = data.map((item: Customer) => {
 			var value: any[] = [];
 			value.push(item.name || "");
 			value.push(item.description || "");
 			value.push(ActionHelper.getActionUpdateAndDelete(item, onCreateOrUpdate, onDelete));
-
 			return value;
 		});
 
-		const getTable: IBaseTable<PositionStaff> = {
+		const getTable: IBaseTable<Customer> = {
 			header: [
 				{ id: "name", label: "Name" },
 				{ id: "description", label: "Description" },
-				{ id: "", label: "Hang dong" },
+				{ id: "", label: "Hanh dong" },
 			],
 			paging: { ...object, rows: [] },
 			value: createValue,
@@ -115,7 +104,7 @@ export default function PositionStaffContainer() {
 					isDisplay={showForm}
 				></BaseDialogs>
 
-				<SearchAndAdd<PositionStaff> onCreate={onCreateOrUpdate} onSearch={onSearch} />
+				<SearchAndAdd<Customer> onCreate={onCreateOrUpdate} onSearch={onSearch} />
 
 				<Box mt={3}>
 					<BaseTable

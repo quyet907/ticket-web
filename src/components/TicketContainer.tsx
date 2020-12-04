@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Box, Button, Container, makeStyles, Typography } from "@material-ui/core";
-import Results from "./Results";
 import SearchAndAdd from "./SearchAndAdd";
 import AddOrEditDialog from "./dialogs/AddOrEditDialog";
 import { positionStaffController, staffController, tripController } from "../service";
@@ -24,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function TripContainer() {
+export default function TicketContainer() {
 	const [object, setObject] = useState<Paging<Trip>>({
 		page: 1,
 		pageSize: 5,

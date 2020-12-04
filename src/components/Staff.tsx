@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Box, Button, Container, makeStyles, Typography } from "@material-ui/core";
-import Results from "./Results";
 import SearchAndAdd from "./SearchAndAdd";
 import AddOrEditDialog from "../components/dialogs/AddOrEditDialog";
 import { positionStaffController, staffController } from "../service";
@@ -52,15 +51,17 @@ export default function StaffView() {
 		setShowForm(false);
 	}
 
-	function onSave(position: Staff) {
-		positionStaffController.create(position).then((res) => {
+	function onSave(staff: Staff) {
+		staffController.create(staff).then((res) => {
 			setQuery({ ...query });
+			console.log(res);
+			
 			setShowForm(false);
 		});
 	}
 
 	function onDelete(id: string) {
-		positionStaffController.delete(id).then((res) => {
+		staffController.delete(id).then((res) => {
 			setQuery({ ...query });
 		});
 	}

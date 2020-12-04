@@ -179,7 +179,7 @@ export default function BaseTable<T>(props: Props<T>) {
 					<Table>
 						<TableHead>
 							<TableRow>
-								{props.iTable(props.data.rows).header.map((header: HeadCell<T>) => {
+								{props.iTable(props.data.rows || []).header.map((header: HeadCell<T>) => {
 									return (
 										<TableCell
 											key={"dfjjk"}
@@ -204,7 +204,7 @@ export default function BaseTable<T>(props: Props<T>) {
 
 						<TableBody>
 							{props
-								.iTable(props.data.rows)
+								.iTable(props.data.rows || [])
 								.value.map((valueTable: React.ReactNode[]) => (
 									<TableRow
 										hover
@@ -224,7 +224,7 @@ export default function BaseTable<T>(props: Props<T>) {
 			<TablePagination
 				component="div"
 				colSpan={3}
-				count={props.data.total}
+				count={props.data.total || 0}
 				onChangePage={handlePageChange}
 				onChangeRowsPerPage={handleLimitChange}
 				page={props.query.page - 1 || 0}
