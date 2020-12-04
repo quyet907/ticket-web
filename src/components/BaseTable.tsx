@@ -33,8 +33,8 @@ import { useTheme } from "@material-ui/core/styles";
 import TableContainer from "@material-ui/core/TableContainer";
 import Paper from "@material-ui/core/Paper";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
-import { Paging } from "../../base-ticket-team/query/Paging";
-import { IList } from "../../base-ticket-team/query/IList";
+import { IList } from "../submodules/base-ticket-team/query/IList";
+import { Paging } from "../submodules/base-ticket-team/query/Paging";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -212,7 +212,7 @@ export default function BaseTable<T>(props: Props<T>) {
 										selected={selectedCustomerIds.indexOf("") !== -1}
 									>
 										{valueTable.map((label: React.ReactNode) => (
-											<TableCell>{label} </TableCell>
+											<TableCell >{label} </TableCell>
 										))}
 									</TableRow>
 								))}
@@ -243,7 +243,6 @@ export interface HeadCell<T> {
 	label: string;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
 export interface IBaseTable<T> {
 	header: HeadCell<T>[];
 	value: Array<T[]>;
