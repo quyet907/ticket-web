@@ -87,9 +87,9 @@ export default function PositionStaffContainer() {
 
 		const getTable: IBaseTable<PositionStaff> = {
 			header: [
-				{ id: "name", label: "Name" },
-				{ id: "description", label: "Description" },
-				{ id: "", label: "Hang dong" },
+				{ id: "name", label: "Tên chức vụ" },
+				{ id: "description", label: "Mô tả" },
+				{ id: "", label: "Thao tác" },
 			],
 			paging: { ...object, rows: [] },
 			value: createValue,

@@ -30,7 +30,7 @@ import NavItem from "./NavItem";
 const user = {
 	avatar: "https://picsum.photos/200/300",
 	jobTitle: "Admin",
-	name: "Smith",
+	name: "Quyet iu vk",
 };
 
 const items = [
@@ -42,7 +42,7 @@ const items = [
 	{
 		href: "/customer",
 		icon: Users,
-		title: "Khach hang",
+		title: "Khách hàng",
 	},
 	{
 		href: "/position",
@@ -62,7 +62,7 @@ const items = [
 	{
 		href: "/route",
 		icon: Map,
-		title: "Lộ trình",
+		title: "Tuyến đường",
 	},
 	{
 		href: "/car",

@@ -13,7 +13,7 @@ import { IList } from "../submodules/base-ticket-team/query/IList";
 import { Paging } from "../submodules/base-ticket-team/query/Paging";
 import PopUpEditPositionStaff from "../components/dialogs/PopUpEditPositionStaff";
 import PopUpEditStaff from "../components/dialogs/PopUpEditStaff";
-
+import moment from "moment";
 // import Page from 'src/components/Page';
 
 const useStyles = makeStyles((theme) => ({
@@ -84,7 +84,7 @@ export default function StaffView() {
 		const createValue = data.map((item: Staff) => {
 			var value: any[] = [];
 			value.push(item.name || "");
-			value.push(item.birthAt);
+			value.push(moment(item.birthAt).format("l"));
 			value.push(item.address);
 			value.push(item.phoneNumber);
 			value.push(item.identityCard);
@@ -98,13 +98,13 @@ export default function StaffView() {
 
 		const getTable: IBaseTable<Staff> = {
 			header: [
-				{ id: "name", label: "Ho ten" },
-				{ id: "birthAt", label: "Ngay sinh" },
-				{ id: "address", label: "Dia chi" },
-				{ id: "phoneNumber", label: "So dien thoai" },
+				{ id: "name", label: "Họ tên" },
+				{ id: "birthAt", label: "Ngày sinh" },
+				{ id: "address", label: "Địa chỉ" },
+				{ id: "phoneNumber", label: "Số điện thoại" },
 				{ id: "identityCard", label: "CMND" },
-				{ id: "positionId", label: "Chuc vu" },
-				{ id: "", label: "Hanh dong" },
+				{ id: "positionId", label: "Chức vụ" },
+				{ id: "", label: "Thao tác" },
 			],
 			paging: { ...object, rows: [] },
 			value: createValue,

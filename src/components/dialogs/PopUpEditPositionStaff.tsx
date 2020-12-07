@@ -55,7 +55,7 @@ export default function PopUpEditPositionStaff(props: Props) {
 							variant="outlined"
 							label={"Mo ta"}
 							value={data.description}
-							onChange={(e) => setData({ ...data, name: e.target.value })}
+							onChange={(e) => setData({ ...data, description: e.target.value })}
 						/>
 					</Grid>
 				</Grid>
