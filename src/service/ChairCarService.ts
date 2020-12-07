@@ -1,6 +1,7 @@
 import { AxiosInstance } from "axios";
 import { ChairCar } from "../submodules/base-ticket-team/base-carOwner/ChairCar";
 import { CreateChairCar } from "../submodules/base-ticket-team/controller.ts/CreateChairCar";
+import { ListChairCar } from "../submodules/base-ticket-team/controller.ts/ListChairCar";
 import { BaseController } from "./BaseController";
 
 export class ChairCarService extends BaseController<ChairCar> {
@@ -12,10 +13,10 @@ export class ChairCarService extends BaseController<ChairCar> {
     super(serviceURL, basePath, client);
   }
 
-  public async getByCarId(carId: string): Promise<any> {
+  public async getByCarId(carId: string): Promise<ListChairCar> {
     return this.client
       .get(`${this.serviceURL}/${this.basePath}/byCar/${carId}`)
-      .then((res) => res)
+      .then((res) => res.data)
       .catch((err) => null);
   }
 
@@ -27,4 +28,6 @@ export class ChairCarService extends BaseController<ChairCar> {
       .then((res) => res.data)
       .catch((res) => null);
   }
+
+
 }

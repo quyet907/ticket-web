@@ -4,6 +4,8 @@ import { useGlobalStyles } from "../../styles/GlobalStyle";
 import { Staff } from "../../submodules/base-ticket-team/base-carOwner/Staff";
 import { BaseDialogActions, BaseDialogTitle } from "./BaseDialogs";
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import { ErrorValidate, ValidateHelper } from "../../helper/ValidateHelper";
+import { isError } from "@deckchair-technicians/vice";
 
 interface Props {
   titlePopup?: string;
@@ -15,8 +17,17 @@ interface Props {
 
 export default function PopUpEditStaff(props: Props) {
   const globalStyles = useGlobalStyles();
-  const { isDisplay, onCancel, onSave, titlePopup } = props;
+  const { isDisplay, onCancel, titlePopup } = props;
   const [data, setData] = useState<Staff>({} as Staff);
+  const [error, setError] = useState<ErrorValidate<Staff>[]>([])
+
+  function onSave(obj : Staff){
+    // const getErr =  ValidateHelper.validateTechnicians<Staff>(Staff,obj);
+    // if(getErr){
+    //   setError(getErr|| []);
+    // }
+    //  props.onSave(data)
+  }
 
   useEffect(() => {
     setData(props.obj);
@@ -34,6 +45,8 @@ export default function PopUpEditStaff(props: Props) {
               label={"Ho ten"}
               value={data.name}
               onChange={(e) => setData({ ...data, name: e.target.value })}
+              helperText = {ValidateHelper.getMessenger<Staff>("name",error)}
+              error = {ValidateHelper.isError<Staff>("name", error)}
             />
           </Grid>
           <Grid className={globalStyles.mb3} item xs={12}>
@@ -45,6 +58,8 @@ export default function PopUpEditStaff(props: Props) {
               onChange={(e) =>
                 setData({ ...data, phoneNumber: e.target.value })
               }
+              helperText = {ValidateHelper.getMessenger<Staff>("phoneNumber",error)}
+              error = {ValidateHelper.isError<Staff>("phoneNumber", error)}
             />
           </Grid>
           <Grid className={globalStyles.mb3} item xs={12}>
