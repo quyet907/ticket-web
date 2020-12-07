@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Box, Button, Container, makeStyles, Typography } from "@material-ui/core";
-import SearchAndAdd from "./SearchAndAdd";
-import AddOrEditDialog from "./dialogs/AddOrEditDialog";
-import { positionStaffController, staffController, ticketController, tripController } from "../service";
-import { object } from "yup";
-import BaseTable, { IBaseTable } from "./BaseTable";
-import { ActionHelper } from "../comon/ActionHelper";
-import BaseDialogs from "./dialogs/PopUpEditPositionStaff";
-import { PositionStaff } from "../submodules/base-ticket-team/base-carOwner/PositionStaff";
-import { Trip } from "../submodules/base-ticket-team/base-carOwner/Trip";
-import { IList } from "../submodules/base-ticket-team/query/IList";
-import { Paging } from "../submodules/base-ticket-team/query/Paging";
+import {
+	Box,
+	Button,
+	colors,
+	Container,
+	makeStyles,
+	Paper,
+	TextField,
+	Typography,
+} from "@material-ui/core";
+import parse from "autosuggest-highlight/parse";
+import match from "autosuggest-highlight/match";
+import { Autocomplete } from "@material-ui/lab";
 
 // import Page from 'src/components/Page';
 
@@ -24,15 +25,53 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function TicketContainer() {
-	
-
+	const top100Films = [
+		{ title: "The Shawshank Redemption", year: 1994 },
+		{ title: "The Godfather", year: 1972 },
+	];
 	return (
 		// <Page className={classes.root} title="Customers">
 		<Container maxWidth={false}>
-			
+			<Paper>
+				<Autocomplete
+					id="highlights-demo"
+					style={{ width: 300 }}
+					options={top100Films}
+					getOptionLabel={(option) => option.title}
+					renderInput={(params) => (
+						<TextField
+							{...params}
+							label="Diem den"
+							variant="outlined"
+							margin="normal"
+						/>
+					)}
+					renderOption={(option, { inputValue }) => {
+						const matches = match(option.title, inputValue);
+						const parts = parse(option.title, matches);
+						console.log(parts);
+						
 
-
-			
+						return (
+							<div>
+								{parts.map((part: any, index: number) => (
+									<span
+										key={index}
+										style={{
+											fontWeight: part.highlight ? 700 : 400,
+											background: part.highlight
+												? colors.yellow[600]
+												: "none",
+										}}
+									>
+										{part.text}
+									</span>
+								))}
+							</div>
+						);
+					}}
+				/>
+			</Paper>
 		</Container>
 		// </Page>
 	);
