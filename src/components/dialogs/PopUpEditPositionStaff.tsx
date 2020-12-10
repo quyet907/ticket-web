@@ -69,9 +69,7 @@ export default function PopUpEditPositionStaff(props: Props) {
 							variant="outlined"
 							label={"Mô tả"}
 							value={data.description}
-							onChange={(e) => setData({ ...data, name: e.target.value })}
-							helperText = {ValidateHelper.getMessenger<PositionStaff>("description", err)}
-							error = {ValidateHelper.isError<PositionStaff>("description", err)}
+							onChange={(e) => setData({ ...data, description: e.target.value })}
 						/>
 					</Grid>
 				</Grid>

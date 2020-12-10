@@ -12,8 +12,7 @@ import BaseDialogs from "./dialogs/BaseDialogs";
 import { Route } from "../submodules/base-ticket-team/base-carOwner/Route";
 import PopUpEditStaff from "./dialogs/PopUpEditStaff";
 import PopUpEditRoute from "./dialogs/PopUpEditRoute";
-
-
+import moment from "moment";
 // import Page from 'src/components/Page';
 
 const useStyles = makeStyles((theme) => ({
@@ -83,9 +82,8 @@ export default function RouteContainer() {
 			var value: any[] = [];
 			value.push(item.localStart);
 			value.push(item.localEnd);
-			value.push(item.startAt);
+			value.push(moment(item.startAt).format("l"));
 			value.push(item.sumTimeRun);
-		
 			value.push(ActionHelper.getActionUpdateAndDelete(item, onCreateOrUpdate, onDelete));
 
 			return value;
