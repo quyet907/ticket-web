@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Box, Button, Container, makeStyles, Typography } from "@material-ui/core";
-import SearchAndAdd from "./SearchAndAdd";
+import SearchAndAdd from "../../components/genaral-component/SearchAndAdd";
 import { object } from "yup";
-import BaseTable, { IBaseTable } from "./BaseTable";
-import { ActionHelper } from "../comon/ActionHelper";
-import { routeController, positionStaffController, staffController } from "../service";
-import { PositionStaff } from "../submodules/base-ticket-team/base-carOwner/PositionStaff";
-import { IList } from "../submodules/base-ticket-team/query/IList";
-import { Paging } from "../submodules/base-ticket-team/query/Paging";
-import BaseDialogs from "./dialogs/BaseDialogs";
-import { Route } from "../submodules/base-ticket-team/base-carOwner/Route";
-import PopUpEditStaff from "./dialogs/PopUpEditStaff";
-import PopUpEditRoute from "./dialogs/PopUpEditRoute";
+import { ActionHelper } from "../../comon/ActionHelper";
+import { routeController, positionStaffController, staffController } from "../../service";
+import { PositionStaff } from "../../submodules/base-ticket-team/base-carOwner/PositionStaff";
+import { IList } from "../../submodules/base-ticket-team/query/IList";
+import { Paging } from "../../submodules/base-ticket-team/query/Paging";
+import BaseDialogs from "../../components/dialogs/BaseDialogs";
+import { Route } from "../../submodules/base-ticket-team/base-carOwner/Route";
+import PopUpEditStaff from "../../components/dialogs/PopUpEditStaff";
+import PopUpEditRoute from "../../components/dialogs/PopUpEditRoute";
 import moment from "moment";
+import BaseTable, { IBaseTable } from "../../components/genaral-component/BaseTable";
+import PopUpConfirm from "../../components/dialogs/DialogConfirm";
 // import Page from 'src/components/Page';
 
 const useStyles = makeStyles((theme) => ({
@@ -40,6 +41,7 @@ export default function RouteContainer() {
 	});
 	const [selected, setSelected] = useState<Route>({} as Route);
 	const [showForm, setShowForm] = useState<boolean>(false);
+	const [showConfirm, setShowConfirm] = useState<boolean>(false);
 
 	function onCreateOrUpdate(staff: Route) {
 		setSelected(staff);
@@ -57,14 +59,24 @@ export default function RouteContainer() {
 		});
 	}
 
-	function onDelete(id: string) {
-		positionStaffController.delete(id).then((res) => {
+	function onDelete() {
+		positionStaffController.delete(selected._id ||"").then((res) => {
 			setQuery({ ...query });
 		});
+		setShowConfirm(false)
 	}
 
 	function onQuery(query: IList) {
 		setQuery(query);
+	}
+
+	function onConfirm(item : Route){
+		setSelected(item);
+		setShowConfirm(true)
+	}
+
+	function onCancelConfirm(){
+		setShowConfirm(false)
 	}
 
 	function onSearch(search: string) {
@@ -84,7 +96,7 @@ export default function RouteContainer() {
 			value.push(item.localEnd);
 			value.push(moment(item.startAt).format("l"));
 			value.push(item.sumTimeRun);
-			value.push(ActionHelper.getActionUpdateAndDelete(item, onCreateOrUpdate, onDelete));
+			value.push(ActionHelper.getActionUpdateAndDelete(item, onCreateOrUpdate, onConfirm));
 
 			return value;
 		});
@@ -107,12 +119,11 @@ export default function RouteContainer() {
 	return (
 		// <Page className={classes.root} title="Customers">
 		<Container maxWidth={false}>
-			{/* <AddOrEditDialog
-				data={selected}
-				onSave={onSave}
-				onClose={onCloseForm}
-				isDisplay={showForm}
-			></AddOrEditDialog> */}
+			<PopUpConfirm
+			isDisplay = {showConfirm}
+			onCancel ={onCancelConfirm}
+			onDelete = {onDelete}
+			/>
 
 			<PopUpEditRoute
 				obj={selected}

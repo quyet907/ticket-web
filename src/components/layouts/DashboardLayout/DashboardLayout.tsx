@@ -3,14 +3,16 @@ import { makeStyles, Theme } from "@material-ui/core";
 import NavBar from "./NavBar/NavBar";
 import TopBar from "./TopBar";
 import { useRouteMatch, Route, Redirect, Switch } from "react-router";
-import StaffView from "../../Staff";
-import Statistic from "../../Statistic";
-import TripContainer from "../../TripContainer";
-import PositionStaffContainer from "../../PositionStaffContainer";
-import RouteContainer from "../../Route";
-import CarContainer from "../../CarContainer";
-import TicketContainer from "../../TicketContainer"
-import Customers from "../../Customer";
+import Statistic from "../../../container/statistic/Statistic";
+import PositionStaffContainer from "../../../container/manager/PositionStaffContainer";
+import RouteContainer from "../../../container/manager/Route";
+import Customers from "../../../container/manager/Customer";
+import StaffView from "../../../container/manager/Staff";
+import TicketContainer from "../../../container/manager/TicketContainer";
+import TripContainer from "../../../container/manager/TripContainer";
+import CarContainer from "../../../container/manager/CarContainer";
+import DiagramChair from "../../chair/DiagramChair";
+import DialogChair from "../../chair/DialogChair";
 
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -64,6 +66,7 @@ function DashboardLayout() {
 							<Route exact path={`/route`} component={RouteContainer} />
 							<Route exact path={`/ticket`} component={TicketContainer} />
 							<Route exact path={`/car`} component={CarContainer}/>
+							<Route exact path={`/chair`} component={DialogChair}/>
 							<Route path="*">
 								<Redirect to="/dashboard" />
 							</Route>

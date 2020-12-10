@@ -1,40 +1,14 @@
+import { Box, Card, IconButton, makeStyles, Table, TableBody, TableCell, TableHead, TablePagination, TableRow, TableSortLabel, useTheme } from "@material-ui/core";
 import React, { useState } from "react";
-import clsx from "clsx";
-import PropTypes from "prop-types";
-import moment from "moment";
-import PerfectScrollbar from "react-perfect-scrollbar";
-import {
-	Avatar,
-	Box,
-	Card,
-	Checkbox,
-	Table,
-	TableBody,
-	TableCell,
-	TableHead,
-	TablePagination,
-	TableRow,
-	Typography,
-	makeStyles,
-	IconButton,
-	Button,
-	Chip,
-	Grid,
-} from "@material-ui/core";
-// import getInitials from "src/utils/getInitials";
-import EditIcon from "@material-ui/icons/Edit";
-import HighlightOffIcon from "@material-ui/icons/HighlightOff";
-import DeleteIcon from "@material-ui/icons/Delete";
+import LastPageIcon from "@material-ui/icons/LastPage";
 import FirstPageIcon from "@material-ui/icons/FirstPage";
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
-import LastPageIcon from "@material-ui/icons/LastPage";
-import { useTheme } from "@material-ui/core/styles";
-import TableContainer from "@material-ui/core/TableContainer";
-import Paper from "@material-ui/core/Paper";
-import TableSortLabel from "@material-ui/core/TableSortLabel";
-import { IList } from "../submodules/base-ticket-team/query/IList";
-import { Paging } from "../submodules/base-ticket-team/query/Paging";
+import { IList } from "../../submodules/base-ticket-team/query/IList";
+import { Paging } from "../../submodules/base-ticket-team/query/Paging";
+import PerfectScrollbar from "react-perfect-scrollbar";
+import clsx from "clsx";
+
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -81,7 +55,7 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
 				disabled={page === 0}
 				aria-label="first page"
 			>
-				{theme.direction === "rtl" ? <LastPageIcon /> : <FirstPageIcon />}
+				{theme.direction === "rtl" ? <LastPageIcon/> : <FirstPageIcon/>}
 			</IconButton>
 			<IconButton
 				onClick={handleBackButtonClick}

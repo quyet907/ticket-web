@@ -1,22 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { Box, Button, Container, makeStyles, Typography } from "@material-ui/core";
-import SearchAndAdd from "./SearchAndAdd";
-import AddOrEditDialog from "./dialogs/AddOrEditDialog";
-import {
-	carController,
-	positionStaffController,
-	staffController,
-	tripController,
-} from "../service";
-import { object } from "yup";
-import BaseTable, { IBaseTable } from "./BaseTable";
-import { ActionHelper } from "../comon/ActionHelper";
-import BaseDialogs from "./dialogs/PopUpEditPositionStaff";
-import { IList } from "../submodules/base-ticket-team/query/IList";
-import { Paging } from "../submodules/base-ticket-team/query/Paging";
-import { Car } from "../submodules/base-ticket-team/base-carOwner/Car";
+
 
 // import Page from 'src/components/Page';
+
+import { Box, Container, makeStyles } from "@material-ui/core";
+import { functions } from "lodash";
+import React, { useState, useEffect } from "react";
+import { ActionHelper } from "../../comon/ActionHelper";
+import DialogChair from "../../components/chair/DialogChair";
+import BaseDialogs from "../../components/dialogs/BaseDialogs";
+import PopUpConfirm from "../../components/dialogs/DialogConfirm";
+import BaseTable, { IBaseTable } from "../../components/genaral-component/BaseTable";
+import SearchAndAdd from "../../components/genaral-component/SearchAndAdd";
+import { carController } from "../../service";
+import { Car } from "../../submodules/base-ticket-team/base-carOwner/Car";
+import { IList } from "../../submodules/base-ticket-team/query/IList";
+import { Paging } from "../../submodules/base-ticket-team/query/Paging";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -39,10 +37,11 @@ export default function CarContainer() {
 		page: 1,
 		pageSize: 5,
 		search: "",
-		// sort : ["-createAt"]
 	});
 	const [selected, setSelected] = useState<Car>({} as Car);
 	const [showForm, setShowForm] = useState<boolean>(false);
+	const [showConfirm, setShowConfirm] = useState<boolean>(false);
+	const [showDialogChair, setShowDialogChair] = useState<boolean>(false);
 
 	function onCreateOrUpdate(car: Car) {
 		setSelected(car);
@@ -60,10 +59,11 @@ export default function CarContainer() {
 		});
 	}
 
-	function onDelete(id: string) {
-		carController.delete(id).then((res) => {
+	function onDelete() {
+		carController.delete(selected._id|| "").then((res) => {
 			setQuery({ ...query });
 		});
+		setShowConfirm(false)
 	}
 
 	function onQuery(query: IList) {
@@ -72,6 +72,25 @@ export default function CarContainer() {
 
 	function onSearch(search: string) {
 		setQuery({ ...query, search: search });
+	}
+
+	function onConfirm(item : Car){
+		setSelected(item)
+		setShowConfirm(true)
+	}
+
+	function onCancelConfirm(){
+		setShowConfirm(false)
+	}
+
+	function onCloseDialogDiagramChar(){
+		setShowDialogChair(false)
+		setQuery({...query})
+	}
+
+	function onDialogDiagramChar(item : Car){
+		setShowDialogChair(true)
+		setSelected(item);
 	}
 
 	useEffect(() => {
@@ -85,8 +104,7 @@ export default function CarContainer() {
 			var value: any[] = [];
 			value.push(item.name || "");
 			value.push(item.status);
-			value.push(ActionHelper.getActionUpdate(item, onCreateOrUpdate));
-			value.push(ActionHelper.getActionDelete(item, onDelete));
+			value.push(ActionHelper.getAllActionForCar(item, onCreateOrUpdate, onConfirm, onDialogDiagramChar));
 			return value;
 		});
 
@@ -94,8 +112,7 @@ export default function CarContainer() {
 			header: [
 				{ id: "name", label: "Ten xe" },
 				{ id: "status", label: "Trang thai" },
-				{ id: "", label: "Edit" },
-				{ id: "", label: "Delete" },
+				{ id: "", label: "Hành động" },
 			],
 			paging: { ...object, rows: [] },
 			value: createValue,
@@ -106,7 +123,21 @@ export default function CarContainer() {
 	return (
 		// <Page className={classes.root} title="Customers">
 		<Container maxWidth={false}>
+			
+			<PopUpConfirm
+			isDisplay = {showConfirm}
+			onCancel ={onCancelConfirm}
+			onDelete = {onDelete}
+			/>
+
+			<DialogChair
+			Car = {selected}
+			onClose = {onCloseDialogDiagramChar}
+			open = {showDialogChair}
+			/>
+
 			<BaseDialogs
+				dialogContent = {""}
 				obj={selected}
 				onSave={onSave}
 				onCancel={onCloseForm}

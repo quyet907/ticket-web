@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { Box, Button, Container, makeStyles, Typography } from "@material-ui/core";
-import SearchAndAdd from "./SearchAndAdd";
-import AddOrEditDialog from "../components/dialogs/AddOrEditDialog";
-import { positionStaffController, staffController, tripController } from "../service";
-import { object } from "yup";
-import BaseTable, { IBaseTable } from "./BaseTable";
-import { ActionHelper } from "../comon/ActionHelper";
-import BaseDialogs from "../components/dialogs/PopUpEditPositionStaff";
-import { PositionStaff } from "../submodules/base-ticket-team/base-carOwner/PositionStaff";
-import { Trip } from "../submodules/base-ticket-team/base-carOwner/Trip";
-import { IList } from "../submodules/base-ticket-team/query/IList";
-import { Paging } from "../submodules/base-ticket-team/query/Paging";
+
+import { makeStyles, Container, Box } from "@material-ui/core";
+import React, { useState, useEffect } from "react";
+import { ActionHelper } from "../../comon/ActionHelper";
+import BaseDialogs from "../../components/dialogs/BaseDialogs";
+import PopUpConfirm from "../../components/dialogs/DialogConfirm";
+import BaseTable, { IBaseTable } from "../../components/genaral-component/BaseTable";
+import SearchAndAdd from "../../components/genaral-component/SearchAndAdd";
+import { tripController } from "../../service";
+import { PositionStaff } from "../../submodules/base-ticket-team/base-carOwner/PositionStaff";
+import { Trip } from "../../submodules/base-ticket-team/base-carOwner/Trip";
+import { IList } from "../../submodules/base-ticket-team/query/IList";
+import { Paging } from "../../submodules/base-ticket-team/query/Paging";
 
 // import Page from 'src/components/Page';
 
@@ -39,6 +39,7 @@ export default function TripContainer() {
 	});
 	const [selected, setSelected] = useState<Trip>({} as Trip);
 	const [showForm, setShowForm] = useState<boolean>(false);
+	const [showConfirm, setShowConfirm] = useState<boolean>(false);
 
 	function onCreateOrUpdate(staff: Trip) {
 		setSelected(staff);
@@ -56,18 +57,28 @@ export default function TripContainer() {
 		});
 	}
 
-	function onDelete(id: string) {
-		tripController.delete(id).then((res) => {
+	function onDelete() {
+		tripController.delete(selected._id || "").then((res) => {
 			setQuery({ ...query });
 		});
+		setShowConfirm(false)
 	}
 
 	function onQuery(query: IList) {
 		setQuery(query);
 	}
 
+	function onConfirm(item : Trip){
+		setSelected(item)
+	}
+
+	function onCancelConfirm(){
+		setShowConfirm(false)
+	}
+
 	function onSearch(search: string) {
 		setQuery({ ...query, search: search });
+		setShowConfirm(true)
 	}
 
 	useEffect(() => {
@@ -81,7 +92,7 @@ export default function TripContainer() {
 			var value: any[] = [];
 			value.push(item.price || "");
 			value.push(item.timeStart);
-			value.push(ActionHelper.getActionUpdateAndDelete(item, onCreateOrUpdate, onDelete));
+			value.push(ActionHelper.getActionUpdateAndDelete(item, onCreateOrUpdate, onConfirm));
 
 			return value;
 		});
@@ -101,14 +112,14 @@ export default function TripContainer() {
 	return (
 		// <Page className={classes.root} title="Customers">
 		<Container maxWidth={false}>
-			{/* <AddOrEditDialog
-				data={selected}
-				onSave={onSave}
-				onClose={onCloseForm}
-				isDisplay={showForm}
-			></AddOrEditDialog> */}
+			<PopUpConfirm
+			isDisplay = {showConfirm}
+			onCancel ={onCancelConfirm}
+			onDelete = {onDelete}
+			/>
 
 			<BaseDialogs
+				dialogContent = {""}
 				obj={selected}
 				onSave={onSave}
 				onCancel={onCloseForm}

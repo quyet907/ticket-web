@@ -1,36 +1,21 @@
-import React, { useEffect, useState } from "react";
 import {
   Box,
-  Button,
+
   Container,
-  makeStyles,
-  Typography,
+  makeStyles
 } from "@material-ui/core";
-import AddOrEditDialog from "../components/dialogs/AddOrEditDialog";
-import { positionStaffController, staffController } from "../service";
-import { ActionHelper } from "../comon/ActionHelper";
-import BaseDialogs from "../components/dialogs/PopUpEditPositionStaff";
-import { PositionStaff } from "../submodules/base-ticket-team/base-carOwner/PositionStaff";
-import { Staff } from "../submodules/base-ticket-team/base-carOwner/Staff";
-import { IList } from "../submodules/base-ticket-team/query/IList";
-import { Paging } from "../submodules/base-ticket-team/query/Paging";
-import PopUpEditPositionStaff from "../components/dialogs/PopUpEditPositionStaff";
-import PopUpEditStaff from "../components/dialogs/PopUpEditStaff";
-import { ValidateHelper } from "../helper/ValidateHelper";
+import React, { useEffect, useState } from "react";
+import { ActionHelper } from "../../comon/ActionHelper";
+import PopUpConfirm from "../../components/dialogs/DialogConfirm";
+import PopUpEditStaff from "../../components/dialogs/PopUpEditStaff";
+import BaseTable, { IBaseTable } from "../../components/genaral-component/BaseTable";
+import SearchAndAdd from "../../components/genaral-component/SearchAndAdd";
+import { staffController } from "../../service";
+import { PositionStaff } from "../../submodules/base-ticket-team/base-carOwner/PositionStaff";
+import { Staff } from "../../submodules/base-ticket-team/base-carOwner/Staff";
+import { IList } from "../../submodules/base-ticket-team/query/IList";
+import { Paging } from "../../submodules/base-ticket-team/query/Paging";
 
-import moment from "moment";
-import SearchAndAdd from "./genaral-component/SearchAndAdd";
-import BaseTable, { IBaseTable } from "./genaral-component/BaseTable";
-// import Page from 'src/components/Page';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    backgroundColor: theme.palette.background.default,
-    minHeight: "100%",
-    paddingBottom: theme.spacing(3),
-    paddingTop: theme.spacing(3),
-  },
-}));
 
 export default function StaffView() {
   const [object, setObject] = useState<Paging<Staff>>({
@@ -48,6 +33,7 @@ export default function StaffView() {
   });
   const [selected, setSelected] = useState<Staff>({} as Staff);
   const [showForm, setShowForm] = useState<boolean>(false);
+  const [showConfirm, setShowConfirm] = useState<boolean>(false);
 
   function onCreateOrUpdate(staff: Staff) {
     setSelected(staff);
@@ -70,15 +56,24 @@ export default function StaffView() {
     });
   }
 
-  function onDelete(item: Staff) {
-    staffController.delete(item._id || "").then((res) => {
+  function onDelete() {
+    staffController.delete(selected._id || "").then((res) => {
       setQuery({ ...query });
     });
+    setShowConfirm(false)
   }
 
   function onQuery(query: IList) {
     setQuery(query);
   }
+
+  function onConfirm(item : Staff){
+    setSelected(item);
+    setShowConfirm(true)
+  }
+  function onCancelConfirm(){
+		setShowConfirm(false)
+	}
 
   function onSearch(search: string) {
     setQuery({ ...query, search: search });
@@ -102,12 +97,12 @@ export default function StaffView() {
       // value.push(ActionHelper.getActionUpdate(item, onCreateOrUpdate));
       // value.push(ActionHelper.getActionDelete(item, onDelete));
       value.push(
-        ActionHelper.getActionUpdateAndDelete(item, onCreateOrUpdate, onDelete)
+        ActionHelper.getActionUpdateAndDelete(item, onCreateOrUpdate, onConfirm)
       );
 
       return value;
     });
-// Table show
+
     const getTable: IBaseTable<Staff> = {
       header: [
         { id: "name", label: "Ho ten" },
@@ -127,12 +122,11 @@ export default function StaffView() {
   return (
     // <Page className={classes.root} title="Customers">
     <Container maxWidth={false}>
-      {/* <AddOrEditDialog
-				data={selected}
-				onSave={onSave}
-				onClose={onCloseForm}
-				isDisplay={showForm}
-			></AddOrEditDialog> */}
+      <PopUpConfirm
+			isDisplay = {showConfirm}
+			onCancel ={onCancelConfirm}
+			onDelete = {onDelete}
+			/>
 
       <PopUpEditStaff
         obj={selected}

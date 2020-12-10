@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Box, Container, makeStyles } from "@material-ui/core";
-import SearchAndAdd from "./SearchAndAdd";
-import { customerController } from "../service";
-import BaseTable, { IBaseTable } from "./BaseTable";
-import { ActionHelper } from "../comon/ActionHelper";
-import BaseDialogs from "./dialogs/PopUpEditPositionStaff";
-import { IList } from "../submodules/base-ticket-team/query/IList";
-import { Paging } from "../submodules/base-ticket-team/query/Paging";
-import { Customer } from "../submodules/base-ticket-team/base-carOwner/Customer";
+import SearchAndAdd from "../../components/genaral-component/SearchAndAdd";
+import { customerController } from "../../service";
+import { ActionHelper } from "../../comon/ActionHelper";
+import BaseDialogs from "../../components/dialogs/PopUpEditPositionStaff";
+import { IList } from "../../submodules/base-ticket-team/query/IList";
+import { Paging } from "../../submodules/base-ticket-team/query/Paging";
+import { Customer } from "../../submodules/base-ticket-team/base-carOwner/Customer";
 import moment from "moment";
+import BaseTable, { IBaseTable } from "../../components/genaral-component/BaseTable";
+import PopUpConfirm from "../../components/dialogs/DialogConfirm";
 
 // import Page from 'src/components/Page';
 
@@ -28,6 +29,7 @@ export default function Customers() {
   });
   const [selected, setSelected] = useState<Customer>({} as Customer);
   const [showForm, setShowForm] = useState<boolean>(false);
+  const [showConfirm, setShowConfirm] = useState<boolean>(false);
 
   function onCreateOrUpdate(position: Customer) {
     setSelected(position);
@@ -45,10 +47,11 @@ export default function Customers() {
     });
   }
 
-  function onDelete(id: string) {
-    customerController.delete(id).then(() => {
+  function onDelete() {
+    customerController.delete(selected._id|| "").then(() => {
       setQuery({ ...query });
     });
+    setShowConfirm(false)
   }
 
   function onQuery(query: IList) {
@@ -58,6 +61,15 @@ export default function Customers() {
   function onSearch(search: string) {
     setQuery({ ...query, search: search });
   }
+
+  function onConfirm(item : Customer){
+    setSelected(item);
+    setShowConfirm(true)
+	}
+
+  function onCancelConfirm(){
+		setShowConfirm(false)
+	}
 
   useEffect(() => {
     customerController.list(query).then((res: Paging<Customer>) => {
@@ -72,7 +84,7 @@ export default function Customers() {
       value.push(moment(item.birthAt).format("l"));
       value.push(item.description || "");
       value.push(
-        ActionHelper.getActionUpdateAndDelete(item, onCreateOrUpdate, onDelete)
+        ActionHelper.getActionUpdateAndDelete(item, onCreateOrUpdate, onConfirm)
       );
       return value;
     });
@@ -93,12 +105,11 @@ export default function Customers() {
   return (
     // <Page className={classes.root} title="Customers">
     <Container maxWidth={false}>
-      {/* <AddOrEditDialog
-				data={selected}
-				onSave={onSave}
-				onClose={onCloseForm}
-				isDisplay={showForm}
-			></AddOrEditDialog> */}
+      <PopUpConfirm
+			isDisplay = {showConfirm}
+			onCancel ={onCancelConfirm}
+			onDelete = {onDelete}
+			/>
 
       <BaseDialogs
         obj={selected}
