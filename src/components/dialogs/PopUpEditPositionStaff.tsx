@@ -17,6 +17,7 @@ import { useFormik } from "formik";
 import { useGlobalStyles } from "../../styles/GlobalStyle";
 import { PositionStaff } from "../../submodules/base-ticket-team/base-carOwner/PositionStaff";
 import { BaseDialogActions, BaseDialogTitle } from "./BaseDialogs";
+import { ErrorValidate, ValidateHelper } from "../../helper/ValidateHelper";
 
 interface Props {
 	titlePopup?: string;
@@ -28,39 +29,54 @@ interface Props {
 
 export default function PopUpEditPositionStaff(props: Props) {
 	const globalStyles = useGlobalStyles();
-	const { isDisplay, onCancel, onSave, titlePopup, obj } = props;
 	const [data, setData] = useState<PositionStaff>({} as PositionStaff);
-
+	const [err, setErr] = useState<ErrorValidate<PositionStaff>[]>([]);
 	useEffect(() => {
+		setErr([])
 		setData(props.obj);
 	}, [props.obj]);
 
+	function onSave(item: PositionStaff){
+		var getErr = ValidateHelper.validateTechnicians<PositionStaff>(PositionStaff, item);
+		console.log(getErr)
+		if(getErr && getErr.length > 0){
+			setErr(getErr);
+		}
+		else{
+			props.onSave(item)
+		}
+	}
+
 	return (
-		<Dialog open={isDisplay} fullWidth maxWidth="xs">
-			<BaseDialogTitle title={titlePopup || "Them"} onCancel={onCancel} />
+		<Dialog open={props.isDisplay} fullWidth maxWidth="xs">
+			<BaseDialogTitle title={props.titlePopup || "Them"} onCancel={props.onCancel} />
 			<DialogContent>
 				<Grid container xs={12} direction="column" className={globalStyles.mt1}>
 					<Grid className={globalStyles.mb3} item xs={12}>
 						<TextField
 							fullWidth
 							variant="outlined"
-							label={"Chuc vu"}
+							label={"Chức vụ"}
 							value={data.name}
 							onChange={(e) => setData({ ...data, name: e.target.value })}
+							helperText = {ValidateHelper.getMessenger<PositionStaff>("name", err)}
+							error = {ValidateHelper.isError<PositionStaff>("name", err)}
 						/>
 					</Grid>
 					<Grid className={globalStyles.mb3} item xs={12}>
 						<TextField
 							fullWidth
 							variant="outlined"
-							label={"Mo ta"}
+							label={"Mô tả"}
 							value={data.description}
 							onChange={(e) => setData({ ...data, name: e.target.value })}
+							helperText = {ValidateHelper.getMessenger<PositionStaff>("description", err)}
+							error = {ValidateHelper.isError<PositionStaff>("description", err)}
 						/>
 					</Grid>
 				</Grid>
 			</DialogContent>
-			<BaseDialogActions onCancel={onCancel} onSave={() => onSave(data)} />
+			<BaseDialogActions onCancel={props.onCancel} onSave={() => onSave(data)} />
 		</Dialog>
 	);
 }

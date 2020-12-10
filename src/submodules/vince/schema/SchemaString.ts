@@ -1,5 +1,8 @@
 import {
+	BaseSchema,
 	failure,
+	Schema,
+	schema,
 	StringSchema,
 	ValidationResult,
 } from "@deckchair-technicians/vice";
@@ -58,4 +61,21 @@ export class UpperCase extends StringSchema {
 			return failure("expected a valid string");
 		}
 	}
+}
+
+export class AllowEmpty extends BaseSchema<any ,null | undefined> {
+	conform(value: any): ValidationResult<null | undefined> {
+		if (typeof value === "string") {
+			value = value.trim();
+			if(value ==="") return
+		} 
+		if(value === undefined || value===null){
+			return
+		}
+		else return failure("is not empty");
+	}
+	toJSON(toJson?: (s: Schema<any, any>) => any) {
+		throw new Error("Method not implemented.");
+	}
+
 }

@@ -60,7 +60,7 @@ function SearchAndAdd<T>(props: Props<T>) {
 										</InputAdornment>
 									),
 								}}
-								placeholder="Search customer"
+								placeholder="Search"
 								variant="outlined"
 								onChange={(e) => {
 									onSearch(e.target.value);

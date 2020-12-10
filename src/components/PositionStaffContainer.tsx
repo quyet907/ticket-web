@@ -81,15 +81,14 @@ export default function PositionStaffContainer() {
 			value.push(item.name || "");
 			value.push(item.description || "");
 			value.push(ActionHelper.getActionUpdateAndDelete(item, onCreateOrUpdate, onDelete));
-
 			return value;
 		});
 
 		const getTable: IBaseTable<PositionStaff> = {
 			header: [
-				{ id: "name", label: "Name" },
-				{ id: "description", label: "Description" },
-				{ id: "", label: "Hang dong" },
+				{ id: "name", label: "Tên chức vụ" },
+				{ id: "description", label: "Mô tả" },
+				{ id: "", label: "Hành động" },
 			],
 			paging: { ...object, rows: [] },
 			value: createValue,
@@ -100,15 +99,7 @@ export default function PositionStaffContainer() {
 	return (
 		// <Page className={classes.root} title="Customers">
 			<Container maxWidth={false}>
-				{/* <AddOrEditDialog
-				data={selected}
-				onSave={onSave}
-				onClose={onCloseForm}
-				isDisplay={showForm}
-			></AddOrEditDialog> */}
-
 				<BaseDialogs
-		
 					obj={selected}
 					onSave={onSave}
 					onCancel={onCloseForm}
