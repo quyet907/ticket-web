@@ -107,7 +107,7 @@ export default function StaffView() {
 
       return value;
     });
-
+// Table show
     const getTable: IBaseTable<Staff> = {
       header: [
         { id: "name", label: "Ho ten" },
