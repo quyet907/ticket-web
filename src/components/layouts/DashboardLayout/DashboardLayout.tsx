@@ -13,11 +13,13 @@ import TripContainer from "../../../container/manager/TripContainer";
 import CarContainer from "../../../container/manager/CarContainer";
 import DiagramChair from "../../chair/DiagramChair";
 import DialogChair from "../../chair/DialogChair";
+import HomeSaleTicket from "../../../container/sale/HomeSaleTicket";
 
 
 const useStyles = makeStyles((theme: Theme) => ({
 	root: {
 		backgroundColor: theme.palette.background.default,
+		// backgroundColor : "black",
 		display: "flex",
 		height: "100%",
 		overflow: "hidden",
@@ -51,8 +53,8 @@ function DashboardLayout() {
 	const { path } = useRouteMatch();
 
 	return (
-		<div className={classes.root}>
-			<TopBar onMobileNavOpen={() => setMobileNavOpen(true)} />
+		<div className={classes.root} >
+			{/* <TopBar onMobileNavOpen={() => setMobileNavOpen(true)} /> */}
 			<NavBar onMobileClose={() => setMobileNavOpen(false)} openMobile={isMobileNavOpen} />
 			<div className={classes.wrapper}>
 				<div className={classes.contentContainer}>
@@ -66,7 +68,7 @@ function DashboardLayout() {
 							<Route exact path={`/route`} component={RouteContainer} />
 							<Route exact path={`/ticket`} component={TicketContainer} />
 							<Route exact path={`/car`} component={CarContainer}/>
-							<Route exact path={`/chair`} component={DialogChair}/>
+							<Route exact path={`/sale`} component={HomeSaleTicket}/>
 							<Route path="*">
 								<Redirect to="/dashboard" />
 							</Route>

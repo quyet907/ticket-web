@@ -1,31 +1,23 @@
+import { Box, Container, Grid, makeStyles, Typography } from "@material-ui/core";
+import moment from "moment";
 import React, { useEffect, useState } from "react";
-import { Box, Button, Container, makeStyles, Typography } from "@material-ui/core";
-import SearchAndAdd from "../../components/genaral-component/SearchAndAdd";
-import { object } from "yup";
 import { ActionHelper } from "../../comon/ActionHelper";
-import { routeController, positionStaffController, staffController } from "../../service";
+import PopUpConfirm from "../../components/dialogs/DialogConfirm";
+import PopUpEditRoute from "../../components/dialogs/PopUpEditRoute";
+import BaseTable, { IBaseTable } from "../../components/genaral-component/BaseTable";
+import SearchAndAdd from "../../components/genaral-component/SearchAndAdd";
+import { positionStaffController, routeController } from "../../service";
 import { PositionStaff } from "../../submodules/base-ticket-team/base-carOwner/PositionStaff";
+import { Route } from "../../submodules/base-ticket-team/base-carOwner/Route";
 import { IList } from "../../submodules/base-ticket-team/query/IList";
 import { Paging } from "../../submodules/base-ticket-team/query/Paging";
-import BaseDialogs from "../../components/dialogs/BaseDialogs";
-import { Route } from "../../submodules/base-ticket-team/base-carOwner/Route";
-import PopUpEditStaff from "../../components/dialogs/PopUpEditStaff";
-import PopUpEditRoute from "../../components/dialogs/PopUpEditRoute";
-import moment from "moment";
-import BaseTable, { IBaseTable } from "../../components/genaral-component/BaseTable";
-import PopUpConfirm from "../../components/dialogs/DialogConfirm";
 // import Page from 'src/components/Page';
+import clsx from "clsx"
+import { useGlobalStyles } from "../../styles/GlobalStyle";
 
-const useStyles = makeStyles((theme) => ({
-	root: {
-		backgroundColor: theme.palette.background.default,
-		minHeight: "100%",
-		paddingBottom: theme.spacing(3),
-		paddingTop: theme.spacing(3),
-	},
-}));
 
 export default function RouteContainer() {
+	const globalStyle = useGlobalStyles();
 	const [object, setObject] = useState<Paging<Route>>({
 		page: 1,
 		pageSize: 5,
@@ -94,8 +86,8 @@ export default function RouteContainer() {
 			var value: any[] = [];
 			value.push(item.localStart);
 			value.push(item.localEnd);
-			value.push(moment(item.startAt).format("l"));
-			value.push(item.sumTimeRun);
+			value.push(moment(item.startAt).format("HH Giờ MM"));
+			value.push(`${item.sumTimeRun} tiếng`);
 			value.push(ActionHelper.getActionUpdateAndDelete(item, onCreateOrUpdate, onConfirm));
 
 			return value;
@@ -103,10 +95,10 @@ export default function RouteContainer() {
 
 		const getTable: IBaseTable<Route> = {
 			header: [
-				{ id: "localStart", label: "Xuat phat" },
-				{ id: "localEnd", label: "Diem den" },
-				{ id: "startAt", label: "Gio khoi hanh" },
-				{ id: "sumTimeRun", label: "Tong thoi gian du kien" },
+				{ id: "localStart", label: "Địa điểm xuất phát" },
+				{ id: "localEnd", label: "Địa điêm đích" },
+				{ id: "startAt", label: "Giờ khởi hành" },
+				{ id: "sumTimeRun", label: "Tổng thời gian chạy dự kiến" },
 				{ id: "", label: "Hanh dong" },
 		
 			],
@@ -118,7 +110,16 @@ export default function RouteContainer() {
 
 	return (
 		// <Page className={classes.root} title="Customers">
-		<Container maxWidth={false}>
+		<Container maxWidth={false} className={clsx(globalStyle.pp5, globalStyle.container)}>
+			<Grid style = {{
+				paddingLeft : 30
+			}}>
+				<Typography
+					variant = {"h1"}
+				>
+					Chức vụ
+				</Typography>
+			</Grid>
 			<PopUpConfirm
 			isDisplay = {showConfirm}
 			onCancel ={onCancelConfirm}

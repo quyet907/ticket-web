@@ -2,8 +2,11 @@ import {
   Box,
 
   Container,
-  makeStyles
+  Grid,
+  makeStyles,
+  Typography
 } from "@material-ui/core";
+import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { ActionHelper } from "../../comon/ActionHelper";
 import PopUpConfirm from "../../components/dialogs/DialogConfirm";
@@ -15,9 +18,12 @@ import { PositionStaff } from "../../submodules/base-ticket-team/base-carOwner/P
 import { Staff } from "../../submodules/base-ticket-team/base-carOwner/Staff";
 import { IList } from "../../submodules/base-ticket-team/query/IList";
 import { Paging } from "../../submodules/base-ticket-team/query/Paging";
+import clsx from "clsx"
+import { useGlobalStyles } from "../../styles/GlobalStyle";
 
 
 export default function StaffView() {
+  const globalStyle = useGlobalStyles();
   const [object, setObject] = useState<Paging<Staff>>({
     page: 1,
     pageSize: 5,
@@ -89,7 +95,7 @@ export default function StaffView() {
     const createValue = data.map((item: Staff) => {
       var value: any[] = [];
       value.push(item.name || "");
-      value.push(item.birthAt);
+      value.push(moment(item.birthAt).format("DD-MM-YYYY"));
       value.push(item.address);
       value.push(item.phoneNumber);
       value.push(item.identityCard);
@@ -105,12 +111,12 @@ export default function StaffView() {
 
     const getTable: IBaseTable<Staff> = {
       header: [
-        { id: "name", label: "Ho ten" },
-        { id: "birthAt", label: "Ngay sinh" },
-        { id: "address", label: "Dia chi" },
-        { id: "phoneNumber", label: "So dien thoai" },
-        { id: "identityCard", label: "CMND" },
-        { id: "positionId", label: "Chuc vu" },
+        { id: "name", label: "Họ và tên" },
+        { id: "birthAt", label: "Ngày sinh" },
+        { id: "address", label: "Địa chỉ" },
+        { id: "phoneNumber", label: "Số điện thoại" },
+        { id: "identityCard", label: "Chứng minh nhân dân" },
+        { id: "positionId", label: "Chức vụ" },
         { id: "", label: "Hanh dong" },
       ],
       paging: { ...object, rows: [] },
@@ -121,7 +127,16 @@ export default function StaffView() {
 
   return (
     // <Page className={classes.root} title="Customers">
-    <Container maxWidth={false}>
+    <Container maxWidth={false} className={clsx(globalStyle.pp5, globalStyle.container)}>
+      <Grid style = {{
+				paddingLeft : 30
+			}}>
+				<Typography
+					variant = {"h1"}
+				>
+					Nhân viên
+				</Typography>
+			</Grid>
       <PopUpConfirm
 			isDisplay = {showConfirm}
 			onCancel ={onCancelConfirm}

@@ -28,6 +28,13 @@ const useStyles = makeStyles((theme) => ({
 		paddingBottom: theme.spacing(3),
 		paddingTop: theme.spacing(3),
 	},
+	formLogin : {
+		background : "rgba(245,245,245,0.1)",
+		boxShadow : "0px 0px 200px 0px rgba(100,100,100,0.1)",
+		padding : 50,
+		borderRadius : 40,
+		border : "1px solid #ccc",
+	}
 }));
 
 const LoginView = () => {
@@ -36,25 +43,22 @@ const LoginView = () => {
 
 	return (
 		// <Page className={clsx(classes.root)} title="Login">
-		<Box
+		<Box 
 			display="flex"
 			flexDirection="column"
 			height="100%"
 			justifyContent="center"
 			// alignItems="center"
 		>
-			<Container maxWidth="sm">
+			<Container maxWidth="sm"
+			className= {classes.formLogin}
+			>
 				<Formik
 					initialValues={{
 						email: "",
 						password: "",
 					}}
 					validationSchema={Yup.object().shape({
-						// email: Yup.string()
-							// .email("Must be a valid email")
-							// .max(255)
-							// .required("Email is required"),
-						// password: Yup.string().max(255).required("Password is required"),
 					})}
 					onSubmit={() => {
 						history.push("/dashboard", { replace: true });

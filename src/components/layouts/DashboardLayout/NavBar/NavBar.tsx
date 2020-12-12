@@ -26,11 +26,12 @@ import {
 	Users,
 } from "react-feather";
 import NavItem from "./NavItem";
+import { useGlobalStyles } from "../../../../styles/GlobalStyle";
 
 const user = {
 	avatar: "https://picsum.photos/200/300",
 	jobTitle: "Admin",
-	name: "Quyet iu vk",
+	name: "Team Ale",
 };
 
 const items = [
@@ -94,6 +95,8 @@ const useStyles = makeStyles(() => ({
 		width: 256,
 		top: 64,
 		height: "calc(100% - 64px)",
+		border : "none",
+		background: "none"
 	},
 	avatar: {
 		cursor: "pointer",
@@ -109,6 +112,7 @@ type Props = {
 
 const NavBar = (props: Props) => {
 	const classes = useStyles();
+	const globalStyle = useGlobalStyles();
 	const location = useLocation();
 
 	useEffect(() => {
@@ -127,7 +131,7 @@ const NavBar = (props: Props) => {
 					to="/app/account"
 				/>
 				<Box mt={1} alignItems="center" display="flex" flexDirection="column">
-					<Typography color="textPrimary" variant="h5">
+					<Typography color="textPrimary" variant="h1">
 						{user.name}
 					</Typography>
 					<Typography color="textSecondary" variant="body2">
@@ -135,7 +139,7 @@ const NavBar = (props: Props) => {
 					</Typography>
 				</Box>
 			</Box>
-			<Divider />
+			
 			<Box p={2}>
 				<List>
 					{items.map((item) => (
@@ -149,18 +153,6 @@ const NavBar = (props: Props) => {
 				</List>
 			</Box>
 			<Box flexGrow={1} />
-			<Box p={2} m={2} bgcolor="background.dark">
-				<Box display="flex" justifyContent="center" mt={2}>
-					<Button
-						color="primary"
-						component="a"
-						href="https://react-material-kit.devias.io"
-						variant="contained"
-					>
-						See PRO version
-					</Button>
-				</Box>
-			</Box>
 		</Box>
 	);
 

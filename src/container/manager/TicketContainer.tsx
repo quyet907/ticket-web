@@ -12,6 +12,8 @@ import {
 import parse from "autosuggest-highlight/parse";
 import match from "autosuggest-highlight/match";
 import { Autocomplete } from "@material-ui/lab";
+import clsx from "clsx"
+import { useGlobalStyles } from "../../styles/GlobalStyle";
 
 // import Page from 'src/components/Page';
 
@@ -25,13 +27,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function TicketContainer() {
+	const globalStyle = useGlobalStyles();
 	const top100Films = [
 		{ title: "The Shawshank Redemption", year: 1994 },
 		{ title: "The Godfather", year: 1972 },
 	];
 	return (
 		// <Page className={classes.root} title="Customers">
-		<Container maxWidth={false}>
+		<Container maxWidth={false} className={clsx(globalStyle.pp5, globalStyle.container)}>
 			<Paper>
 				<Autocomplete
 					id="highlights-demo"

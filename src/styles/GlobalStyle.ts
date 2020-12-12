@@ -2,9 +2,16 @@ import { yellow } from "@material-ui/core/colors";
 import { makeStyles } from "@material-ui/core/styles";
 
 export const useGlobalStyles = makeStyles((theme) => ({
+  border : {
+    borderRadius :7,
+    border : "1px solid #ccc",
+    boxShadow : "0px 0px 10px 10px rgba(200,200,200,0.2)"
+
+  },
   container: {
-    marginTop: theme.spacing(15),
-    marginBottom: theme.spacing(12),
+    borderRadius : "50px 0px 0px 50px",
+    backgroundColor : "#faf9f9",
+    minHeight : "90%"
   },
   highlightSearchText: {
     background: "yellow",
@@ -196,5 +203,20 @@ export const useGlobalStyles = makeStyles((theme) => ({
   },
   pl5: {
     paddingLeft: theme.spacing(5),
+  },
+  pp1: {
+    padding: theme.spacing(1),
+  },
+  pp2: {
+    padding: theme.spacing(2),
+  },
+  pp3: {
+    padding: theme.spacing(3),
+  },
+  pp4: {
+    padding: theme.spacing(4),
+  },
+  pp5: {
+    padding: theme.spacing(5),
   },
 }));

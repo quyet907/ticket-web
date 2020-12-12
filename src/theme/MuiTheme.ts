@@ -4,14 +4,14 @@ import { shadows } from "./shadows";
 const theme = createMuiTheme({
 	palette: {
 		background: {
-			default: colors.common.white,
-			paper: colors.common.white,
+			default: "rgba(0,0,0,0.05)",
+			paper: "#faf9f9",
 		},
 		primary: {
-			main: colors.indigo[500],
+			main: "rgb(255, 13, 158)",
 		},
 		secondary: {
-			main: colors.indigo[500],
+			main: "#ff798e",
 		},
 		text: {
 			primary: colors.blueGrey[900],
@@ -58,7 +58,7 @@ const theme = createMuiTheme({
 		MuiButton: {
 			containedSizeLarge: {
 				padding: "12px 24px",
-			}
+			},
 		},
 		MuiDialog: {
 			paper: {

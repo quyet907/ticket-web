@@ -31,8 +31,8 @@ export class BaseController<T> {
       });
   }
 
-  public find(params: IFind): Promise<T[]> {
-    params = { ...params, sort: this.convertSort(params.sort) };
+  public find(params?: IFind): Promise<T[]> {
+    params = { ...params, sort: this.convertSort(params?.sort) };
     return this.client
       .get(`${this.serviceURL}/${this.basePath}/find`, {
         params: params,

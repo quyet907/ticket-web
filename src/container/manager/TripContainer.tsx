@@ -1,5 +1,5 @@
 
-import { makeStyles, Container, Box } from "@material-ui/core";
+import { makeStyles, Container, Box, Grid, Typography } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 import { ActionHelper } from "../../comon/ActionHelper";
 import BaseDialogs from "../../components/dialogs/BaseDialogs";
@@ -11,6 +11,8 @@ import { PositionStaff } from "../../submodules/base-ticket-team/base-carOwner/P
 import { Trip } from "../../submodules/base-ticket-team/base-carOwner/Trip";
 import { IList } from "../../submodules/base-ticket-team/query/IList";
 import { Paging } from "../../submodules/base-ticket-team/query/Paging";
+import clsx from "clsx"
+import { useGlobalStyles } from "../../styles/GlobalStyle";
 
 // import Page from 'src/components/Page';
 
@@ -24,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function TripContainer() {
+	const globalStyle = useGlobalStyles();
 	const [object, setObject] = useState<Paging<Trip>>({
 		page: 1,
 		pageSize: 5,
@@ -111,7 +114,16 @@ export default function TripContainer() {
 
 	return (
 		// <Page className={classes.root} title="Customers">
-		<Container maxWidth={false}>
+		<Container maxWidth={false} className={clsx(globalStyle.pp5, globalStyle.container)}>
+			<Grid style = {{
+				paddingLeft : 30
+			}}>
+				<Typography
+					variant = {"h1"}
+				>
+					Chuyến đi
+				</Typography>
+			</Grid>
 			<PopUpConfirm
 			isDisplay = {showConfirm}
 			onCancel ={onCancelConfirm}

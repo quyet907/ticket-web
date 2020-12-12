@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Container, makeStyles } from "@material-ui/core";
+import { Box, Container, Grid, makeStyles, Typography } from "@material-ui/core";
 import SearchAndAdd from "../../components/genaral-component/SearchAndAdd";
 import { customerController } from "../../service";
 import { ActionHelper } from "../../comon/ActionHelper";
@@ -10,10 +10,13 @@ import { Customer } from "../../submodules/base-ticket-team/base-carOwner/Custom
 import moment from "moment";
 import BaseTable, { IBaseTable } from "../../components/genaral-component/BaseTable";
 import PopUpConfirm from "../../components/dialogs/DialogConfirm";
-
+import PopUpEditCustomer from "../../components/dialogs/PopUpEditCustomer";
+import clsx from "clsx"
+import { useGlobalStyles } from "../../styles/GlobalStyle";
 // import Page from 'src/components/Page';
 
 export default function Customers() {
+  const globalStyle = useGlobalStyles();
   const [object, setObject] = useState<Paging<Customer>>({
     page: 1,
     pageSize: 5,
@@ -81,7 +84,11 @@ export default function Customers() {
     const createValue = data.map((item: Customer) => {
       var value: any[] = [];
       value.push(item.name || "");
-      value.push(moment(item.birthAt).format("l"));
+      value.push(item.CMND || "");
+      value.push(moment(item.birthAt).format("DD-MM-YYYY"));
+      value.push(item.email || "");
+      value.push(item.phoneNumber || "");
+      value.push(item.sex || "");
       value.push(item.description || "");
       value.push(
         ActionHelper.getActionUpdateAndDelete(item, onCreateOrUpdate, onConfirm)
@@ -92,7 +99,11 @@ export default function Customers() {
     const getTable: IBaseTable<Customer> = {
       header: [
         { id: "name", label: "Họ tên" },
+        { id: "CMND", label: "Chứng minh nhân dân" },
         { id: "birthAt", label: "Ngày sinh" },
+        { id: "email", label: "Email" },
+        { id: "phoneNumber", label: "Số điện thoại" },
+        { id: "sex", label: "Giới tính" },
         { id: "description", label: "Mô tả" },
         { id: "", label: "Thao tác" },
       ],
@@ -104,19 +115,28 @@ export default function Customers() {
 
   return (
     // <Page className={classes.root} title="Customers">
-    <Container maxWidth={false}>
+    <Container maxWidth={false} className={clsx(globalStyle.pp5, globalStyle.container)}>
+      <Grid style = {{
+				paddingLeft : 30
+			}}>
+				<Typography
+					variant = {"h1"}
+				>
+					Khách hàng
+				</Typography>
+			</Grid>
       <PopUpConfirm
 			isDisplay = {showConfirm}
 			onCancel ={onCancelConfirm}
 			onDelete = {onDelete}
 			/>
 
-      <BaseDialogs
+      <PopUpEditCustomer
         obj={selected}
         onSave={onSave}
         onCancel={onCloseForm}
         isDisplay={showForm}
-      ></BaseDialogs>
+      ></PopUpEditCustomer>
 
       <SearchAndAdd<Customer> onCreate={onCreateOrUpdate} onSearch={onSearch} />
 

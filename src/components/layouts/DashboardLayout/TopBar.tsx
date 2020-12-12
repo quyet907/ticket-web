@@ -10,7 +10,9 @@ import Logo from "../../../theme/Logo";
 // import Logo from "src/components/Logo";
 
 const useStyles = makeStyles(() => ({
-  root: {},
+  root: {
+    backgroundColor : "#00ee33"
+  },
   avatar: {
     width: 60,
     height: 60,

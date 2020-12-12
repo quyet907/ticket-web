@@ -1,16 +1,7 @@
-import {
-	Container,
-	Grid,
-	makeStyles,
-	Theme,
-	withStyles,
-} from "@material-ui/core";
-import EventSeatIcon from "@material-ui/icons/EventSeat";
-import React, { useEffect, useState } from "react";
+import { Button, Grid, makeStyles, withStyles } from "@material-ui/core";
 import clsx from "clsx";
+import React from "react";
 import { ChairCar } from "../../submodules/base-ticket-team/base-carOwner/ChairCar";
-import { IList } from "../../submodules/base-ticket-team/query/IList";
-import { chairCarController } from "../../service";
 import { ListChairCar } from "../../submodules/base-ticket-team/controller.ts/ListChairCar";
 import ChairItem from "./ChairItem";
 
@@ -31,11 +22,25 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 type Props = {
-	listChairDiagram : ListChairCar,
-	IconRender:(item : ChairCar) => React.ReactElement, 
-}
+	listChairDiagram: ListChairCar;
+	onAddRows: (floor: number) => void;
+	onEdit : (item :ChairCar)=> void
+};
 
-export default function DiagramChair(props : Props ) {
+const ButtonAddRow = withStyles((theme) => ({
+	root: {
+		width: "100%",
+		// textColor: "none",
+		// padding: -10,
+		// height: 2,
+		// fontSize: 0,
+		// "&:hover": {
+		// 	fontSize: "1rem",
+		// },
+	},
+}))(Button);
+
+export default function DiagramChair(props: Props) {
 	const classes = useStyles();
 	return (
 		<Grid
@@ -47,34 +52,52 @@ export default function DiagramChair(props : Props ) {
 			}}
 		>
 			<Grid xs={12} container direction="row" justify="space-evenly">
-				{props.listChairDiagram?.dataListChar?.map((floor) => {
-					return (
-						<Grid
-							item
-							className={clsx(
-								classes.borderRadius,
-								classes.marginDefault
-							)}
-						>
-							<Grid>
-								{floor.map((row) => {
-									return (
-										<Grid container style={{ padding: 10 }}>
-											{row.map((chair) => {
-												return (
-													<ChairItem
-														chair={chair}
-														onClick={() => {}}
-													/>
+				{props.listChairDiagram?.dataListChar?.map(
+					(floor, indexFloor) => {
+						return (
+							<Grid
+								item
+								className={clsx(
+									classes.borderRadius,
+									classes.marginDefault
+								)}
+							>
+								<Grid>
+									{floor.map((row, indexRow) => {
+										return (
+											<Grid
+												container
+												style={{ padding: 10 }}
+											>
+												{row.map((chair) => {
+													return (
+														<ChairItem
+															chair={chair}
+															onClick={() => {
+																props.onEdit(chair)
+															}}
+														/>
+													);
+												})}
+											</Grid>
+										);
+									})}
+									<Grid>
+										<ButtonAddRow
+											onClick={() => {
+												props.onAddRows(
+													indexFloor
 												);
-											})}
-										</Grid>
-									);
-								})}
+											}}
+										>
+											Thêm hàng
+										</ButtonAddRow>
+									</Grid>
+								</Grid>
 							</Grid>
-						</Grid>
-					);
-				})}
+						);
+					}
+				)}
 			</Grid>
 		</Grid>
 	);

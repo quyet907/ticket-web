@@ -1,14 +1,21 @@
-import { Box, Card, IconButton, makeStyles, Table, TableBody, TableCell, TableHead, TablePagination, TableRow, TableSortLabel, useTheme } from "@material-ui/core";
+import {
+	Box,
+	Card,
+	FormControl,
+	Grid,
+	makeStyles,
+	MenuItem,
+	Select,
+	TableSortLabel,
+} from "@material-ui/core";
+import { Pagination } from "@material-ui/lab";
+import clsx from "clsx";
 import React, { useState } from "react";
-import LastPageIcon from "@material-ui/icons/LastPage";
-import FirstPageIcon from "@material-ui/icons/FirstPage";
-import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
-import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
+import PerfectScrollbar from "react-perfect-scrollbar";
+import { useGlobalStyles } from "../../styles/GlobalStyle";
 import { IList } from "../../submodules/base-ticket-team/query/IList";
 import { Paging } from "../../submodules/base-ticket-team/query/Paging";
-import PerfectScrollbar from "react-perfect-scrollbar";
-import clsx from "clsx";
-
+import ButtonSort from "./ButtonSort";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -18,78 +25,45 @@ const useStyles = makeStyles((theme) => ({
 	avatar: {
 		marginRight: theme.spacing(2),
 	},
+	rowTable: {
+		padding: 10,
+		borderBottom: "1px solid #ccc",
+		borderRadius: 7,
+		display: "flex",
+		flexWrap: "nowrap",
+		cursor: "pointer",
+		"&:hover": {
+			transition: "0.3s",
+			backgroundColor: theme.palette.primary.main,
+			color: "white",
+			fontWeight: 500,
+		},
+	},
+	headerTable: {
+		backgroundColor: theme.palette.primary.main,
+		color: "white",
+		fontWeight: 500,
+	},
+	rowFirst: {
+		background: "white",
+	},
+	rowSeconds: {
+		background: theme.palette.background.default,
+	},
 }));
-
-interface TablePaginationActionsProps {
-	count: number;
-	page: number;
-	rowsPerPage: number;
-	onChangePage: (event: React.MouseEvent<HTMLButtonElement>, newPage: number) => void;
-}
-
-function TablePaginationActions(props: TablePaginationActionsProps) {
-	const classes = useStyles();
-	const theme = useTheme();
-	const { count, page, rowsPerPage, onChangePage } = props;
-
-	const handleFirstPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-		onChangePage(event, 0);
-	};
-
-	const handleBackButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-		onChangePage(event, page - 1);
-	};
-
-	const handleNextButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-		onChangePage(event, page + 1);
-	};
-
-	const handleLastPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-		onChangePage(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
-	};
-
-	return (
-		<div className={classes.root}>
-			<IconButton
-				onClick={handleFirstPageButtonClick}
-				disabled={page === 0}
-				aria-label="first page"
-			>
-				{theme.direction === "rtl" ? <LastPageIcon/> : <FirstPageIcon/>}
-			</IconButton>
-			<IconButton
-				onClick={handleBackButtonClick}
-				disabled={page === 0}
-				aria-label="previous page"
-			>
-				{theme.direction === "rtl" ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
-			</IconButton>
-			<IconButton
-				onClick={handleNextButtonClick}
-				disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-				aria-label="next page"
-			>
-				{theme.direction === "rtl" ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
-			</IconButton>
-			<IconButton
-				onClick={handleLastPageButtonClick}
-				disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-				aria-label="last page"
-			>
-				{theme.direction === "rtl" ? <FirstPageIcon /> : <LastPageIcon />}
-			</IconButton>
-		</div>
-	);
-}
 
 export default function BaseTable<T>(props: Props<T>) {
 	const classes = useStyles();
+	const globalStyle = useGlobalStyles();
 	const [selectedCustomerIds, setSelectedCustomerIds] = useState<any[]>([]);
 
 	const handleLimitChange = (
 		event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
 	) => {
-		props.onQuery({ ...props.query, pageSize: parseInt(event.target.value) });
+		props.onQuery({
+			...props.query,
+			pageSize: parseInt(event.target.value),
+		});
 	};
 
 	const handlePageChange = (
@@ -101,23 +75,33 @@ export default function BaseTable<T>(props: Props<T>) {
 
 	function checkActionSort(label: string): boolean {
 		if (typeof props.query.sort == "string") {
-			if (props.query.sort === `${label}` || props.query.sort === `-${label}`) {
+			if (
+				props.query.sort === `${label}` ||
+				props.query.sort === `-${label}`
+			) {
 				return true;
 			}
 			return false;
 		}
-		var check = props.query.sort?.find((sort) => sort === `${label}` || sort === `-${label}`);
+		var check = props.query.sort?.find(
+			(sort) => sort === `${label}` || sort === `-${label}`
+		);
 		return check ? true : false;
 	}
 
 	function checkDirection(label: string): "desc" | "asc" | undefined {
 		if (typeof props.query.sort == "string") {
-			if (props.query.sort === `${label}` || props.query.sort === `-${label}`) {
+			if (
+				props.query.sort === `${label}` ||
+				props.query.sort === `-${label}`
+			) {
 				return "asc";
 			}
 			return "desc";
 		}
-		var check = props.query.sort?.find((sort) => sort === `${label}` || sort === `-${label}`);
+		var check = props.query.sort?.find(
+			(sort) => sort === `${label}` || sort === `-${label}`
+		);
 		if (!check) return undefined;
 		if (check === `${label}`) return "desc";
 		return "asc";
@@ -130,7 +114,9 @@ export default function BaseTable<T>(props: Props<T>) {
 			getSort.push(label);
 		} else {
 			getSort = props.query?.sort || [];
-			var check = getSort?.findIndex((sort) => sort === `${label}` || sort === `-${label}`);
+			var check = getSort?.findIndex(
+				(sort) => sort === `${label}` || sort === `-${label}`
+			);
 			if (check !== undefined && check < 0) {
 				getSort.push(label);
 			}
@@ -147,72 +133,185 @@ export default function BaseTable<T>(props: Props<T>) {
 	}
 
 	return (
-		<Card className={clsx(classes.root, props.className)}>
+		<Grid className={clsx(classes.root, props.className)}>
 			<PerfectScrollbar>
 				<Box minWidth={1050}>
-					<Table>
-						<TableHead>
-							<TableRow>
-								{props.iTable(props.data.rows || []).header.map((header: HeadCell<T>) => {
+					<Grid container direction="column">
+						<Grid
+							container
+							// direction="row"
+							// justify="space-evenly"
+							className={clsx(
+								classes.rowTable,
+								classes.headerTable
+							)}
+						>
+							<Grid
+								container
+								direction="row"
+								alignItems="center"
+								alignContent="center"
+								style={{
+									width: 200,
+								}}
+							>
+								<Grid>STT</Grid>
+							</Grid>
+							{props
+								.iTable(props.data.rows || [])
+								.header.map((header: HeadCell<T>) => {
 									return (
-										<TableCell
-											key={"dfjjk"}
-											align={"left"}
-											padding={"default"}
-											// sortDirection={"asc"}
-										>
-											<TableSortLabel
+										<Grid
+											style={{
+												flexShrink: "initial",
+												width: 1000,
+											}}
+											>
+											{header.label}
+											{/* <TableSortLabel
+												color = {"white"}
 												active={checkActionSort(header.id.toString())}
 												direction={checkDirection(header.id.toString())}
 												onClick={(e) => {
 													onSort(header.id.toString());
 												}}
 											>
-												{header.label}
-											</TableSortLabel>
-										</TableCell>
+											</TableSortLabel> */}
+											<ButtonSort
+												active={checkActionSort(header.id.toString())}
+												direction={checkDirection(header.id.toString()) as any}
+												onClick={() => {
+													onSort(header.id.toString());
+												}}
+											/>
+											
+										</Grid>
 									);
 								})}
-							</TableRow>
-						</TableHead>
+						</Grid>
 
-						<TableBody>
-							{props
-								.iTable(props.data.rows || [])
-								.value.map((valueTable: React.ReactNode[]) => (
-									<TableRow
-										hover
-										key={""}
-										selected={selectedCustomerIds.indexOf("") !== -1}
-									>
-										{valueTable.map((label: React.ReactNode) => (
-											<TableCell >{label} </TableCell>
-										))}
-									</TableRow>
-								))}
-						</TableBody>
-					</Table>
+						<Grid container direction="column">
+							<Grid container direction="column">
+								{props
+									.iTable(props.data.rows || [])
+									.value.map(
+										(
+											valueTable: React.ReactNode[],
+											indexRow
+										) => (
+											<Grid
+												container
+												direction="row"
+												className={clsx(
+													classes.rowTable,
+													indexRow % 2 === 0
+														? classes.rowFirst
+														: classes.rowSeconds
+												)}
+											>
+												<Grid
+													container
+													direction="row"
+													alignItems="center"
+													alignContent="center"
+													style={{
+														width: 200,
+													}}
+												>
+													<Grid>{indexRow + 1} </Grid>
+												</Grid>
+												{valueTable.map(
+													(
+														label: React.ReactNode
+													) => (
+														<Grid
+															container
+															direction="row"
+															alignItems="center"
+															alignContent="center"
+															style={{
+																width: 1000,
+															}}
+														>
+															<Grid>
+																{label}{" "}
+															</Grid>
+														</Grid>
+													)
+												)}
+											</Grid>
+										)
+									)}
+							</Grid>
+						</Grid>
+					</Grid>
 				</Box>
 			</PerfectScrollbar>
 
-			<TablePagination
-				component="div"
-				colSpan={3}
-				count={props.data.total || 0}
-				onChangePage={handlePageChange}
-				onChangeRowsPerPage={handleLimitChange}
-				page={(props.query?.page || 0 ) -1 }
-				rowsPerPage={props.query.pageSize || 5}
-				rowsPerPageOptions={[5, 10, 25, { label: "ALL", value: -1 }]}
-				ActionsComponent={TablePaginationActions}
-			/>
-		</Card>
+			<Grid container direction="row" justify="center">
+				<Grid className={clsx(globalStyle.pp3)}>
+					<Grid container direction="row" justify="center">
+						<Grid item className={clsx(globalStyle.mr5)}>
+							<Grid>
+								<FormControl variant="outlined">
+									<Select
+										value={props.query.pageSize}
+										onChange={(e) => {
+											var getValue: string = e.target
+												.value as any;
+											var getValueNumber: number = parseInt(
+												getValue
+											);
+											props.onQuery({
+												...props.query,
+												pageSize: getValueNumber,
+											});
+										}}
+									>
+										<MenuItem value={5}>5</MenuItem>
+										<MenuItem value={10}>10</MenuItem>
+										<MenuItem value={15}>15</MenuItem>
+									</Select>
+								</FormControl>
+							</Grid>
+						</Grid>
+						<Grid item>
+							<Grid
+								container
+								direction="column"
+								justify="center"
+								// alignContent="center"
+								style={{
+									height: "100%",
+								}}
+							>
+								<Grid>
+									<Pagination
+										count={Math.ceil(
+											(props.data.total || 1) /
+												(props.query.pageSize || 1)
+										)}
+										showFirstButton
+										showLastButton
+										onChange={(e, value) => {
+											props.onQuery({
+												...props.query,
+												page: value,
+											});
+										}}
+										color="primary"
+									/>
+								</Grid>
+							</Grid>
+						</Grid>
+					</Grid>
+				</Grid>
+			</Grid>
+		</Grid>
 	);
 }
 
 export interface HeadCell<T> {
-	// disablePadding: boolean;
-	// numeric: boolean;
 	id: keyof T | "";
 	label: string;
 }

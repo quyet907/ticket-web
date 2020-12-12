@@ -10,13 +10,18 @@ import {
 	InputAdornment,
 	SvgIcon,
 	makeStyles,
+	withStyles,
+	InputBase,
 } from "@material-ui/core";
 import { Search as SearchIcon } from "react-feather";
 import _ from "lodash";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		marginLeft: theme.spacing(2.5)
+		marginLeft: theme.spacing(2.5),
+		// backgroundColor : theme.palette.background.default
+		background : "none",
+		borderRadius: 10
 	},
 	importButton: {
 		marginRight: theme.spacing(1),
@@ -25,6 +30,19 @@ const useStyles = makeStyles((theme) => ({
 		marginRight: theme.spacing(1),
 	},
 }));
+
+const TextFieldCustom = withStyles(theme=>({
+	root : {
+		borderRadius : 20,
+		background : theme.palette.background.default,
+		paddingLeft : 50,
+		padding : 10,
+		"&:focus": {
+			border : "1px solid",
+			borderColor : theme.palette.primary.main,
+		}
+	}
+}))(InputBase)
 
 type Props<T> = {
 	className?: string;
@@ -44,24 +62,24 @@ function SearchAndAdd<T>(props: Props<T>) {
 	);
 
 	return (
-		<div className={clsx(classes.root, props.className)}>
+		<div >
 			<Box mt={3}>
-				<Card>
+				<Card className={clsx(classes.root)}>
 					<CardContent style={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
 						<Box flexBasis={500}>
-							<TextField
+							<TextFieldCustom
+
 								fullWidth
-								InputProps={{
-									startAdornment: (
-										<InputAdornment position="start">
-											<SvgIcon fontSize="small" color="action">
-												<SearchIcon />
-											</SvgIcon>
-										</InputAdornment>
-									),
-								}}
+								// InputProps={{
+								// 	startAdornment: (
+								// 		<InputAdornment position="start">
+								// 			<SvgIcon fontSize="small" color="action">
+								// 				<SearchIcon />
+								// 			</SvgIcon>
+								// 		</InputAdornment>
+								// 	),
+								// }}
 								placeholder="Search"
-								variant="outlined"
 								onChange={(e) => {
 									onSearch(e.target.value);
 								}}
