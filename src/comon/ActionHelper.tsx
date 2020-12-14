@@ -57,6 +57,7 @@ export class ActionHelper {
     createOrEdit: (id: T) => void,
     Delete: (item : T) => void,
     OpenChair:(item :T)=> void,
+    nextPageTrip:(item: T)=> void
   ): React.ReactElement {
     return (
       <Grid>
@@ -64,6 +65,11 @@ export class ActionHelper {
         {ActionHelper.getActionDelete<T>(item , Delete)}
         <IconButtonCustom
         onClick={() => OpenChair(item)}
+      >
+        <EventSeatIcon fontSize="small"/>
+      </IconButtonCustom>
+      <IconButtonCustom
+        onClick={() => nextPageTrip(item)}
       >
         <EventSeatIcon fontSize="small"/>
       </IconButtonCustom>

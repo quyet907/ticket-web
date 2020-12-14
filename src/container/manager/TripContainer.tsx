@@ -13,6 +13,9 @@ import { IList } from "../../submodules/base-ticket-team/query/IList";
 import { Paging } from "../../submodules/base-ticket-team/query/Paging";
 import clsx from "clsx"
 import { useGlobalStyles } from "../../styles/GlobalStyle";
+import {useParams } from "react-router-dom"
+import PopUpEditTrip from "../../components/dialogs/PopUpEditTrip";
+import moment from "moment";
 
 // import Page from 'src/components/Page';
 
@@ -26,6 +29,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function TripContainer() {
+	const param: any = useParams<{id : string}>();
+	const id = param.id;
 	const globalStyle = useGlobalStyles();
 	const [object, setObject] = useState<Paging<Trip>>({
 		page: 1,
@@ -54,7 +59,7 @@ export default function TripContainer() {
 	}
 
 	function onSave(trip: Trip) {
-		tripController.create(trip).then((res) => {
+		tripController.create({...trip, carId : id}).then((res) => {
 			setQuery({ ...query });
 			setShowForm(false);
 		});
@@ -73,6 +78,7 @@ export default function TripContainer() {
 
 	function onConfirm(item : Trip){
 		setSelected(item)
+		setShowConfirm(true)
 	}
 
 	function onCancelConfirm(){
@@ -81,11 +87,10 @@ export default function TripContainer() {
 
 	function onSearch(search: string) {
 		setQuery({ ...query, search: search });
-		setShowConfirm(true)
 	}
 
 	useEffect(() => {
-		tripController.list(query).then((res: Paging<Trip>) => {
+		tripController.getListByCarId(query, id).then((res: Paging<Trip>) => {
 			setObject(res);
 		});
 	}, [query]);
@@ -93,8 +98,10 @@ export default function TripContainer() {
 	function convertDataToTable(data: Trip[]): IBaseTable<Trip> {
 		const createValue = data.map((item: Trip) => {
 			var value: any[] = [];
+			value.push(`${item.metaMapping?.route?.localStart}- ${item.metaMapping?.route?.localEnd}` || "");
 			value.push(item.price || "");
-			value.push(item.timeStart);
+			value.push(moment(item.timeStart).format("DD-MM-YYYY"));
+			value.push(item.metaMapping?.drive?.name)
 			value.push(ActionHelper.getActionUpdateAndDelete(item, onCreateOrUpdate, onConfirm));
 
 			return value;
@@ -102,9 +109,11 @@ export default function TripContainer() {
 
 		const getTable: IBaseTable<Trip> = {
 			header: [
-				{ id: "price", label: "Gia" },
-				{ id: "timeStart", label: "Gio khoi hanh" },
-				{ id: "", label: "Hanh dong" },
+				{ id: "route" as any, label: "Tuyến đường" },
+				{ id: "price", label: "Giá" },
+				{ id: "timeStart", label: "Giờ khởi hành" },
+				{ id: "drive", label: "Người lái xe" },
+				{ id: "", label: "Hành động" },
 			],
 			paging: { ...object, rows: [] },
 			value: createValue,
@@ -113,7 +122,6 @@ export default function TripContainer() {
 	}
 
 	return (
-		// <Page className={classes.root} title="Customers">
 		<Container maxWidth={false} className={clsx(globalStyle.pp5, globalStyle.container)}>
 			<Grid style = {{
 				paddingLeft : 30
@@ -130,13 +138,12 @@ export default function TripContainer() {
 			onDelete = {onDelete}
 			/>
 
-			<BaseDialogs
-				dialogContent = {""}
+			<PopUpEditTrip
 				obj={selected}
 				onSave={onSave}
 				onCancel={onCloseForm}
 				isDisplay={showForm}
-			></BaseDialogs>
+			></PopUpEditTrip>
 
 			<SearchAndAdd<PositionStaff> onCreate={onCreateOrUpdate} onSearch={onSearch} />
 

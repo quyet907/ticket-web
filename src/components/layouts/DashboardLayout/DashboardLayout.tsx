@@ -14,6 +14,7 @@ import CarContainer from "../../../container/manager/CarContainer";
 import DiagramChair from "../../chair/DiagramChair";
 import DialogChair from "../../chair/DialogChair";
 import HomeSaleTicket from "../../../container/sale/HomeSaleTicket";
+import DiagramSaleTicket from "../../../container/sale/DiagramSaleTicket";
 
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -29,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 		display: "flex",
 		flex: "1 1 auto",
 		overflow: "hidden",
-		paddingTop: 64,
+		// paddingTop: 64,
 		[theme.breakpoints.up("lg")]: {
 			paddingLeft: 256,
 		},
@@ -64,13 +65,13 @@ function DashboardLayout() {
 							<Route exact path={`/customer`} component={Customers} />
 							<Route exact path={`/position`} component={PositionStaffContainer} />
 							<Route exact path={`/staff`} component={StaffView} />
-							<Route exact path={`/trip`} component={TripContainer} />
+							<Route exact path={`/trip/:id`} component={TripContainer} />
 							<Route exact path={`/route`} component={RouteContainer} />
-							<Route exact path={`/ticket`} component={TicketContainer} />
+							<Route exact path={`/ticket`} component={HomeSaleTicket} />
 							<Route exact path={`/car`} component={CarContainer}/>
-							<Route exact path={`/sale`} component={HomeSaleTicket}/>
+							<Route exact path={`/sale/:id`} component={DiagramSaleTicket}/>
 							<Route path="*">
-								<Redirect to="/dashboard" />
+								{/* <Redirect to="/dashboard" /> */}
 							</Route>
 						</Switch>
 					</div>

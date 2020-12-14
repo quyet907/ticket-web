@@ -1,6 +1,9 @@
 import { AxiosInstance } from "axios";
 import { Trip } from "../submodules/base-ticket-team/base-carOwner/Trip";
+import { DiagramChairOfTrip } from "../submodules/base-ticket-team/controller.ts/DiagramChairOfTrip";
 import { IGetByDate } from "../submodules/base-ticket-team/controller.ts/TripController";
+import { IList } from "../submodules/base-ticket-team/query/IList";
+import { Paging } from "../submodules/base-ticket-team/query/Paging";
 import { BaseController } from "./BaseController";
 
 export class TripService extends BaseController<Trip> {
@@ -8,7 +11,7 @@ export class TripService extends BaseController<Trip> {
 		super(serviceURL, basePath, client);
 		
 	}
-    public getListByDate(params : IGetByDate): Promise<Trip> {
+    public getListByDate(params : IGetByDate): Promise<Paging<Trip>> {
 		return this.client
       .get(`${this.serviceURL}/${this.basePath}/getListByDate`, {
         params: params,
@@ -16,22 +19,22 @@ export class TripService extends BaseController<Trip> {
       .then((res) => {
         return res.data;
       });
+  }
+
+	public getListByCarId( query: IList,id: string): Promise<Paging<Trip>> {
+    query = {...query,searchFields: ["price"]}
+    const newQuery: IList = {
+      ...query,
+      query : {...query.query, carId : id}
+
+    }
+    console.log(newQuery)
+		return super.list(newQuery)
 	}
 
-	public getListByCarId(params : {id: string}): Promise<Trip> {
+	public getChairByTrip(params : {id: string}): Promise<DiagramChairOfTrip> {
 		return this.client
-      .get(`${this.serviceURL}/${this.basePath}/getListByDate`, {
-        params: params,
-      })
-      .then((res) => {
-        return res.data;
-      });
-	}
-
-	public getChairByTrip(params : {id: string}): Promise<Trip> {
-		return this.client
-      .get(`${this.serviceURL}/${this.basePath}/getChairByTrip`, {
-        params: params,
+      .get(`${this.serviceURL}/${this.basePath}/getChairByTrip/${params.id}`, {
       })
       .then((res) => {
         return res.data;

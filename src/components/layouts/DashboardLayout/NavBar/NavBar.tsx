@@ -1,17 +1,13 @@
-import React, { useEffect } from "react";
-import { Link as RouterLink, useLocation } from "react-router-dom";
-import PropTypes from "prop-types";
 import {
 	Avatar,
 	Box,
-	Button,
-	Divider,
 	Drawer,
 	Hidden,
 	List,
-	Typography,
 	makeStyles,
+	Typography,
 } from "@material-ui/core";
+import React, { useEffect } from "react";
 import {
 	AlertCircle,
 	BarChart,
@@ -19,17 +15,16 @@ import {
 	Lock,
 	Map,
 	MapPin,
-	Settings,
 	Star,
 	Truck,
-	UserPlus,
 	Users,
 } from "react-feather";
-import NavItem from "./NavItem";
+import { Link as RouterLink, useLocation } from "react-router-dom";
 import { useGlobalStyles } from "../../../../styles/GlobalStyle";
+import NavItem from "./NavItem";
 
 const user = {
-	avatar: "https://picsum.photos/200/300",
+	avatar: "https://loremflickr.com/json/g/320/240/girl/all",
 	jobTitle: "Admin",
 	name: "Team Ale",
 };
@@ -95,8 +90,8 @@ const useStyles = makeStyles(() => ({
 		width: 256,
 		top: 64,
 		height: "calc(100% - 64px)",
-		border : "none",
-		background: "none"
+		border: "none",
+		background: "none",
 	},
 	avatar: {
 		cursor: "pointer",
@@ -123,14 +118,24 @@ const NavBar = (props: Props) => {
 
 	const content = (
 		<Box height="100%" display="flex" flexDirection="column">
-			<Box alignItems="center" display="flex" flexDirection="column" p={2}>
+			<Box
+				alignItems="center"
+				display="flex"
+				flexDirection="column"
+				p={2}
+			>
 				<Avatar
 					className={classes.avatar}
 					component={RouterLink}
 					src={user.avatar}
 					to="/app/account"
 				/>
-				<Box mt={1} alignItems="center" display="flex" flexDirection="column">
+				<Box
+					mt={1}
+					alignItems="center"
+					display="flex"
+					flexDirection="column"
+				>
 					<Typography color="textPrimary" variant="h1">
 						{user.name}
 					</Typography>
@@ -139,7 +144,7 @@ const NavBar = (props: Props) => {
 					</Typography>
 				</Box>
 			</Box>
-			
+
 			<Box p={2}>
 				<List>
 					{items.map((item) => (

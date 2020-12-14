@@ -1,24 +1,23 @@
 // import Page from 'src/components/Page';
 
 import { Box, Container, Grid, makeStyles, Typography } from "@material-ui/core";
-import { functions } from "lodash";
+import clsx from "clsx";
 import moment from "moment";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { ActionHelper } from "../../comon/ActionHelper";
 import DialogChair from "../../components/chair/DialogChair";
-import BaseDialogs from "../../components/dialogs/BaseDialogs";
 import PopUpConfirm from "../../components/dialogs/DialogConfirm";
 import PopUpEditCar from "../../components/dialogs/PopUpEditCar";
 import BaseTable, {
-	IBaseTable,
+	IBaseTable
 } from "../../components/genaral-component/BaseTable";
 import SearchAndAdd from "../../components/genaral-component/SearchAndAdd";
 import { carController } from "../../service";
+import { useGlobalStyles } from "../../styles/GlobalStyle";
 import { Car } from "../../submodules/base-ticket-team/base-carOwner/Car";
 import { IList } from "../../submodules/base-ticket-team/query/IList";
 import { Paging } from "../../submodules/base-ticket-team/query/Paging";
-import clsx from "clsx"
-import { useGlobalStyles } from "../../styles/GlobalStyle";
+import {useHistory} from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
 	root: {
 		backgroundColor: theme.palette.background.default,
@@ -28,7 +27,8 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function CarContainer() {
+export default function CarContainer() {	
+	const history = useHistory()
 	const globalStyle = useGlobalStyles();
 	const [object, setObject] = useState<Paging<Car>>({
 		page: 1,
@@ -97,6 +97,10 @@ export default function CarContainer() {
 		setSelected(item);
 	}
 
+	function onNextPageTrip(item :Car){
+		history.push(`trip/${item._id}`)
+	}
+
 	useEffect(() => {
 		carController.list(query).then((res: Paging<Car>) => {
 			setObject(res);
@@ -118,7 +122,8 @@ export default function CarContainer() {
 					item,
 					onCreateOrUpdate,
 					onConfirm,
-					onDialogDiagramChar
+					onDialogDiagramChar,
+					onNextPageTrip
 				)
 			);
 			return value;

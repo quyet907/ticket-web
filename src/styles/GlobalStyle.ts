@@ -4,14 +4,14 @@ import { makeStyles } from "@material-ui/core/styles";
 export const useGlobalStyles = makeStyles((theme) => ({
   border : {
     borderRadius :7,
-    border : "1px solid #ccc",
-    boxShadow : "0px 0px 10px 10px rgba(200,200,200,0.2)"
+    // border : "1px solid #ccc",
+    boxShadow : "0px 0px 100px 10px rgba(200,200,200,0.2)"
 
   },
   container: {
     borderRadius : "50px 0px 0px 50px",
     backgroundColor : "#faf9f9",
-    minHeight : "90%"
+    minHeight : "99vh"
   },
   highlightSearchText: {
     background: "yellow",
