@@ -22,7 +22,7 @@ import {
 	Chip,
 	TextareaAutosize,
 } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Switch } from "react-router";
 import theme from "../../theme/MuiTheme";
 import clsx from "clsx";
@@ -63,7 +63,7 @@ export default function DialogSaleTicket(props: Props) {
 	const classes = useStyle();
 	const globalStyle = useGlobalStyles();
 	const [listLuggage, setListLuggage] = useState<DetailLuggage[]>([]);
-	console.log(props.ticket);
+	const [ticket, setTicket] = useState<Ticket>({}as Ticket);
 
 	function addLuggage(nameDetailLuggage: string) {
 		var newItem: DetailLuggage = {
@@ -89,9 +89,18 @@ export default function DialogSaleTicket(props: Props) {
 		validationSchema: validate,
 		initialErrors: {},
 		onSubmit: () => {
-			console.log("on submit");
+			props.onSave({...ticket,metaMapping: {
+				customer : formikForCustomer.values
+			} })
 		},
 	});
+
+	useEffect(() => {
+		setTicket(props.ticket)
+		formikForCustomer.resetForm(); 
+		formikForCustomer.setErrors({});
+		formikForCustomer.setValues(props.ticket)
+	}, [props])
 
 	function onSave(item: Ticket) {
 		formikForCustomer.handleSubmit();
@@ -268,10 +277,19 @@ export default function DialogSaleTicket(props: Props) {
 									>
 										{listLuggage.map((luggage) => {
 											return (
-												<Grid style = {{padding : 10}}><Chip
-												label={luggage.nameLuggage}
-												style={{ padding: 10 }}
-											/></Grid>
+												<Grid style={{ padding: 10 }}>
+													<Chip
+														label={
+															luggage.nameLuggage
+														}
+														onDelete={() => {
+															removeLuggage(
+																luggage
+															);
+														}}
+														style={{ padding: 10 }}
+													/>
+												</Grid>
 											);
 										})}
 									</Grid>
@@ -300,6 +318,10 @@ export default function DialogSaleTicket(props: Props) {
 										multiline
 										fullWidth={true}
 										variant="outlined"
+										value = {ticket.description}
+										onChange = {(e=>{
+											setTicket({...ticket,description : e.target.value})
+										})}
 										inputProps={{
 											className: classes.textarea,
 										}}
@@ -311,8 +333,14 @@ export default function DialogSaleTicket(props: Props) {
 				</Grid>
 			</DialogContent>
 			<DialogActions>
-				<Button onClick={() => props.onCancel()} color="primary">
+				<Button onClick={() => props.onCancel()} color="default">
 					Close
+				</Button>
+
+				<Button 
+					type = {"submit"}
+				onClick={() => onSave(props.ticket)} color="primary">
+					Đặt
 				</Button>
 			</DialogActions>
 		</Dialog>

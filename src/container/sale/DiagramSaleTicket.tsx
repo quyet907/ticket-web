@@ -30,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function DiagramSaleTicket() {
 	const params = useParams<{ id: string }>();
-	console.log(params);
 	const listChairDiagram = JSON.parse(dataFake);
 	const globalStyle = useGlobalStyles();
 	const classes = useStyles();
@@ -40,7 +39,6 @@ export default function DiagramSaleTicket() {
 		page: 1,
 		pageSize: 5,
 		search: "",
-		// sort : ["-createAt"]
 	});
 	const [selected, setSelected] = useState<Ticket>({} as Ticket);
 	const [showForm, setShowForm] = useState<boolean>(false);
@@ -56,10 +54,11 @@ export default function DiagramSaleTicket() {
 	}
 
 	function onSave(ticket: Ticket) {
-		ticketController.create(ticket).then((res) => {
-			setQuery({ ...query });
-			setShowForm(false);
-		});
+		console.log(ticket)
+		// ticketController.create(ticket).then((res) => {
+		// 	setQuery({ ...query });
+		// 	setShowForm(false);
+		// });
 	}
 
 	function onDelete() {
@@ -87,7 +86,6 @@ export default function DiagramSaleTicket() {
 
 	useEffect(() => {
 		tripController.getChairByTrip({ id: params.id }).then((res) => {
-			console.log(res);
 			setDiagram(res);
 		});
 	}, [query]);
