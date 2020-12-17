@@ -1,20 +1,16 @@
-import React, { FC, useState } from "react";
 import { makeStyles, Theme } from "@material-ui/core";
-import NavBar from "./NavBar/NavBar";
-import TopBar from "./TopBar";
-import { useRouteMatch, Route, Redirect, Switch } from "react-router";
-import Statistic from "../../../container/statistic/Statistic";
+import React, { useState } from "react";
+import { Route, Switch, useRouteMatch } from "react-router";
+import CarContainer from "../../../container/manager/CarContainer";
+import Customers from "../../../container/manager/Customer";
 import PositionStaffContainer from "../../../container/manager/PositionStaffContainer";
 import RouteContainer from "../../../container/manager/Route";
-import Customers from "../../../container/manager/Customer";
 import StaffView from "../../../container/manager/Staff";
-import TicketContainer from "../../../container/manager/TicketContainer";
 import TripContainer from "../../../container/manager/TripContainer";
-import CarContainer from "../../../container/manager/CarContainer";
-import DiagramChair from "../../chair/DiagramChair";
-import DialogChair from "../../chair/DialogChair";
-import HomeSaleTicket from "../../../container/sale/HomeSaleTicket";
 import DiagramSaleTicket from "../../../container/sale/DiagramSaleTicket";
+import HomeSaleTicket from "../../../container/sale/HomeSaleTicket";
+import Statistic from "../../../container/statistic/Statistic";
+import NavBar from "./NavBar/NavBar";
 
 
 const useStyles = makeStyles((theme: Theme) => ({

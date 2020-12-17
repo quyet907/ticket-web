@@ -54,11 +54,10 @@ export default function DiagramSaleTicket() {
 	}
 
 	function onSave(ticket: Ticket) {
-		console.log(ticket)
-		// ticketController.create(ticket).then((res) => {
-		// 	setQuery({ ...query });
-		// 	setShowForm(false);
-		// });
+		ticketController.create(ticket).then((res) => {
+			setQuery({ ...query });
+			setShowForm(false);
+		});
 	}
 
 	function onDelete() {
