@@ -1,38 +1,51 @@
-import classes from "*.module.css";
 import {
-	Dialog,
-	DialogTitle,
-	DialogContent,
-	DialogContentText,
-	FormControl,
-	InputLabel,
-	Select,
-	MenuItem,
-	FormControlLabel,
-	DialogActions,
 	Button,
-	Grid,
+
+
+
+
+
+
+
+
+	Chip, Dialog,
+
+
+
+
+
+
+
+
+	DialogActions, DialogContent,
+
+	FormControl,
+
+
+
+	FormControlLabel,
+
+
+
+
+
+	FormLabel, Grid,
 	makeStyles,
-	Typography,
-	FormLabel,
+
+
 	Radio,
 	RadioGroup,
-	TextField,
-	Box,
-	Chip,
-	TextareaAutosize,
+	TextField, Typography
 } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
-import { Switch } from "react-router";
-import theme from "../../theme/MuiTheme";
 import clsx from "clsx";
-import { useGlobalStyles } from "../../styles/GlobalStyle";
-import { Ticket } from "../../submodules/base-ticket-team/base-carOwner/Ticket";
 import { useFormik } from "formik";
-import { Customer } from "../../submodules/base-ticket-team/base-carOwner/Customer";
-import * as Yup from "yup";
-import { DetailLuggage } from "../../submodules/base-ticket-team/base-carOwner/DetailLuggage";
+import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import * as Yup from "yup";
+import { useGlobalStyles } from "../../styles/GlobalStyle";
+import { Customer } from "../../submodules/base-ticket-team/base-carOwner/Customer";
+import { DetailLuggage } from "../../submodules/base-ticket-team/base-carOwner/DetailLuggage";
+import { Ticket } from "../../submodules/base-ticket-team/base-carOwner/Ticket";
 
 const useStyle = makeStyles((theme) => ({
 	box: {
@@ -68,7 +81,7 @@ export default function DialogSaleTicket(props: Props) {
 	function addLuggage(nameDetailLuggage: string) {
 		var newItem: DetailLuggage = {
 			nameLuggage: nameDetailLuggage,
-			_id: uuidv4().toString(),
+			_id: uuidv4(),
 			luggageId: "", // TODO : change here
 		};
 		setListLuggage([...listLuggage, newItem]);
