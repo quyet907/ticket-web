@@ -3,9 +3,10 @@ import { makeStyles } from "@material-ui/core/styles";
 
 export const useGlobalStyles = makeStyles((theme) => ({
   border : {
-    borderRadius :7,
-    // border : "1px solid #ccc",
-    boxShadow : "0px 0px 100px 10px rgba(200,200,200,0.2)"
+    borderRadius :10,
+    // boxShadow : "0px 0px 100px 10px rgba(200,200,200,0.1)",
+    border : "1px solid #ccc",
+    padding : 20
 
   },
   container: {
@@ -13,14 +14,17 @@ export const useGlobalStyles = makeStyles((theme) => ({
     backgroundColor : "#faf9f9",
     minHeight : "99vh"
   },
+
   highlightSearchText: {
     background: "yellow",
   },
+
   content: {
     minHeight: "100vh",
     paddingLeft: theme.spacing(4),
     paddingRight: theme.spacing(4),
   },
+
   borderLeft: {
     borderLeft: "1px solid",
     borderColor: theme.palette.grey[100],

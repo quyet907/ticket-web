@@ -76,7 +76,7 @@ export default function DialogSaleTicket(props: Props) {
 	const classes = useStyle();
 	const globalStyle = useGlobalStyles();
 	const [listLuggage, setListLuggage] = useState<DetailLuggage[]>([]);
-	const [ticket, setTicket] = useState<Ticket>({}as Ticket);
+	const [ticket, setTicket] = useState<Ticket>({} as Ticket);
 
 	function addLuggage(nameDetailLuggage: string) {
 		var newItem: DetailLuggage = {
@@ -102,18 +102,21 @@ export default function DialogSaleTicket(props: Props) {
 		validationSchema: validate,
 		initialErrors: {},
 		onSubmit: () => {
-			props.onSave({...ticket,metaMapping: {
-				customer : formikForCustomer.values
-			} })
+			props.onSave({
+				...ticket,
+				metaMapping: {
+					customer: formikForCustomer.values,
+				},
+			});
 		},
 	});
 
 	useEffect(() => {
-		setTicket(props.ticket)
-		formikForCustomer.resetForm(); 
+		setTicket(props.ticket);
+		formikForCustomer.resetForm();
 		formikForCustomer.setErrors({});
-		formikForCustomer.setValues(props.ticket)
-	}, [props])
+		formikForCustomer.setValues(props?.ticket?.metaMapping?.customer || {});
+	}, [props]);
 
 	function onSave(item: Ticket) {
 		formikForCustomer.handleSubmit();
@@ -331,10 +334,13 @@ export default function DialogSaleTicket(props: Props) {
 										multiline
 										fullWidth={true}
 										variant="outlined"
-										value = {ticket.description}
-										onChange = {(e=>{
-											setTicket({...ticket,description : e.target.value})
-										})}
+										value={ticket.description}
+										onChange={(e) => {
+											setTicket({
+												...ticket,
+												description: e.target.value,
+											});
+										}}
 										inputProps={{
 											className: classes.textarea,
 										}}
@@ -350,9 +356,11 @@ export default function DialogSaleTicket(props: Props) {
 					Close
 				</Button>
 
-				<Button 
-					type = {"submit"}
-				onClick={() => onSave(props.ticket)} color="primary">
+				<Button
+					type={"submit"}
+					onClick={() => onSave(props.ticket)}
+					color="primary"
+				>
 					Đặt
 				</Button>
 			</DialogActions>

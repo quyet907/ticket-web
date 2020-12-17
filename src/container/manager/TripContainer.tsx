@@ -122,7 +122,7 @@ export default function TripContainer() {
 	}
 
 	return (
-		<Container maxWidth={false} className={clsx(globalStyle.pp5, globalStyle.container)}>
+		<Container maxWidth={false} className={clsx(globalStyle.container)}>
 			<Grid style = {{
 				paddingLeft : 30
 			}}>
