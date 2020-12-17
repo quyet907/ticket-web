@@ -8,6 +8,7 @@ import { CustomerService } from "./CustomerService";
 import { PositionStaffService } from "./PositionStaffService";
 import { RouteService } from "./RouteService";
 import { StaffService } from "./StaffService";
+import { StatisticalService } from "./StatisticalService";
 import { TicketService } from "./TicketService";
 import { TripService } from "./TripService";
 export const appClient = axios.create({
@@ -61,3 +62,4 @@ export const customerController = new CustomerService(URL, serviceName.customer,
 export const routeController = new RouteService(URL, serviceName.route, appClient);
 export const ticketController = new TicketService(URL, serviceName.ticket, appClient);
 export const tripController = new TripService(URL, serviceName.trip, appClient);
+export const statistic = new StatisticalService(URL, serviceName.statistics, appClient)

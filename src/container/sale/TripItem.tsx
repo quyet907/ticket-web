@@ -92,7 +92,7 @@ export default function TripItem(props: Props) {
 						<Grid>
 							<Chip
 								label={moment(
-									props.trip.metaMapping?.route.startAt
+									props.trip.metaMapping?.route?.startAt
 								).format("HH:MM")}
 								color={"primary"}
 							/>
