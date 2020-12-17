@@ -4,6 +4,7 @@ import {
 	Button,
 	colors,
 	Container,
+	Grid,
 	makeStyles,
 	Paper,
 	TextField,
@@ -34,7 +35,7 @@ export default function TicketContainer() {
 	];
 	return (
 		// <Page className={classes.root} title="Customers">
-		<Container maxWidth={false} className={clsx(globalStyle.pp5, globalStyle.container)}>
+		<Grid item xs={12}>
 			<Paper>
 				<Autocomplete
 					id="highlights-demo"
@@ -75,7 +76,7 @@ export default function TicketContainer() {
 					}}
 				/>
 			</Paper>
-		</Container>
+		</Grid>
 		// </Page>
 	);
 }

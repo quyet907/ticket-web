@@ -1,4 +1,4 @@
-import { Grid, Typography } from "@material-ui/core";
+import { Grid, Paper, Typography } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { Bar, ChartComponentProps } from "react-chartjs-2";
 import { useGlobalStyles } from "../../styles/GlobalStyle";
@@ -35,58 +35,24 @@ function Statistic() {
 		],
 	});
 
-	useEffect(() => {
-		
-	}, [])
+	useEffect(() => {}, []);
 	return (
-		<Grid
-			container
-			direction="column"
-			className={clsx(globalStyle.pp5, globalStyle.container)}
-		>
-			<Grid xs={12} container>
-				<Grid xs={6} container>
-					<Grid container direction="row" xs={12}>
-						<SummaryGeneral></SummaryGeneral>
-						<SummaryGeneral></SummaryGeneral>
-					</Grid>
-
-					<Grid container direction="row" className = {clsx(globalStyle.mt3)}>
-						<SummaryGeneral></SummaryGeneral>
-						<SummaryGeneral></SummaryGeneral>
-					</Grid>
-				</Grid>
-
-				<Grid xs={6} className={clsx(globalStyle.border)}>
-					<Bar
-						data={dataTicket}
-						options={{
-							title: {
-								display: true,
-								text: "Vé được bán trong tuần qua",
-								color: "white",
-							},
-							animation: {
-								duration: 3000,
-							},
-							tooltips: {
-								mode: "index",
-								axis: "x",
-							},
-							responsive: true,
-							maintainAspectRatio: true,
-						}}
-					/>
-				</Grid>
+		<Grid xs={12} container spacing={3}>
+			<Grid item xs={12} md={6} lg={3} xl={3}>
+				<SummaryGeneral></SummaryGeneral>
+			</Grid>
+			<Grid item xs={12} md={6} lg={3} xl={3}>
+				<SummaryGeneral></SummaryGeneral>
+			</Grid>
+			<Grid item xs={12} md={6} lg={3} xl={3}>
+				<SummaryGeneral></SummaryGeneral>
+			</Grid>
+			<Grid item xs={12} md={6} lg={3} xl={3}>
+				<SummaryGeneral></SummaryGeneral>
 			</Grid>
 
-			<Grid className={clsx(globalStyle.pt3, globalStyle.pr2)}>
-				<Grid
-					container
-					direction="row"
-					xs={12}
-					className={clsx(globalStyle.border)}
-				>
+			<Grid item xs={12} lg={9}>
+				<Paper elevation={3}>
 					<Bar
 						data={dataTicket}
 						options={{
@@ -105,9 +71,9 @@ function Statistic() {
 							responsive: true,
 							maintainAspectRatio: true,
 						}}
-						height={100}
+						// height={100}
 					/>
-				</Grid>
+				</Paper>
 			</Grid>
 		</Grid>
 	);

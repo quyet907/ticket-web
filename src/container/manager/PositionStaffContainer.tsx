@@ -3,15 +3,13 @@ import React, { useEffect, useState } from "react";
 import { ActionHelper } from "../../comon/ActionHelper";
 import PopUpConfirm from "../../components/dialogs/DialogConfirm";
 import PopUpEditPositionStaff from "../../components/dialogs/PopUpEditPositionStaff";
-import BaseTable, {
-	IBaseTable,
-} from "../../components/genaral-component/BaseTable";
+import BaseTable, { IBaseTable } from "../../components/genaral-component/BaseTable";
 import SearchAndAdd from "../../components/genaral-component/SearchAndAdd";
 import { positionStaffController } from "../../service";
 import { PositionStaff } from "../../submodules/base-ticket-team/base-carOwner/PositionStaff";
 import { IList } from "../../submodules/base-ticket-team/query/IList";
 import { Paging } from "../../submodules/base-ticket-team/query/Paging";
-import clsx from "clsx"
+import clsx from "clsx";
 import { useGlobalStyles } from "../../styles/GlobalStyle";
 
 // import Page from 'src/components/Page';
@@ -40,9 +38,7 @@ export default function PositionStaffContainer() {
 		search: "",
 		// sort : ["-createAt"]
 	});
-	const [selected, setSelected] = useState<PositionStaff>(
-		{} as PositionStaff
-	);
+	const [selected, setSelected] = useState<PositionStaff>({} as PositionStaff);
 	const [showForm, setShowForm] = useState<boolean>(false);
 	const [showConfirm, setShowConfirm] = useState<boolean>(false);
 
@@ -86,27 +82,17 @@ export default function PositionStaffContainer() {
 	}
 
 	useEffect(() => {
-		positionStaffController
-			.list(query)
-			.then((res: Paging<PositionStaff>) => {
-				setObject(res);
-			});
+		positionStaffController.list(query).then((res: Paging<PositionStaff>) => {
+			setObject(res);
+		});
 	}, [query]);
 
-	function convertDataToTable(
-		data: PositionStaff[]
-	): IBaseTable<PositionStaff> {
+	function convertDataToTable(data: PositionStaff[]): IBaseTable<PositionStaff> {
 		const createValue = data.map((item: PositionStaff) => {
 			var value: any[] = [];
 			value.push(item.name || "");
 			value.push(item.description || "");
-			value.push(
-				ActionHelper.getActionUpdateAndDelete(
-					item,
-					onCreateOrUpdate,
-					onConfirm
-				)
-			);
+			value.push(ActionHelper.getActionUpdateAndDelete(item, onCreateOrUpdate, onConfirm));
 			return value;
 		});
 
@@ -124,21 +110,11 @@ export default function PositionStaffContainer() {
 
 	return (
 		// <Page className={classes.root} title="Customers">
-		<Container maxWidth={false} className={clsx(globalStyle.pp5, globalStyle.container)}>
-			<Grid style = {{
-				paddingLeft : 30
-			}}>
-				<Typography
-					variant = {"h1"}
-				>
-					Chức vụ
-				</Typography>
+		<Grid>
+			<Grid>
+				<Typography variant={"h1"}>Chức vụ</Typography>
 			</Grid>
-			<PopUpConfirm
-				isDisplay={showConfirm}
-				onCancel={onCancelConfirm}
-				onDelete={onDelete}
-			/>
+			<PopUpConfirm isDisplay={showConfirm} onCancel={onCancelConfirm} onDelete={onDelete} />
 
 			<PopUpEditPositionStaff
 				obj={selected}
@@ -147,10 +123,7 @@ export default function PositionStaffContainer() {
 				isDisplay={showForm}
 			></PopUpEditPositionStaff>
 
-			<SearchAndAdd<PositionStaff>
-				onCreate={onCreateOrUpdate}
-				onSearch={onSearch}
-			/>
+			<SearchAndAdd<PositionStaff> onCreate={onCreateOrUpdate} onSearch={onSearch} />
 
 			<Box mt={3}>
 				<BaseTable
@@ -160,7 +133,7 @@ export default function PositionStaffContainer() {
 					iTable={convertDataToTable}
 				></BaseTable>
 			</Box>
-		</Container>
+		</Grid>
 		// </Page>
 	);
 }

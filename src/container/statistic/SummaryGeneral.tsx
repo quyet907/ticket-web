@@ -1,8 +1,6 @@
-import { Grid, Typography } from "@material-ui/core";
-import React from "react";
-import { useGlobalStyles } from "../../styles/GlobalStyle";
-import clsx from "clsx";
+import { Avatar, Box, Grid, Paper, Typography } from "@material-ui/core";
 import PersonIcon from "@material-ui/icons/Person";
+import React from "react";
 
 type Props = {
 	title: string;
@@ -10,43 +8,46 @@ type Props = {
 	icon: any;
 };
 export default function SummaryGeneral() {
-	const globalStyle = useGlobalStyles();
 	return (
-		<Grid xs={6} container className={clsx(globalStyle.pr3)}>
-			<Grid
-				container
-				direction="row"
-                justify="center"
-                alignItems = {"stretch"}
-				className={clsx(globalStyle.border)}
-			>
-				<Grid style = {{height : "100%"}} item xs= {3}  >
-					<Grid container direction="column" justify="center" alignItems="center" style = {{
-                        height : "100%",
-                        width : "100%",
-                    }}>
-                    <PersonIcon  style = {{fontSize : 50}}></PersonIcon>
-                    </Grid>
-				</Grid>
-				<Grid item xs= {9} >
-					<Grid
-                    style = {{height : "100%"}}
-						container
-						direction="column"
-						justify={"space-evenly"}
-						alignItems={"center"}
+		<Grid item xs={12}>
+			<Paper elevation={3}>
+				<Box display="flex" flexDirection="row">
+					<Box>
+						<Avatar
+							style={{
+								backgroundColor: "#fff",
+								border: "1px solid grey",
+								width: 56,
+								height: 56,
+							}}
+						>
+							<PersonIcon fontSize="large" color="primary"></PersonIcon>
+						</Avatar>
+					</Box>
+					<Box
+						flex={1}
+						pl={3}
+						display="flex"
+						flexDirection="column"
+						justifyContent="space-between"
 					>
-						<Grid>
-							<Typography variant="h4">
+						<Box>
+							<Typography variant="h6" color="textSecondary" style={{textTransform: "uppercase"}}>
 								Tổng khách hàng
 							</Typography>
-						</Grid>
-						<Grid>
-							<Typography variant="h1">25.0000</Typography>
-						</Grid>
-					</Grid>
-				</Grid>
-			</Grid>
+						</Box>
+						<Box>
+							<Typography variant="h2">
+								{getFormatNumber(Math.round(Math.random() * 10000))}
+							</Typography>
+						</Box>
+					</Box>
+				</Box>
+			</Paper>
 		</Grid>
 	);
+}
+
+export function getFormatNumber(number: number) {
+	return new Intl.NumberFormat("en-IN", { maximumSignificantDigits: 3 }).format(number);
 }
