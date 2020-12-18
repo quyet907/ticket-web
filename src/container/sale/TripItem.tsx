@@ -74,7 +74,7 @@ export default function TripItem(props: Props) {
 				className={clsx(classes.infomation)}
 			>
 				<Grid>
-					<Link to= {`/sale/${props.trip._id}`}>
+					<Link to= {`/sale/${props.trip.id}`}>
 					<Typography variant="h2">
 						{props.trip?.metaMapping?.car?.name}
 					</Typography>

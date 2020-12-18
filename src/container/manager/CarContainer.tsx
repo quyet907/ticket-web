@@ -64,7 +64,7 @@ export default function CarContainer() {
 	}
 
 	function onDelete() {
-		carController.delete(selected._id || "").then((res) => {
+		carController.delete(selected.id || "").then((res) => {
 			setQuery({ ...query });
 		});
 		setShowConfirm(false);
@@ -98,7 +98,7 @@ export default function CarContainer() {
 	}
 
 	function onNextPageTrip(item :Car){
-		history.push(`trip/${item._id}`)
+		history.push(`trip/${item.id}`)
 	}
 
 	useEffect(() => {

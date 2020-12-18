@@ -78,7 +78,7 @@ export default function DetailInfoTicket(props: Props) {
 				>
 				</Grid>
 				<Grid>
-					{(props.ticketInfo._id) ? (statusBooked(props.ticketInfo)): (statusUnset())}
+					{(props.ticketInfo.id) ? (statusBooked(props.ticketInfo)): (statusUnset())}
 				</Grid>
 			</Grid>
 		</Grid>

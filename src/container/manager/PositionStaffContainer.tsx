@@ -63,7 +63,7 @@ export default function PositionStaffContainer() {
 	}
 
 	function onDelete() {
-		positionStaffController.delete(selected._id || "").then((res) => {
+		positionStaffController.delete(selected.id || "").then((res) => {
 			setQuery({ ...query });
 			setShowConfirm(false);
 		});

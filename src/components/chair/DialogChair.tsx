@@ -44,31 +44,31 @@ export default function DialogChair(props: Props) {
 				{
 					localColumn: 1,
 					localRow: row,
-					carId: props.Car._id,
+					carId: props.Car.id,
 					localFloor: floor,
 				},
 				{
 					localColumn: 2,
 					localRow: row,
-					carId: props.Car._id,
+					carId: props.Car.id,
 					localFloor: floor,
 				},
 				{
 					localColumn: 3,
 					localRow: row,
-					carId: props.Car._id,
+					carId: props.Car.id,
 					localFloor: floor,
 				},
 				{
 					localColumn: 4,
 					localRow: row,
-					carId: props.Car._id,
+					carId: props.Car.id,
 					localFloor: floor,
 				},
 				{
 					localColumn: 5,
 					localRow: row,
-					carId: props.Car._id,
+					carId: props.Car.id,
 					localFloor: floor,
 				},
 			]);
@@ -96,7 +96,7 @@ export default function DialogChair(props: Props) {
 	}
 
 	function onDelete() {
-		chairCarController.delete(selected._id || "").then((res) => {
+		chairCarController.delete(selected.id || "").then((res) => {
 			setEventReload(!eventReload);
 		});
 		setShowConfirm(false);
@@ -111,7 +111,7 @@ export default function DialogChair(props: Props) {
 	function onAutoCreate(data : CreateChairCar ){
 		chairCarController.autoCreate({
 			...data,
-			carId : props.Car._id
+			carId : props.Car.id
 		}).then(res=>{
 			setShowFormAutoCreate(false);
 			setEventReload(!eventReload);
@@ -123,7 +123,7 @@ export default function DialogChair(props: Props) {
 		setShowFormAutoCreate(false);
 		setDiagramChair({ dataListChar: [] });
 		if (props.open) {
-			chairCarController.getByCarId(props.Car._id || "").then((res) => {
+			chairCarController.getByCarId(props.Car.id || "").then((res) => {
 				setDiagramChair(res);
 				if (res.dataListChar?.length === 0) {
 					setShowFormAutoCreate(true);

@@ -66,7 +66,7 @@ export default function TripContainer() {
 	}
 
 	function onDelete() {
-		tripController.delete(selected._id || "").then((res) => {
+		tripController.delete(selected.id || "").then((res) => {
 			setQuery({ ...query });
 		});
 		setShowConfirm(false)

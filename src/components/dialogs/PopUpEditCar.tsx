@@ -53,7 +53,7 @@ export default function PopUpEditCar(props: Props) {
 		<form onSubmit={formik.handleSubmit}>
 			<Dialog open={isDisplay} fullWidth maxWidth="xs">
 				<BaseDialogTitle
-					title={props.obj._id ? "SỬa" : "Thêm"}
+					title={props.obj.id ? "SỬa" : "Thêm"}
 					onCancel={onCancel}
 				/>
 				<DialogContent>

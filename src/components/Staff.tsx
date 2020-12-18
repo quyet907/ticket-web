@@ -71,7 +71,7 @@ export default function StaffView() {
   }
 
   function onDelete(item: Staff) {
-    staffController.delete(item._id || "").then((res) => {
+    staffController.delete(item.id || "").then((res) => {
       setQuery({ ...query });
     });
   }

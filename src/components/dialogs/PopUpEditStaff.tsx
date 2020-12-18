@@ -86,7 +86,7 @@ export default function PopUpEditStaff(props: Props) {
 		<form onSubmit={formik.handleSubmit}>
 			<Dialog open={props.isDisplay} fullWidth maxWidth="xs">
 				<BaseDialogTitle
-					title={props.obj._id ? "SỬa" : "Thêm"}
+					title={props.obj.id ? "SỬa" : "Thêm"}
 					onCancel={props.onCancel}
 				/>
 				<DialogContent>
@@ -216,7 +216,7 @@ export default function PopUpEditStaff(props: Props) {
 							options={listPostion}
 							getOptionLabel={(option) => option?.name ||""}
 							fullWidth
-							value = {listPostion.find(item=> item._id === formik.values.positionId)}
+							value = {listPostion.find(item=> item.id === formik.values.positionId)}
 							renderInput={(params) => (
 								<TextField
 									{...params}

@@ -63,7 +63,7 @@ export default function StaffView() {
   }
 
   function onDelete() {
-    staffController.delete(selected._id || "").then((res) => {
+    staffController.delete(selected.id || "").then((res) => {
       setQuery({ ...query });
     });
     setShowConfirm(false)

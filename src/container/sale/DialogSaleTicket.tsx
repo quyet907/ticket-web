@@ -81,7 +81,7 @@ export default function DialogSaleTicket(props: Props) {
 	function addLuggage(nameDetailLuggage: string) {
 		var newItem: DetailLuggage = {
 			nameLuggage: nameDetailLuggage,
-			_id: uuidv4(),
+			id: uuidv4(),
 			luggageId: "", // TODO : change here
 		};
 		setListLuggage([...listLuggage, newItem]);
@@ -89,7 +89,7 @@ export default function DialogSaleTicket(props: Props) {
 	function removeLuggage(item: DetailLuggage) {
 		var getListLuggage = [...listLuggage];
 		var getIndex = getListLuggage.findIndex(
-			(luggage) => luggage._id == item._id
+			(luggage) => luggage.id == item.id
 		);
 		if (getIndex >= 0) {
 			getListLuggage.splice(getIndex, 1);

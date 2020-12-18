@@ -80,7 +80,7 @@ export default function PopUpEditCustomer(props: Props) {
 	return (
 		<Dialog open={props.isDisplay} fullWidth maxWidth="xs">
 			<BaseDialogTitle
-				title={props.obj._id ? "Sửa" : "Thêm"}
+				title={props.obj.id ? "Sửa" : "Thêm"}
 				onCancel={props.onCancel}
 			/>
 			<DialogContent>

@@ -51,7 +51,7 @@ export default function Customers() {
   }
 
   function onDelete() {
-    customerController.delete(selected._id|| "").then(() => {
+    customerController.delete(selected.id|| "").then(() => {
       setQuery({ ...query });
     });
     setShowConfirm(false)
