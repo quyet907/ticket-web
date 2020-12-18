@@ -12,9 +12,8 @@ import { Route } from "../../submodules/base-ticket-team/base-carOwner/Route";
 import { IList } from "../../submodules/base-ticket-team/query/IList";
 import { Paging } from "../../submodules/base-ticket-team/query/Paging";
 // import Page from 'src/components/Page';
-import clsx from "clsx"
+import clsx from "clsx";
 import { useGlobalStyles } from "../../styles/GlobalStyle";
-
 
 export default function RouteContainer() {
 	const globalStyle = useGlobalStyles();
@@ -52,23 +51,23 @@ export default function RouteContainer() {
 	}
 
 	function onDelete() {
-		positionStaffController.delete(selected.id ||"").then((res) => {
+		positionStaffController.delete(selected.id || "").then((res) => {
 			setQuery({ ...query });
 		});
-		setShowConfirm(false)
+		setShowConfirm(false);
 	}
 
 	function onQuery(query: IList) {
 		setQuery(query);
 	}
 
-	function onConfirm(item : Route){
+	function onConfirm(item: Route) {
 		setSelected(item);
-		setShowConfirm(true)
+		setShowConfirm(true);
 	}
 
-	function onCancelConfirm(){
-		setShowConfirm(false)
+	function onCancelConfirm() {
+		setShowConfirm(false);
 	}
 
 	function onSearch(search: string) {
@@ -100,7 +99,6 @@ export default function RouteContainer() {
 				{ id: "startAt", label: "Giờ khởi hành" },
 				{ id: "sumTimeRun", label: "Tổng thời gian chạy dự kiến" },
 				{ id: "", label: "Hanh dong" },
-		
 			],
 			paging: { ...object, rows: [] },
 			value: createValue,
@@ -110,21 +108,11 @@ export default function RouteContainer() {
 
 	return (
 		// <Page className={classes.root} title="Customers">
-		<Container maxWidth={false} className={clsx(globalStyle.pp5, globalStyle.container)}>
-			<Grid style = {{
-				paddingLeft : 30
-			}}>
-				<Typography
-					variant = {"h1"}
-				>
-					Chức vụ
-				</Typography>
+		<Grid xs={12}>
+			<Grid>
+				<Typography variant={"h1"}>Chức vụ</Typography>
 			</Grid>
-			<PopUpConfirm
-			isDisplay = {showConfirm}
-			onCancel ={onCancelConfirm}
-			onDelete = {onDelete}
-			/>
+			<PopUpConfirm isDisplay={showConfirm} onCancel={onCancelConfirm} onDelete={onDelete} />
 
 			<PopUpEditRoute
 				obj={selected}
@@ -143,7 +131,7 @@ export default function RouteContainer() {
 					iTable={convertDataToTable}
 				></BaseTable>
 			</Box>
-		</Container>
+		</Grid>
 		// </Page>
 	);
 }

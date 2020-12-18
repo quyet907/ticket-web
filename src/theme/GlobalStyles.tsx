@@ -25,9 +25,6 @@ const useStyles = makeStyles(() => createStyles({
       height: '100%',
       width: '100%'
     },
-    '.MuiPaper-root' :{
-      borderRadius: 30
-    }
   }
 }));
 

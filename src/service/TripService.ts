@@ -12,6 +12,9 @@ export class TripService extends BaseController<Trip> {
 		
 	}
     public getListByDate(params : IGetByDate): Promise<Paging<Trip>> {
+    params.from.setDate(1);
+    params.to.setDate(30);
+
 		return this.client
       .get(`${this.serviceURL}/${this.basePath}/getListByDate`, {
         params: params,

@@ -1,4 +1,4 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { Box, colors, Container, Grid, makeStyles, Theme } from "@material-ui/core";
 import React, { useState } from "react";
 import { Route, Switch, useRouteMatch } from "react-router";
 import CarContainer from "../../../container/manager/CarContainer";
@@ -10,12 +10,12 @@ import TripContainer from "../../../container/manager/TripContainer";
 import DiagramSaleTicket from "../../../container/sale/DiagramSaleTicket";
 import HomeSaleTicket from "../../../container/sale/HomeSaleTicket";
 import Statistic from "../../../container/statistic/Statistic";
+import { useGlobalStyles } from "../../../styles/GlobalStyle";
 import NavBar from "./NavBar/NavBar";
-
 
 const useStyles = makeStyles((theme: Theme) => ({
 	root: {
-		backgroundColor: theme.palette.background.default,
+		backgroundColor: theme.palette.common.white,
 		// backgroundColor : "black",
 		display: "flex",
 		height: "100%",
@@ -40,17 +40,23 @@ const useStyles = makeStyles((theme: Theme) => ({
 		flex: "1 1 auto",
 		height: "100%",
 		overflow: "auto",
+		padding: theme.spacing(3),
+		// paddingLeft: theme.spacing(4),
+		backgroundColor: "rgb(247, 249, 252)",
+		borderLeft: "1px solid",
+		borderColor: colors.grey[300]
 	},
 }));
 
 function DashboardLayout() {
 	const classes = useStyles();
 	const [isMobileNavOpen, setMobileNavOpen] = useState(false);
+	const globalStyles = useGlobalStyles();
 
 	const { path } = useRouteMatch();
 
 	return (
-		<div className={classes.root} >
+		<div className={classes.root}>
 			{/* <TopBar onMobileNavOpen={() => setMobileNavOpen(true)} /> */}
 			<NavBar onMobileClose={() => setMobileNavOpen(false)} openMobile={isMobileNavOpen} />
 			<div className={classes.wrapper}>
@@ -64,11 +70,9 @@ function DashboardLayout() {
 							<Route exact path={`/trip/:id`} component={TripContainer} />
 							<Route exact path={`/route`} component={RouteContainer} />
 							<Route exact path={`/ticket`} component={HomeSaleTicket} />
-							<Route exact path={`/car`} component={CarContainer}/>
-							<Route exact path={`/sale/:id`} component={DiagramSaleTicket}/>
-							<Route path="*">
-								{/* <Redirect to="/dashboard" /> */}
-							</Route>
+							<Route exact path={`/car`} component={CarContainer} />
+							<Route exact path={`/sale/:id`} component={DiagramSaleTicket} />
+							<Route path="*">{/* <Redirect to="/dashboard" /> */}</Route>
 						</Switch>
 					</div>
 				</div>

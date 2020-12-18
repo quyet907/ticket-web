@@ -1,12 +1,4 @@
-import {
-	Avatar,
-	Box,
-	Drawer,
-	Hidden,
-	List,
-	makeStyles,
-	Typography,
-} from "@material-ui/core";
+import { Avatar, Box, Drawer, Hidden, List, makeStyles, Typography } from "@material-ui/core";
 import React, { useEffect } from "react";
 import {
 	AlertCircle,
@@ -22,11 +14,14 @@ import {
 import { Link as RouterLink, useLocation } from "react-router-dom";
 import { useGlobalStyles } from "../../../../styles/GlobalStyle";
 import NavItem from "./NavItem";
+import { uniqueNamesGenerator, Config, names } from "unique-names-generator";
 
 const user = {
-	avatar: "https://loremflickr.com/json/g/320/240/girl/all",
-	jobTitle: "Admin",
-	name: "Team Ale",
+	avatar: "https://picsum.photos/200",
+	jobTitle: "Manager",
+	name: uniqueNamesGenerator({
+		dictionaries: [names],
+	}),
 };
 
 const items = [
@@ -118,24 +113,14 @@ const NavBar = (props: Props) => {
 
 	const content = (
 		<Box height="100%" display="flex" flexDirection="column">
-			<Box
-				alignItems="center"
-				display="flex"
-				flexDirection="column"
-				p={2}
-			>
+			<Box alignItems="center" display="flex" flexDirection="column" p={2}>
 				<Avatar
 					className={classes.avatar}
 					component={RouterLink}
 					src={user.avatar}
 					to="/app/account"
 				/>
-				<Box
-					mt={1}
-					alignItems="center"
-					display="flex"
-					flexDirection="column"
-				>
+				<Box mt={1} alignItems="center" display="flex" flexDirection="column">
 					<Typography color="textPrimary" variant="h1">
 						{user.name}
 					</Typography>

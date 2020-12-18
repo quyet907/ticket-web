@@ -20,7 +20,6 @@ import ButtonSort from "./ButtonSort";
 const useStyles = makeStyles((theme) => ({
 	root: {
 		flexShrink: 0,
-		marginLeft: theme.spacing(2.5),
 	},
 	avatar: {
 		marginRight: theme.spacing(2),
@@ -28,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 	rowTable: {
 		padding: 10,
 		borderBottom: "1px solid #ccc",
-		borderRadius: 7,
+		// borderRadius: 7,
 		display: "flex",
 		flexWrap: "nowrap",
 		cursor: "pointer",
@@ -43,6 +42,12 @@ const useStyles = makeStyles((theme) => ({
 		backgroundColor: theme.palette.primary.main,
 		color: "white",
 		fontWeight: 500,
+		borderTopRightRadius: 10,
+		borderTopLeftRadius: 10,
+	},
+	lastRow: {
+		borderBottomRightRadius: 10,
+		borderBottomLeftRadius: 10,
 	},
 	rowFirst: {
 		background: "white",
@@ -75,33 +80,23 @@ export default function BaseTable<T>(props: Props<T>) {
 
 	function checkActionSort(label: string): boolean {
 		if (typeof props.query.sort == "string") {
-			if (
-				props.query.sort === `${label}` ||
-				props.query.sort === `-${label}`
-			) {
+			if (props.query.sort === `${label}` || props.query.sort === `-${label}`) {
 				return true;
 			}
 			return false;
 		}
-		var check = props.query.sort?.find(
-			(sort) => sort === `${label}` || sort === `-${label}`
-		);
+		var check = props.query.sort?.find((sort) => sort === `${label}` || sort === `-${label}`);
 		return check ? true : false;
 	}
 
 	function checkDirection(label: string): "desc" | "asc" | undefined {
 		if (typeof props.query.sort == "string") {
-			if (
-				props.query.sort === `${label}` ||
-				props.query.sort === `-${label}`
-			) {
+			if (props.query.sort === `${label}` || props.query.sort === `-${label}`) {
 				return "asc";
 			}
 			return "desc";
 		}
-		var check = props.query.sort?.find(
-			(sort) => sort === `${label}` || sort === `-${label}`
-		);
+		var check = props.query.sort?.find((sort) => sort === `${label}` || sort === `-${label}`);
 		if (!check) return undefined;
 		if (check === `${label}`) return "desc";
 		return "asc";
@@ -114,9 +109,7 @@ export default function BaseTable<T>(props: Props<T>) {
 			getSort.push(label);
 		} else {
 			getSort = props.query?.sort || [];
-			var check = getSort?.findIndex(
-				(sort) => sort === `${label}` || sort === `-${label}`
-			);
+			var check = getSort?.findIndex((sort) => sort === `${label}` || sort === `-${label}`);
 			if (check !== undefined && check < 0) {
 				getSort.push(label);
 			}
@@ -141,10 +134,7 @@ export default function BaseTable<T>(props: Props<T>) {
 							container
 							// direction="row"
 							// justify="space-evenly"
-							className={clsx(
-								classes.rowTable,
-								classes.headerTable
-							)}
+							className={clsx(classes.rowTable, classes.headerTable)}
 						>
 							<Grid
 								container
@@ -166,7 +156,7 @@ export default function BaseTable<T>(props: Props<T>) {
 												flexShrink: "initial",
 												width: 1000,
 											}}
-											>
+										>
 											{header.label}
 											{/* <TableSortLabel
 												color = {"white"}
@@ -179,12 +169,13 @@ export default function BaseTable<T>(props: Props<T>) {
 											</TableSortLabel> */}
 											<ButtonSort
 												active={checkActionSort(header.id.toString())}
-												direction={checkDirection(header.id.toString()) as any}
+												direction={
+													checkDirection(header.id.toString()) as any
+												}
 												onClick={() => {
 													onSort(header.id.toString());
 												}}
 											/>
-											
 										</Grid>
 									);
 								})}
@@ -194,54 +185,49 @@ export default function BaseTable<T>(props: Props<T>) {
 							<Grid container direction="column">
 								{props
 									.iTable(props.data.rows || [])
-									.value.map(
-										(
-											valueTable: React.ReactNode[],
-											indexRow
-										) => (
+									.value.map((valueTable: React.ReactNode[], indexRow) => (
+										<Grid
+											container
+											direction="row"
+											className={clsx(
+												classes.rowTable,
+												indexRow % 2 === 0
+													? classes.rowFirst
+													: classes.rowSeconds,
+												props
+													.iTable(props.data.rows || [])
+													.value.length ===
+													indexRow + 1
+													? classes.lastRow
+													: ""
+											)}
+										>
 											<Grid
 												container
 												direction="row"
-												className={clsx(
-													classes.rowTable,
-													indexRow % 2 === 0
-														? classes.rowFirst
-														: classes.rowSeconds
-												)}
+												alignItems="center"
+												alignContent="center"
+												style={{
+													width: 200,
+												}}
 											>
+												<Grid>{indexRow + 1} </Grid>
+											</Grid>
+											{valueTable.map((label: React.ReactNode) => (
 												<Grid
 													container
 													direction="row"
 													alignItems="center"
 													alignContent="center"
 													style={{
-														width: 200,
+														width: 1000,
 													}}
 												>
-													<Grid>{indexRow + 1} </Grid>
+													<Grid>{label} </Grid>
 												</Grid>
-												{valueTable.map(
-													(
-														label: React.ReactNode
-													) => (
-														<Grid
-															container
-															direction="row"
-															alignItems="center"
-															alignContent="center"
-															style={{
-																width: 1000,
-															}}
-														>
-															<Grid>
-																{label}{" "}
-															</Grid>
-														</Grid>
-													)
-												)}
-											</Grid>
-										)
-									)}
+											))}
+										</Grid>
+									))}
 							</Grid>
 						</Grid>
 					</Grid>
@@ -257,11 +243,8 @@ export default function BaseTable<T>(props: Props<T>) {
 									<Select
 										value={props.query.pageSize}
 										onChange={(e) => {
-											var getValue: string = e.target
-												.value as any;
-											var getValueNumber: number = parseInt(
-												getValue
-											);
+											var getValue: string = e.target.value as any;
+											var getValueNumber: number = parseInt(getValue);
 											props.onQuery({
 												...props.query,
 												pageSize: getValueNumber,
@@ -288,9 +271,9 @@ export default function BaseTable<T>(props: Props<T>) {
 								<Grid>
 									<Pagination
 										count={Math.ceil(
-											(props.data.total || 1) /
-												(props.query.pageSize || 1)
+											(props.data.total || 1) / (props.query.pageSize || 1)
 										)}
+										shape="rounded"
 										showFirstButton
 										showLastButton
 										onChange={(e, value) => {
@@ -299,7 +282,7 @@ export default function BaseTable<T>(props: Props<T>) {
 												page: value,
 											});
 										}}
-										color="primary"
+										color="standard"
 									/>
 								</Grid>
 							</Grid>

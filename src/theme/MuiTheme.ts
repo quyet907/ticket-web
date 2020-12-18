@@ -8,7 +8,7 @@ const theme = createMuiTheme({
 			paper: "#faf9f9",
 		},
 		primary: {
-			main: "rgb(255, 13, 158)",
+			main: colors.blue[400],
 		},
 		secondary: {
 			main: "#ff798e",
@@ -81,6 +81,16 @@ const theme = createMuiTheme({
 				padding: "8px 24px 24px 24px",
 			},
 		},
+		MuiPaper: {
+			root: {
+				boxSizing: "border-box",
+				padding: "20px",
+				backgroundColor: colors.common.white
+			},
+			rounded: {
+				borderRadius: "5px"
+			}
+		}
 	},
 });
 

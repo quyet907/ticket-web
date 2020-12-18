@@ -18,10 +18,9 @@ import _ from "lodash";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		marginLeft: theme.spacing(2.5),
-		// backgroundColor : theme.palette.background.default
-		background : "none",
-		borderRadius: 10
+		backgroundColor : theme.palette.common.white,
+		background: "none",
+		borderRadius: 10,
 	},
 	importButton: {
 		marginRight: theme.spacing(1),
@@ -31,18 +30,16 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const TextFieldCustom = withStyles(theme=>({
-	root : {
-		borderRadius : 20,
-		background : theme.palette.background.default,
-		paddingLeft : 50,
-		padding : 10,
+const TextFieldCustom = withStyles((theme) => ({
+	root: {
+		background: theme.palette.background.default,
+		padding: 10,
 		"&:focus": {
-			border : "1px solid",
-			borderColor : theme.palette.primary.main,
-		}
-	}
-}))(InputBase)
+			border: "1px solid",
+			borderColor: theme.palette.primary.main,
+		},
+	},
+}))(InputBase);
 
 type Props<T> = {
 	className?: string;
@@ -62,44 +59,47 @@ function SearchAndAdd<T>(props: Props<T>) {
 	);
 
 	return (
-		<div >
-			<Box mt={3}>
-				<Card className={clsx(classes.root)}>
-					<CardContent style={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
-						<Box flexBasis={500}>
-							<TextFieldCustom
-
-								fullWidth
-								// InputProps={{
-								// 	startAdornment: (
-								// 		<InputAdornment position="start">
-								// 			<SvgIcon fontSize="small" color="action">
-								// 				<SearchIcon />
-								// 			</SvgIcon>
-								// 		</InputAdornment>
-								// 	),
-								// }}
-								placeholder="Search"
-								onChange={(e) => {
-									onSearch(e.target.value);
-								}}
-							/>
-						</Box>
-						<Box  display="flex" justifyContent="flex-end">
-							<Button className={classes.importButton}>Import</Button>
-							<Button className={classes.exportButton}>Export</Button>
-							<Button
-								color="primary"
-								variant="contained"
-								onClick={() => props.onCreate({} as T)}
-							>
-								Thêm mới
-							</Button>
-						</Box>
-					</CardContent>
-				</Card>
-			</Box>
-		</div>
+		<Box>
+			<Card className={clsx(classes.root)}>
+				<CardContent
+					style={{
+						display: "flex",
+						justifyContent: "space-between",
+						alignItems: "center",
+					}}
+				>
+					<Box flexBasis={300}>
+						<TextField
+							fullWidth
+							// InputProps={{
+							// 	startAdornment: (
+							// 		<InputAdornment position="start">
+							// 			<SvgIcon fontSize="small" color="action">
+							// 				<SearchIcon />
+							// 			</SvgIcon>
+							// 		</InputAdornment>
+							// 	),
+							// }}
+							placeholder="Search"
+							onChange={(e) => {
+								onSearch(e.target.value);
+							}}
+						/>
+					</Box>
+					<Box display="flex" justifyContent="flex-end">
+						<Button className={classes.importButton}>Import</Button>
+						<Button className={classes.exportButton}>Export</Button>
+						<Button
+							color="primary"
+							variant="contained"
+							onClick={() => props.onCreate({} as T)}
+						>
+							Thêm mới
+						</Button>
+					</Box>
+				</CardContent>
+			</Card>
+		</Box>
 	);
 }
 
