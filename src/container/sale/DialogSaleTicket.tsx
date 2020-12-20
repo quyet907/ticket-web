@@ -1,41 +1,18 @@
 import {
 	Button,
-
-
-
-
-
-
-
-
-	Chip, Dialog,
-
-
-
-
-
-
-
-
-	DialogActions, DialogContent,
-
+	Chip,
+	Dialog,
+	DialogActions,
+	DialogContent,
 	FormControl,
-
-
-
 	FormControlLabel,
-
-
-
-
-
-	FormLabel, Grid,
+	FormLabel,
+	Grid,
 	makeStyles,
-
-
 	Radio,
 	RadioGroup,
-	TextField, Typography
+	TextField,
+	Typography,
 } from "@material-ui/core";
 import clsx from "clsx";
 import { useFormik } from "formik";
@@ -81,7 +58,7 @@ export default function DialogSaleTicket(props: Props) {
 	function addLuggage(nameDetailLuggage: string) {
 		var newItem: DetailLuggage = {
 			nameLuggage: nameDetailLuggage,
-			_id: uuidv4(),
+			id: uuidv4(),
 			luggageId: "", // TODO : change here
 		};
 		setListLuggage([...listLuggage, newItem]);
@@ -89,7 +66,7 @@ export default function DialogSaleTicket(props: Props) {
 	function removeLuggage(item: DetailLuggage) {
 		var getListLuggage = [...listLuggage];
 		var getIndex = getListLuggage.findIndex(
-			(luggage) => luggage._id == item._id
+			(luggage) => luggage.id == item.id
 		);
 		if (getIndex >= 0) {
 			getListLuggage.splice(getIndex, 1);
@@ -104,9 +81,7 @@ export default function DialogSaleTicket(props: Props) {
 		onSubmit: () => {
 			props.onSave({
 				...ticket,
-				metaMapping: {
-					customer: formikForCustomer.values,
-				},
+				customer: formikForCustomer.values,
 			});
 		},
 	});
@@ -115,7 +90,7 @@ export default function DialogSaleTicket(props: Props) {
 		setTicket(props.ticket);
 		formikForCustomer.resetForm();
 		formikForCustomer.setErrors({});
-		formikForCustomer.setValues(props?.ticket?.metaMapping?.customer || {});
+		formikForCustomer.setValues(props?.ticket?.customer || {});
 	}, [props]);
 
 	function onSave(item: Ticket) {
@@ -170,17 +145,9 @@ export default function DialogSaleTicket(props: Props) {
 										name="gender1"
 									>
 										<FormControlLabel
-											value={
-												props.ticket.metaMapping?.trip
-													?.metaMapping?.route
-													?.localStart
-											}
+											value={"changHere"}
 											control={<Radio />}
-											label={
-												props.ticket.metaMapping?.trip
-													?.metaMapping?.route
-													?.localStart
-											}
+											label={"changHere"}
 										/>
 										<FormControlLabel
 											value="male"
@@ -205,11 +172,7 @@ export default function DialogSaleTicket(props: Props) {
 										<FormControlLabel
 											value="female"
 											control={<Radio />}
-											label={
-												props.ticket.metaMapping?.trip
-													?.metaMapping?.route
-													?.localStart
-											}
+											label={"changHere"}
 										/>
 										<FormControlLabel
 											value="male"

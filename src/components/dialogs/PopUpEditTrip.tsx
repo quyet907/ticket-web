@@ -76,7 +76,7 @@ export default function PopUpEditTrip(props: Props) {
 		<form onSubmit={formik.handleSubmit}>
 			<Dialog open={props.isDisplay} fullWidth maxWidth="xs">
 				<BaseDialogTitle
-					title={props.obj._id ? "Sửa" : "Thêm"}
+					title={props.obj.id ? "Sửa" : "Thêm"}
 					onCancel={props.onCancel}
 				/>
 				<DialogContent>
@@ -135,12 +135,12 @@ export default function PopUpEditTrip(props: Props) {
 								getOptionLabel={(option) => option?.name || ""}
 								fullWidth
 								value={listStaff.find(
-									(item) => item._id === formik.values.driveId
+									(item) => item.id === formik.values.driveId
 								)}
 								onChange={(e, v) => {
 									formik.setValues({
 										...formik.values,
-										driveId: v?._id,
+										driveId: v?.id,
 									});
 								}}
 								renderInput={(params) => (
@@ -160,12 +160,12 @@ export default function PopUpEditTrip(props: Props) {
 								getOptionLabel={(option) => (`${option?.localStart}- ${option?.localEnd}`) || ""}
 								fullWidth
 								value={listRoute.find(
-									(item) => item._id === formik.values.routeId
+									(item) => item.id === formik.values.routeId
 								)}
 								onChange={(e, v) => {
 									formik.setValues({
 										...formik.values,
-										routeId: v?._id,
+										routeId: v?.id,
 									});
 								}}
 								renderInput={(params) => (

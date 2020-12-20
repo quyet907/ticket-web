@@ -63,7 +63,7 @@ export default function PopUpEditRoute(props: Props) {
 		<form onSubmit={formik.handleSubmit}>
 			<Dialog open={props.isDisplay} fullWidth maxWidth="xs">
 				<BaseDialogTitle
-					title={props.obj._id ? "SỬa" : "Thêm"}
+					title={props.obj.id ? "SỬa" : "Thêm"}
 					onCancel={props.onCancel}
 				/>
 				<DialogContent>

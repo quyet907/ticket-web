@@ -25,13 +25,11 @@ export class TripService extends BaseController<Trip> {
   }
 
 	public getListByCarId( query: IList,id: string): Promise<Paging<Trip>> {
-    query = {...query,searchFields: ["price"]}
     const newQuery: IList = {
       ...query,
       query : {...query.query, carId : id}
 
     }
-    console.log(newQuery)
 		return super.list(newQuery)
 	}
 

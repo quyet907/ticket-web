@@ -55,7 +55,7 @@ export default function StaffView() {
 	}
 
 	function onDelete() {
-		staffController.delete(selected._id || "").then((res) => {
+		staffController.delete(selected.id || "").then((res) => {
 			setQuery({ ...query });
 		});
 		setShowConfirm(false);
@@ -91,7 +91,7 @@ export default function StaffView() {
 			value.push(item.address);
 			value.push(item.phoneNumber);
 			value.push(item.identityCard);
-			value.push(item.metaMapping?.position?.name);
+			value.push(item.position?.name);
 			// value.push(ActionHelper.getActionUpdate(item, onCreateOrUpdate));
 			// value.push(ActionHelper.getActionDelete(item, onDelete));
 			value.push(ActionHelper.getActionUpdateAndDelete(item, onCreateOrUpdate, onConfirm));
@@ -107,7 +107,7 @@ export default function StaffView() {
 				{ id: "phoneNumber", label: "Số điện thoại" },
 				{ id: "identityCard", label: "Chứng minh nhân dân" },
 				{ id: "positionId", label: "Chức vụ" },
-				{ id: "", label: "Hanh dong" },
+				{ id: "", label: "Hành động" },
 			],
 			paging: { ...object, rows: [] },
 			value: createValue,

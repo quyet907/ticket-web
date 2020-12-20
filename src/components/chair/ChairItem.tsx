@@ -62,7 +62,7 @@ export default function ChairItem(props: Props) {
 						props.onClick(e);
 					}}
 				>
-					{props.chair._id ? <EventSeatIcon /> : <AddIcon />}
+					{props.chair.id ? <EventSeatIcon /> : <AddIcon />}
 				</ChairButton>
 			</Tooltip>
 		</Grid>

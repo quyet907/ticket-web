@@ -62,7 +62,7 @@ export default function CarContainer() {
 	}
 
 	function onDelete() {
-		carController.delete(selected._id || "").then((res) => {
+		carController.delete(selected.id || "").then((res) => {
 			setQuery({ ...query });
 		});
 		setShowConfirm(false);
@@ -96,7 +96,7 @@ export default function CarContainer() {
 	}
 
 	function onNextPageTrip(item: Car) {
-		history.push(`trip/${item._id}`);
+		history.push(`trip/${item.id}`);
 	}
 
 	useEffect(() => {
@@ -113,7 +113,7 @@ export default function CarContainer() {
 			value.push(item.origin);
 			value.push(moment(item.entryAt).format("YYYY-MM-DD"));
 			value.push(item.licensePlates);
-			value.push(item.metaMapping?.totalChair);
+			value.push(item.totalChair as any);
 
 			value.push(
 				ActionHelper.getAllActionForCar(

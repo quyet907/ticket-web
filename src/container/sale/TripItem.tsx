@@ -74,9 +74,9 @@ export default function TripItem(props: Props) {
 				className={clsx(classes.infomation)}
 			>
 				<Grid>
-					<Link to= {`/sale/${props.trip._id}`}>
+					<Link to= {`/sale/${props.trip.id}`}>
 					<Typography variant="h2">
-						{props.trip?.metaMapping?.car?.name}
+						{props.trip?.car?.name}
 					</Typography>
 					</Link>
 
@@ -92,7 +92,7 @@ export default function TripItem(props: Props) {
 						<Grid>
 							<Chip
 								label={moment(
-									props.trip.metaMapping?.route?.startAt
+									props.trip.route?.startAt
 								).format("HH:MM")}
 								color={"primary"}
 							/>
@@ -112,20 +112,20 @@ export default function TripItem(props: Props) {
 								<Grid>
 									<ArrowDownwardIcon />
 								</Grid>
-								<Grid>{`${props.trip.metaMapping?.route?.sumTimeRun} Giờ`}</Grid>
+								<Grid>{`${props.trip.route?.sumTimeRun} Giờ`}</Grid>
 							</Grid>
 						</Grid>
 						<Grid>
 							<Chip
 								label={moment(
-									TimeHelper.HoursPlus(
-										new Date(
-											props.trip.metaMapping?.route
-												?.startAt || new Date()
-										),
-										props.trip.metaMapping?.route
-											.sumTimeRun || 0
-									)
+									// TimeHelper.HoursPlus(
+									// 	new Date(
+									// 		props.trip.route
+									// 			?.startAt || new Date()
+									// 	),
+									// 	props.trip.route
+									// 		.sumTimeRun || 0
+									// )
 								).format("HH:mm")}
 								color={"primary"}
 							/>
@@ -210,7 +210,7 @@ export default function TripItem(props: Props) {
 										name="radio-button-demo"
 										inputProps={{ "aria-label": "B" }}
 									/>
-									<Typography>{props.trip.metaMapping?.route.localStart}</Typography>
+									{/* <Typography>{props.trip.route.localStart}</Typography> */}
 								</Grid>
 							}
 						/>
@@ -245,7 +245,7 @@ export default function TripItem(props: Props) {
 										name="radio-button-demo"
 										inputProps={{ "aria-label": "B" }}
 									/>
-									<Typography>{props.trip.metaMapping?.route?.localEnd}</Typography>
+									<Typography>{props.trip.route?.localEnd}</Typography>
 								</Grid>
 							}
 						/>
