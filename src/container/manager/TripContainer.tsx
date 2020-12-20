@@ -98,11 +98,11 @@ export default function TripContainer() {
 		const createValue = data.map((item: Trip) => {
 			var value: any[] = [];
 			value.push(
-				`${item.metaMapping?.route?.localStart}- ${item.metaMapping?.route?.localEnd}` || ""
+				`${item.route?.localStart}- ${item.route?.localEnd}` || ""
 			);
 			value.push(item.price || "");
 			value.push(moment(item.timeStart).format("DD-MM-YYYY"));
-			value.push(item.metaMapping?.drive?.name);
+			value.push(item.drive?.name);
 			value.push(ActionHelper.getActionUpdateAndDelete(item, onCreateOrUpdate, onConfirm));
 
 			return value;

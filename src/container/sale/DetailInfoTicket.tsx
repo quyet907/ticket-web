@@ -25,7 +25,7 @@ export default function DetailInfoTicket(props: Props) {
 				<Grid style={{ padding: 3 }}>
 						<Chip
 							label={
-								ticketInfo?.metaMapping?.customer?.name
+								ticketInfo?.customer?.name
 							}
 							color={"primary"}
 						/>
@@ -33,7 +33,7 @@ export default function DetailInfoTicket(props: Props) {
 					<Grid style={{ padding: 3 }}>
 						<Chip
 							label={
-								ticketInfo?.metaMapping?.customer
+								ticketInfo?.customer
 									?.phoneNumber
 							}
 							color={"default"}
