@@ -1,10 +1,9 @@
 import { AxiosInstance } from "axios";
-import { Staff } from "../submodules/base-ticket-team/base-carOwner/Staff";
-import { Summary } from "../submodules/base-ticket-team/controller.ts/Statistical";
-import { Statistical } from "../submodules/base-ticket-team/Statistical/Statistical";
-import { BaseController } from "./BaseController";
+import { Summary, IntervalTicketChart } from "../submodules/base-ticket-team/controller.ts/Statistical";
+import { IStatisticalController } from "./IStatisticalController";
 
-export class StatisticalService {
+
+export class StatisticalService implements IStatisticalController{
   serviceURL: string;
   basePath: string;
   client: AxiosInstance;
@@ -18,26 +17,13 @@ export class StatisticalService {
     this.client = client;
     this.serviceURL = serviceURL;
   }
-
-  public StatisticalSummaryService(): Promise<Summary>{
-    return this.client
-      .get(`${this.serviceURL}/${this.basePath}/Statistical`)
-      .then((res) => {
-        return res.data;
-      });
+  statisticalSummary(): Promise<Summary> {
+    throw new Error("Method not implemented.");
   }
-  public StatisticalIntervalTicketService(params:{type : "month"| "day"}): Promise<Summary>{
-    return this.client
-      .get(`${this.serviceURL}/${this.basePath}/IntervalTicket`, {params: params})
-      .then((res) => {
-        return res.data;
-      });
+  statisticalIntervalTicket(params: { type: "month" | "day"; }): Promise<IntervalTicketChart[]> {
+    throw new Error("Method not implemented.");
   }
-  public StatisticalIntervalRevenueTicketService(params:{type : "month"| "day"}): Promise<Summary>{
-    return this.client
-      .get(`${this.serviceURL}/${this.basePath}/IntervalRevenue`, {params: params})
-      .then((res) => {
-        return res.data;
-      });
+  statisticalIntervalRevenueTicket(params: { type: "month" | "day"; }): Promise<IntervalTicketChart[]> {
+    throw new Error("Method not implemented.");
   }
 }

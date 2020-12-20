@@ -1,13 +1,16 @@
 import { Avatar, Box, Grid, Paper, Typography } from "@material-ui/core";
 import PersonIcon from "@material-ui/icons/Person";
+import PeopleIcon from '@material-ui/icons/People';
 import React from "react";
 
 type Props = {
 	title: string;
-	value: string;
+	value: number;
 	icon: any;
+	isMoney?: boolean;
 };
-export default function SummaryGeneral() {
+
+export default function SummaryGeneral(props: Props) {
 	return (
 		<Grid item xs={12}>
 			<Paper elevation={3}>
@@ -21,7 +24,8 @@ export default function SummaryGeneral() {
 								height: 56,
 							}}
 						>
-							<PersonIcon fontSize="large" color="primary"></PersonIcon>
+							{/* <props.icon fontSize="large" color="primary"/> */}
+							{props.icon}
 						</Avatar>
 					</Box>
 					<Box
@@ -32,13 +36,19 @@ export default function SummaryGeneral() {
 						justifyContent="space-between"
 					>
 						<Box>
-							<Typography variant="h6" color="textSecondary" style={{textTransform: "uppercase"}}>
-								Tổng khách hàng
+							<Typography variant="h6" color="textSecondary" style={{ textTransform: "uppercase" }}>
+								{props.title}
 							</Typography>
 						</Box>
 						<Box>
 							<Typography variant="h2">
-								{getFormatNumber(Math.round(Math.random() * 10000))}
+								{/* {getFormatNumber(Math.round(Math.random() * 10000))} */}
+								{props.isMoney ?
+									Intl.NumberFormat("de-DE", {
+										style: "currency",
+										currency: "VND",
+									}).format(Number(props.value))
+									: Intl.NumberFormat().format(props.value)}
 							</Typography>
 						</Box>
 					</Box>

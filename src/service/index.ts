@@ -5,6 +5,7 @@ import { serviceName } from "../submodules/base-ticket-team/query/NameService";
 import { CarService } from "./CarService";
 import { ChairCarService } from "./ChairCarService";
 import { CustomerService } from "./CustomerService";
+import { StatisticalController } from "./fake-data/StatisticalController";
 import { PositionStaffService } from "./PositionStaffService";
 import { RouteService } from "./RouteService";
 import { StaffService } from "./StaffService";
@@ -55,11 +56,11 @@ appClient.interceptors.response.use(
 export const URL = appConfig.applicationUrl;
 
 export const staffController = new StaffService(URL, serviceName.staff, appClient);
-export const positionStaffController = new PositionStaffService(URL,serviceName.position , appClient);
+export const positionStaffController = new PositionStaffService(URL, serviceName.position, appClient);
 export const carController = new CarService(URL, serviceName.car, appClient);
 export const chairCarController = new ChairCarService(URL, serviceName.chairCar, appClient);
 export const customerController = new CustomerService(URL, serviceName.customer, appClient);
 export const routeController = new RouteService(URL, serviceName.route, appClient);
 export const ticketController = new TicketService(URL, serviceName.ticket, appClient);
 export const tripController = new TripService(URL, serviceName.trip, appClient);
-export const statistic = new StatisticalService(URL, serviceName.statistics, appClient)
+export const statisticController = new StatisticalController();

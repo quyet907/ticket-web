@@ -147,7 +147,7 @@ export default function CarContainer() {
 		// <Page className={classes.root} title="Customers">
 		<Grid xs={12}>
 			<Grid>
-				<Typography variant={"h1"}>Xe</Typography>
+				<Typography variant={"h1"}>Xe vip pro</Typography>
 			</Grid>
 			<PopUpConfirm isDisplay={showConfirm} onCancel={onCancelConfirm} onDelete={onDelete} />
 
