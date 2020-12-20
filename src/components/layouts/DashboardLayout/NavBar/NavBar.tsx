@@ -61,11 +61,6 @@ const items = [
 		title: "Xe",
 	},
 	{
-		href: "/login",
-		icon: Lock,
-		title: "Login",
-	},
-	{
 		href: "/ticket",
 		icon: Bookmark,
 		title: "Bán vé",

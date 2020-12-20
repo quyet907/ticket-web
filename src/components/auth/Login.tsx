@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link as RouterLink, useHistory } from "react-router-dom";
 import * as Yup from "yup";
 import { Formik } from "formik";
@@ -19,6 +19,8 @@ import Paper from "@material-ui/core/Paper";
 import clsx from "clsx";
 import Facebook from "../../icons/Facebook";
 import Google from "../../icons/Google";
+import {useFormik} from "formik"
+import { accountController } from "../../service";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -37,9 +39,44 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
+type LoginProps = {
+	username?: string , password ?: string
+}
 const LoginView = () => {
 	const classes = useStyles();
 	const history = useHistory();
+	const formik = useFormik<LoginProps>({
+		initialValues : {},
+		initialErrors : {},
+		validationSchema : Yup.object<LoginProps>({
+			password : Yup.string().required().trim("Khoong duoc de trong").max(30, "Khoong dudoj qua 30 ki tu"),
+			username : Yup.string().required().trim('Khoong duoc de trong').max(30, "Khoong dudoj qua 30 ki tu").email(),
+		}),
+		onSubmit : ()=>{
+			accountController.login(formik.values.username || '', formik.values.password || '').then(res => {
+				localStorage.setItem("token", res.token)
+				history.push('dashboard')
+			}).catch(err => {
+				console.log(err)
+			})	
+		}
+	})
+	useEffect(() => {
+		formik.resetForm();
+		formik.setErrors({})
+		formik.setTouched({});
+		formik.setValues({})
+	}, [])
+
+	function onSubmitCustom() {
+
+		formik.handleSubmit();
+		
+		formik.setTouched({
+			password : true ,
+			username : true
+		})
+	}
 
 	return (
 		// <Page className={clsx(classes.root)} title="Login">
@@ -53,27 +90,7 @@ const LoginView = () => {
 			<Container maxWidth="sm"
 			className= {classes.formLogin}
 			>
-				<Formik
-					initialValues={{
-						email: "",
-						password: "",
-					}}
-					validationSchema={Yup.object().shape({
-					})}
-					onSubmit={() => {
-						history.push("/dashboard", { replace: true });
-					}}
-				>
-					{({
-						errors,
-						handleBlur,
-						handleChange,
-						handleSubmit,
-						isSubmitting,
-						touched,
-						values,
-					}) => (
-						<form onSubmit={handleSubmit}>
+				
 							<Box mb={3}>
 								<Typography color="textPrimary" variant="h2">
 									Sign in
@@ -113,35 +130,35 @@ const LoginView = () => {
 								</Typography>
 							</Box>
 							<TextField
-								error={Boolean(touched.email && errors.email)}
+								error={Boolean(formik.touched.username && formik.errors.username)}
 								fullWidth
-								helperText={touched.email && errors.email}
+								helperText={formik.touched.username && formik.errors.username}
 								label="Email Address"
 								margin="normal"
-								name="email"
-								onBlur={handleBlur}
-								onChange={handleChange}
+								name="username"
+								onBlur={formik.handleBlur}
+								onChange={formik.handleChange}
 								// type="email"
-								value={values.email}
+								value={formik.values.username}
 								variant="outlined"
 							/>
 							<TextField
-								error={Boolean(touched.password && errors.password)}
+								error={Boolean(formik.touched.password && formik.errors.password)}
 								fullWidth
-								helperText={touched.password && errors.password}
+								helperText={formik.touched.password && formik.errors.password}
 								label="Password"
 								margin="normal"
 								name="password"
-								onBlur={handleBlur}
-								onChange={handleChange}
+								onBlur={formik.handleBlur}
+								onChange={formik.handleChange}
 								type="password"
-								value={values.password}
+								value={formik.values.password}
 								variant="outlined"
 							/>
 							<Box my={2}>
 								<Button
 									color="primary"
-									disabled={isSubmitting}
+									onClick = {()=> onSubmitCustom()}
 									fullWidth
 									size="large"
 									type="submit"
@@ -156,9 +173,6 @@ const LoginView = () => {
 									Sign up
 								</Link>
 							</Typography>
-						</form>
-					)}
-				</Formik>
 			</Container>
 		</Box>
 		// </Page>

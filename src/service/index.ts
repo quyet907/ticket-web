@@ -2,16 +2,26 @@ import axios from "axios";
 import { Route } from "react-router";
 import appConfig from "../configs/AppConfig";
 import { serviceName } from "../submodules/base-ticket-team/query/NameService";
+import { StatisticalService } from "./StatisticalService";
 import { CarService } from "./CarService";
 import { ChairCarService } from "./ChairCarService";
 import { CustomerService } from "./CustomerService";
-import { StatisticalController } from "./fake-data/StatisticalController";
 import { PositionStaffService } from "./PositionStaffService";
 import { RouteService } from "./RouteService";
 import { StaffService } from "./StaffService";
-import { StatisticalService } from "./StatisticalService";
+// import { StatisticalService } from "./StatisticalService";
 import { TicketService } from "./TicketService";
 import { TripService } from "./TripService";
+import { AccountController } from "./axios/AccountController";
+import { number } from "joi";
+
+const getTokenFromLocalStorage = () => {
+	if(localStorage.getItem("token") === null || localStorage.getItem("token") === '') {
+		return null
+	}
+	return localStorage.getItem("token")
+}
+
 export const appClient = axios.create({
 	baseURL: "",
 	timeout: 10000,
@@ -19,6 +29,7 @@ export const appClient = axios.create({
 		common: {
 			"Content-Type": "application/json",
 		},
+		Authorization: getTokenFromLocalStorage(),
 	},
 });
 
@@ -63,4 +74,7 @@ export const customerController = new CustomerService(URL, serviceName.customer,
 export const routeController = new RouteService(URL, serviceName.route, appClient);
 export const ticketController = new TicketService(URL, serviceName.ticket, appClient);
 export const tripController = new TripService(URL, serviceName.trip, appClient);
-export const statisticController = new StatisticalController();
+export const statisticController = new StatisticalService(URL, serviceName.statistics, appClient)
+export const accountController = new AccountController(URL, serviceName.account, appClient)
+
+// lasy ham login, lay Get me

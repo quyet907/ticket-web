@@ -3,7 +3,7 @@ import { Summary, IntervalTicketChart } from "../submodules/base-ticket-team/con
 import { IStatisticalController } from "./IStatisticalController";
 
 
-export class StatisticalService implements IStatisticalController{
+export class StatisticalService implements IStatisticalController {
   serviceURL: string;
   basePath: string;
   client: AxiosInstance;
@@ -18,12 +18,24 @@ export class StatisticalService implements IStatisticalController{
     this.serviceURL = serviceURL;
   }
   statisticalSummary(): Promise<Summary> {
-    throw new Error("Method not implemented.");
+    return this.client.get(`${this.serviceURL}/${this.basePath}/StatisticalSummary`).then(res => {
+      console.log(res.data)
+      return res.data
+    }).
+      catch(err => null)
   }
   statisticalIntervalTicket(params: { type: "month" | "day"; }): Promise<IntervalTicketChart[]> {
-    throw new Error("Method not implemented.");
+    return this.client.get(`${this.serviceURL}/${this.basePath}/StatisticalSummary`, { params }).then(res => {
+      console.log(res.data)
+      return res.data
+    }).
+      catch(err => null)
   }
   statisticalIntervalRevenueTicket(params: { type: "month" | "day"; }): Promise<IntervalTicketChart[]> {
-    throw new Error("Method not implemented.");
+    return this.client.get(`${this.serviceURL}/${this.basePath}/StatisticalSummary`, { params }).then(res => {
+      console.log(res.data)
+      return res.data
+    }).
+      catch(err => null)
   }
 }
