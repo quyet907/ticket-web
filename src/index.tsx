@@ -6,13 +6,18 @@ import reportWebVitals from "./reportWebVitals";
 import { ThemeProvider } from "@material-ui/core";
 import theme from "./theme/MuiTheme";
 import GlobalStyles from "./theme/GlobalStyles";
+import { Provider } from "react-redux";
+import { store } from "./rematch/Store";
 
 ReactDOM.render(
    <React.StrictMode>
-      <ThemeProvider theme={theme}>
-         <GlobalStyles></GlobalStyles>
-         <App />
-      </ThemeProvider>
+      <Provider store={store}>
+         <ThemeProvider theme={theme}>
+            <GlobalStyles></GlobalStyles>
+            <App />
+         </ThemeProvider>
+      </Provider>
+
    </React.StrictMode>,
    document.getElementById("root")
 );

@@ -58,7 +58,9 @@ function Statistic() {
          setTotalRevenue(res.totalRevenue || 0);
          setTotalTicket(res.totalTicket || 0);
          setTotalTrip(res.totalTrip || 0);
-      });
+      }).catch((err => {
+         console.log(err)
+      }));
    }, []);
 
    let iconCustomer = <People fontSize="large" color="primary" />;

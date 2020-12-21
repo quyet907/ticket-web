@@ -1,6 +1,6 @@
 import { Box, colors, Container, Grid, makeStyles, Theme } from "@material-ui/core";
-import React, { useState } from "react";
-import { Route, Switch, useRouteMatch } from "react-router";
+import React, { useEffect, useState } from "react";
+import { Redirect, Route, Switch, useRouteMatch } from "react-router";
 import CarContainer from "../../../container/manager/CarContainer";
 import Customers from "../../../container/manager/Customer";
 import PositionStaffContainer from "../../../container/manager/PositionStaffContainer";
@@ -10,6 +10,7 @@ import TripContainer from "../../../container/manager/TripContainer";
 import DiagramSaleTicket from "../../../container/sale/DiagramSaleTicket";
 import HomeSaleTicket from "../../../container/sale/HomeSaleTicket";
 import Statistic from "../../../container/statistic/Statistic";
+import { accountController } from "../../../service";
 import { useGlobalStyles } from "../../../styles/GlobalStyle";
 import NavBar from "./NavBar/NavBar";
 
@@ -55,6 +56,18 @@ function DashboardLayout() {
 
 	const { path } = useRouteMatch();
 
+	const [isAuThen, setIsAuThen] = useState<boolean>(false)
+
+	useEffect(() => {
+		accountController.getMe().then((res) => {
+			setIsAuThen(true)
+		}).catch((res) => {
+			setIsAuThen(false)
+		})
+	}, [])
+
+	console.log(isAuThen)
+
 	return (
 		<div className={classes.root}>
 			{/* <TopBar onMobileNavOpen={() => setMobileNavOpen(true)} /> */}
@@ -72,7 +85,6 @@ function DashboardLayout() {
 							<Route exact path={`/ticket`} component={HomeSaleTicket} />
 							<Route exact path={`/car`} component={CarContainer} />
 							<Route exact path={`/sale/:id`} component={DiagramSaleTicket} />
-							<Route path="*">{/* <Redirect to="/dashboard" /> */}</Route>
 						</Switch>
 					</div>
 				</div>

@@ -16,9 +16,6 @@ import { AccountController } from "./axios/AccountController";
 import { number } from "joi";
 
 const getTokenFromLocalStorage = () => {
-	if(localStorage.getItem("token") === null || localStorage.getItem("token") === '') {
-		return null
-	}
 	return localStorage.getItem("token")
 }
 
