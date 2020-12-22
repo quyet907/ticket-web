@@ -4,17 +4,18 @@ import {
 	AlertCircle,
 	BarChart,
 	Bookmark,
-	Lock,
-	Map,
+	LogOut, Map,
 	MapPin,
 	Star,
 	Truck,
-	Users,
+	Users
 } from "react-feather";
 import { Link as RouterLink, useLocation } from "react-router-dom";
+import { names, uniqueNamesGenerator } from "unique-names-generator";
+import { useRematchDispatch } from "../../../../rematch";
+import { Dispatch } from "../../../../rematch/Store";
 import { useGlobalStyles } from "../../../../styles/GlobalStyle";
 import NavItem from "./NavItem";
-import { uniqueNamesGenerator, Config, names } from "unique-names-generator";
 
 const user = {
 	avatar: "https://picsum.photos/200",
@@ -70,6 +71,11 @@ const items = [
 		icon: AlertCircle,
 		title: "Error",
 	},
+	{
+		href: "/login",
+		icon: LogOut,
+		title: "Đăng xuất",
+	},
 ];
 
 const useStyles = makeStyles(() => ({
@@ -95,10 +101,22 @@ type Props = {
 	openMobile: boolean;
 };
 
+
+
 const NavBar = (props: Props) => {
 	const classes = useStyles();
 	const globalStyle = useGlobalStyles();
 	const location = useLocation();
+
+	const staffDispatch = useRematchDispatch((dispatch: Dispatch) => {
+		return dispatch.authentication;
+	});
+
+	const doSomething = (key: string) => {
+		if (key === 'Đăng xuất') {
+			staffDispatch.logout();
+		}
+	}
 
 	useEffect(() => {
 		if (props.openMobile && props.onMobileClose()) {
@@ -133,6 +151,7 @@ const NavBar = (props: Props) => {
 							key={item.title}
 							title={item.title}
 							icon={item.icon}
+							onClick={() => doSomething(item.title)}
 						/>
 					))}
 				</List>

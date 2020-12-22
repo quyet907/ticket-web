@@ -19,9 +19,9 @@ const useStyles = makeStyles((theme) => ({
 		padding: "10px 8px",
 		textTransform: "none",
 		width: "100%",
-		"&:hover":{
+		"&:hover": {
 			background: theme.palette.primary.main,
-			color : "white"
+			color: "white"
 		}
 	},
 	icon: {
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	active: {
 		color: "white",
-		backgroundColor : theme.palette.primary.main,
+		backgroundColor: theme.palette.primary.main,
 		"& $title": {
 			fontWeight: theme.typography.fontWeightMedium,
 		},
@@ -51,13 +51,14 @@ const NavItem = (props: Props) => {
 			disableGutters
 		>
 			<Grid container direction="row" justify="center">
-				<Grid style = {{padding : 4}}>
+				<Grid style={{ padding: 4 }}>
 					<Button
-						style = {{width :150}}
+						style={{ width: 150 }}
 						activeClassName={classes.active}
 						className={classes.button}
 						component={RouterLink}
 						to={props.href}
+						onClick={props.onClick}
 					>
 						{props.icon && (
 							<props.icon className={classes.icon} size="20" />
@@ -75,6 +76,7 @@ type Props = {
 	href: string;
 	icon: React.FC<IconProps>;
 	title: string;
+	onClick :()=> void
 };
 
 export default NavItem;

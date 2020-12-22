@@ -1,11 +1,11 @@
 import { useDispatch } from "react-redux";
-import { authenModel } from "./Authen";
+import { authenticationModel } from "./Authentication";
 export interface AppModel {
-   authen: typeof authenModel
+   authentication: typeof authenticationModel
 }
 
-export const model: AppModel = {
-   authen : authenModel
+export const apModel: AppModel = {
+   authentication: authenticationModel
 }
 
 export const useRematchDispatch = <D extends {}, MD>(

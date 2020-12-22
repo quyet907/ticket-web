@@ -1,28 +1,22 @@
-import React, { useEffect } from "react";
-import { Link as RouterLink, useHistory } from "react-router-dom";
-import * as Yup from "yup";
-import { Formik } from "formik";
 import {
 	Box,
 	Button,
 	Container,
 	Grid,
 	Link,
-	TextField,
-	Typography,
-	makeStyles,
+	makeStyles, Slide, Snackbar, TextField,
+	Typography
 } from "@material-ui/core";
-// import Page from 'src/components/Page';
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import Paper from "@material-ui/core/Paper";
-import clsx from "clsx";
+import { Alert } from "@material-ui/lab";
+import { useFormik } from "formik";
+import React, { useEffect, useState } from "react";
+import { Link as RouterLink, useHistory } from "react-router-dom";
+import * as Yup from "yup";
 import Facebook from "../../icons/Facebook";
 import Google from "../../icons/Google";
-import { useFormik } from "formik"
-import { accountController } from "../../service";
 import { useRematchDispatch } from "../../rematch";
 import { Dispatch } from "../../rematch/Store";
+import { accountController } from "../../service";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -38,17 +32,17 @@ const useStyles = makeStyles((theme) => ({
 		padding: 50,
 		borderRadius: 40,
 		border: "1px solid #ccc",
-	}
+	},
 }));
 
 type LoginProps = {
-	username?: string, password?: string
-}
+	username?: string;
+	password?: string;
+};
 const LoginView = () => {
-
 	const staffDispatch = useRematchDispatch((dispatch: Dispatch) => {
-		return dispatch.authen
-	})
+		return dispatch.authentication;
+	});
 
 	const classes = useStyles();
 	const history = useHistory();
@@ -56,37 +50,55 @@ const LoginView = () => {
 		initialValues: {},
 		initialErrors: {},
 		validationSchema: Yup.object<LoginProps>({
-			password: Yup.string().required().trim("Khoong duoc de trong").max(30, "Khoong dudoj qua 30 ki tu"),
-			username: Yup.string().required().trim('Khoong duoc de trong').max(30, "Khoong dudoj qua 30 ki tu").email(),
+			password: Yup.string()
+				.required("Vui lòng nhập mật khẩu")
+				.trim()
+				.max(30, "Không được quá 30 kí tự"),
+			username: Yup.string()
+				.required("Vui lòng nhập địa chỉ Email")
+				.trim()
+				.max(30, "Không được quá 30 kí tự")
+				.email(),
 		}),
+
 		onSubmit: () => {
-			accountController.login(formik.values.username || '', formik.values.password || '').then(res => {
-
-				staffDispatch.login(res)
-
-			}).catch(err => {
-				console.log(err)
-			})
-		}
-	})
-
-
+			accountController
+				.login(formik.values.username || "", formik.values.password || "")
+				.then((res) => {
+					localStorage.setItem("token", res.token);
+					staffDispatch.login();
+				})
+				.catch((err) => {
+					handleClick();
+					console.log(err);
+				});
+		},
+	});
 
 	useEffect(() => {
 		formik.resetForm();
-		formik.setErrors({})
+		formik.setErrors({});
 		formik.setTouched({});
-		formik.setValues({})
-	}, [])
+		formik.setValues({});
+	}, []);
 
 	function onSubmitCustom() {
-
 		formik.handleSubmit();
 
 		formik.setTouched({
 			password: true,
-			username: true
-		})
+			username: true,
+		});
+	}
+
+	const [openError, setOpenError] = useState<boolean>(false)
+
+	const handleClick = () => {
+		setOpenError(true)
+	}
+
+	const handleClose = () => {
+		setOpenError(false)
 	}
 
 	return (
@@ -98,17 +110,17 @@ const LoginView = () => {
 			justifyContent="center"
 		// alignItems="center"
 		>
-			<Container maxWidth="sm"
-				className={classes.formLogin}
-			>
-
+			<Container maxWidth="sm" className={classes.formLogin}>
+				<Snackbar open={openError} autoHideDuration={3000} onClose={handleClose}	>
+					<Alert color='warning' onClose={handleClose}>{`Tài khoản hoặc mật khẩu không chính xác`}</Alert>
+				</Snackbar>
 				<Box mb={3}>
 					<Typography color="textPrimary" variant="h2">
-						Sign in
-								</Typography>
+						{`Đăng nhập`}
+					</Typography>
 					<Typography color="textSecondary" gutterBottom variant="body2">
-						Sign in on the internal platform
-								</Typography>
+						{`Đăng nhập bằng tài khoản`}
+					</Typography>
 				</Box>
 				<Grid container spacing={3}>
 					<Grid item xs={12} md={6}>
@@ -121,7 +133,7 @@ const LoginView = () => {
 							variant="contained"
 						>
 							Facebook
-									</Button>
+                  </Button>
 					</Grid>
 					<Grid item xs={12} md={6}>
 						<Button
@@ -132,19 +144,21 @@ const LoginView = () => {
 							variant="contained"
 						>
 							Google
-									</Button>
+                  </Button>
 					</Grid>
 				</Grid>
 				<Box mt={3} mb={1}>
 					<Typography align="center" color="textSecondary" variant="body1">
-						or login with email address
+						{`Hoặc đăng nhập bằng địa chỉ Email`}
 					</Typography>
 				</Box>
 				<TextField
-					error={Boolean(formik.touched.username && formik.errors.username)}
+					error={Boolean(
+						formik.touched.username && formik.errors.username
+					)}
 					fullWidth
 					helperText={formik.touched.username && formik.errors.username}
-					label="Email Address"
+					label="Địa chỉ Email"
 					margin="normal"
 					name="username"
 					onBlur={formik.handleBlur}
@@ -154,10 +168,12 @@ const LoginView = () => {
 					variant="outlined"
 				/>
 				<TextField
-					error={Boolean(formik.touched.password && formik.errors.password)}
+					error={Boolean(
+						formik.touched.password && formik.errors.password
+					)}
 					fullWidth
 					helperText={formik.touched.password && formik.errors.password}
-					label="Password"
+					label="Mật khẩu"
 					margin="normal"
 					name="password"
 					onBlur={formik.handleBlur}
@@ -175,14 +191,14 @@ const LoginView = () => {
 						type="submit"
 						variant="contained"
 					>
-						Sign in now
-								</Button>
+						{`Đăng nhập`}
+					</Button>
 				</Box>
 				<Typography color="textSecondary" variant="body1">
-					Don&apos;t have an account?
-								<Link component={RouterLink} to="/register" variant="h6">
-						Sign up
-								</Link>
+					{`Chưa có tài khoản?`}
+					<Link component={RouterLink} to="/register" variant="h6">
+						{`Đăng ký`}
+					</Link>
 				</Typography>
 			</Container>
 		</Box>

@@ -1,10 +1,8 @@
 import { init, RematchDispatch, RematchRootState } from "@rematch/core";
-import { type } from "os";
-import { AppModel, model } from ".";
+import { AppModel, apModel } from ".";
 
 export const store = init({
-   redux : {},
-   models: model
+   models: apModel
 })
 
 export type Store = typeof store

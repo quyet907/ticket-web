@@ -1,19 +1,18 @@
 import axios from "axios";
-import { Route } from "react-router";
+import { number } from "joi";
 import appConfig from "../configs/AppConfig";
 import { serviceName } from "../submodules/base-ticket-team/query/NameService";
-import { StatisticalService } from "./StatisticalService";
+import { AccountController } from "./axios/AccountController";
 import { CarService } from "./CarService";
 import { ChairCarService } from "./ChairCarService";
 import { CustomerService } from "./CustomerService";
 import { PositionStaffService } from "./PositionStaffService";
 import { RouteService } from "./RouteService";
 import { StaffService } from "./StaffService";
+import { StatisticalService } from "./StatisticalService";
 // import { StatisticalService } from "./StatisticalService";
 import { TicketService } from "./TicketService";
 import { TripService } from "./TripService";
-import { AccountController } from "./axios/AccountController";
-import { number } from "joi";
 
 const getTokenFromLocalStorage = () => {
 	return localStorage.getItem("token")
@@ -30,6 +29,9 @@ export const appClient = axios.create({
 	},
 });
 
+
+
+
 appClient.interceptors.request.use(
 	function (config) {
 		return config;
@@ -44,8 +46,10 @@ appClient.interceptors.response.use(
 		return response;
 	},
 	(error) => {
+		console.log(error)
 		if (error.response) {
 			if (error.response.status === 401) {
+				console.log("da gap loi 401")
 			} else if (error.response.status === 403) {
 			} else if (error.response.status && error.response.status >= 500) {
 			} else if (
