@@ -1,4 +1,5 @@
 import { AxiosInstance } from "axios";
+import { dispatch } from "../rematch/Store";
 import { ICount } from "../submodules/base-ticket-team/query/ICount";
 import { IFind } from "../submodules/base-ticket-team/query/IFind";
 import { IList } from "../submodules/base-ticket-team/query/IList";
@@ -46,7 +47,6 @@ export class BaseController<T> {
     return this.client
       .post(`${this.serviceURL}/${this.basePath}`, params)
       .then((res) => {
-        // 
         return res.data;
       });
   }
