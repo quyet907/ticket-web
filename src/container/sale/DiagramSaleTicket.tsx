@@ -1,4 +1,10 @@
-import { Grid, makeStyles, Typography } from "@material-ui/core";
+import {
+	Grid,
+	makeStyles,
+	Menu,
+	MenuItem,
+	Typography,
+} from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import clsx from "clsx";
 import ChairItem from "../../components/chair/ChairItem";
@@ -12,6 +18,7 @@ import { DiagramChairOfTrip } from "../../submodules/base-ticket-team/controller
 import { Ticket } from "../../submodules/base-ticket-team/base-carOwner/Ticket";
 import { IList } from "../../submodules/base-ticket-team/query/IList";
 import { Paging } from "../../submodules/base-ticket-team/query/Paging";
+import { Trip } from "../../submodules/base-ticket-team/base-carOwner/Trip";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -43,6 +50,7 @@ export default function DiagramSaleTicket() {
 	const [selected, setSelected] = useState<Ticket>({} as Ticket);
 	const [showForm, setShowForm] = useState<boolean>(false);
 	const [showConfirm, setShowConfirm] = useState<boolean>(false);
+	const [trip, setTrip] = useState<Trip>({});
 
 	function onCreateOrUpdate(ticket: Ticket) {
 		setSelected(ticket);
@@ -60,32 +68,14 @@ export default function DiagramSaleTicket() {
 		});
 	}
 
-	function onDelete() {
-		ticketController.delete(selected.id || "").then((res) => {
-			setQuery({ ...query });
-			setShowConfirm(false);
-		});
-	}
-
-	function onQuery(query: IList) {
-		setQuery(query);
-	}
-
-	function onConfirm(item: Ticket) {
-		setSelected(item);
-		setShowConfirm(true);
-	}
-	function onCancelConfirm() {
-		setShowConfirm(false);
-	}
-
-	function onSearch(search: string) {
-		setQuery({ ...query, search: search });
-	}
+	function onSelected(ticket: Ticket) {}
 
 	useEffect(() => {
 		tripController.getChairByTrip({ id: params.id }).then((res) => {
 			setDiagram(res);
+		});
+		tripController.getById(params.id).then((res) => {
+			setTrip(res);
 		});
 	}, [query]);
 
@@ -94,12 +84,25 @@ export default function DiagramSaleTicket() {
 			className={clsx(globalStyle.container)}
 			style={{ padding: 30, boxSizing: "border-box" }}
 		>
+			{/* <Menu
+				keepMounted
+				open={true}
+				onClose={() => {}}
+				anchorReference="anchorPosition"
+				anchorPosition={{ left: 500, top: 500 }}
+			>
+				<MenuItem onClick={(e) => {}}>Copy</MenuItem>
+				<MenuItem onClick={(e) => {}}>Print</MenuItem>
+				<MenuItem onClick={(e) => {}}>Highlight</MenuItem>
+				<MenuItem onClick={(e) => {}}>Email</MenuItem>
+			</Menu> */}
 			<Grid>
 				<DialogSaleTicket
-					open = {showForm}
-					onCancel = {onCloseForm}
-					onSave = {onSave}
-					ticket = {selected}
+					open={showForm}
+					onCancel={onCloseForm}
+					onSave={onSave}
+					ticket={selected}
+					trip={trip}
 				></DialogSaleTicket>
 			</Grid>
 
@@ -134,14 +137,19 @@ export default function DiagramSaleTicket() {
 												>
 													{row.map(
 														(ticket: Ticket) => {
-															return (
-																(Object.entries(ticket).length !==0)
-																? <DetailInfoTicket
-																ticketInfo={
-																	ticket
-																}
-																onCreateOrEdit={onCreateOrUpdate}
-															/> : <div></div>
+															return Object.entries(
+																ticket
+															).length !== 0 ? (
+																<DetailInfoTicket
+																	ticketInfo={
+																		ticket
+																	}
+																	onCreateOrEdit={
+																		onCreateOrUpdate
+																	}
+																/>
+															) : (
+																<div></div>
 															);
 														}
 													)}

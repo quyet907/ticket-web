@@ -25,7 +25,7 @@ const App = () => {
 
 	return (
 		<Router>
-			<Redirect exact from="*" to={isAuthentication ? "/dashboard" : "/login"} />
+			{/* <Redirect exact from="*" to={isAuthentication ? "/dashboard" : "/login"} /> */}
 			<Switch>
 				<Route exact path="*" component={isAuthentication ? DashboardLayout : LoginView} />
 				<Route exact path="/register" component={RegisterView} />

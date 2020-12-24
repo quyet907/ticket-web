@@ -91,7 +91,7 @@ export default function StaffView() {
 			value.push(item.address);
 			value.push(item.phoneNumber);
 			value.push(item.identityCard);
-			value.push(item.position?.name);
+			value.push(item.position_staff?.name);
 			// value.push(ActionHelper.getActionUpdate(item, onCreateOrUpdate));
 			// value.push(ActionHelper.getActionDelete(item, onDelete));
 			value.push(ActionHelper.getActionUpdateAndDelete(item, onCreateOrUpdate, onConfirm));

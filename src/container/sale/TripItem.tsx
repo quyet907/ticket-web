@@ -4,6 +4,8 @@ import {
 	Chip,
 	Grid,
 	makeStyles,
+	Menu,
+	MenuItem,
 	Radio,
 	Typography,
 } from "@material-ui/core";
@@ -17,6 +19,7 @@ import { Trip } from "../../submodules/base-ticket-team/base-carOwner/Trip";
 import moment from "moment";
 import { TimeHelper } from "../../helper/TimeHelper";
 import { Link } from "react-router-dom";
+import { TripShowHome } from "../../submodules/base-ticket-team/controller.ts/TripController";
 const useStyles = makeStyles((theme) => ({
 	infomation: {
 		width: 1000,
@@ -30,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 type Props = {
-	trip: Trip;
+	trip: TripShowHome;
 };
 
 export default function TripItem(props: Props) {
@@ -50,6 +53,9 @@ export default function TripItem(props: Props) {
 				flexWrap: "nowrap",
 			}}
 		>
+
+
+	  
 			<Grid
 				style={{
 					overflow: "hidden",
@@ -74,12 +80,11 @@ export default function TripItem(props: Props) {
 				className={clsx(classes.infomation)}
 			>
 				<Grid>
-					<Link to= {`/sale/${props.trip.id}`}>
-					<Typography variant="h2">
-						{props.trip?.car?.name}
-					</Typography>
+					<Link to={`/sale/${props.trip.id}`}>
+						<Typography variant="h2">
+							{props.trip?.car?.name}
+						</Typography>
 					</Link>
-
 				</Grid>
 				<Grid>
 					<Grid
@@ -91,9 +96,11 @@ export default function TripItem(props: Props) {
 					>
 						<Grid>
 							<Chip
-								label={moment(
+								label={`${moment(
 									props.trip.route?.startAt
-								).format("HH:MM")}
+								).format("HH:MM")}-${moment(
+									props.trip.timeStart
+								).format("DD/MM/YYYY")}`}
 								color={"primary"}
 							/>
 						</Grid>
@@ -117,16 +124,20 @@ export default function TripItem(props: Props) {
 						</Grid>
 						<Grid>
 							<Chip
-								label={moment(
-									// TimeHelper.HoursPlus(
-									// 	new Date(
-									// 		props.trip.route
-									// 			?.startAt || new Date()
-									// 	),
-									// 	props.trip.route
-									// 		.sumTimeRun || 0
-									// )
-								).format("HH:mm")}
+								label={`${moment(
+									TimeHelper.HoursPlus(
+										new Date(
+											props.trip.route?.startAt ||
+												new Date()
+										),
+										props?.trip?.route?.sumTimeRun || 0
+									)
+								).format("HH:mm")}- ${moment(TimeHelper.TimeEndTrip(
+									props.trip.timeStart || new Date(),
+									props.trip.route?.startAt || new Date(),
+									props.trip.route?.sumTimeRun || 0
+								)).format("DD-MM-YYYY")}`}
+
 								color={"primary"}
 							/>
 						</Grid>
@@ -164,7 +175,9 @@ export default function TripItem(props: Props) {
 				>
 					<Grid>Tổng số ghế</Grid>
 					<Grid>
-						<Typography>32 Ghế</Typography>
+						<Typography>{`${
+							props.trip.totalChair || 0
+						} Ghế`}</Typography>
 					</Grid>
 				</Grid>
 
@@ -176,7 +189,9 @@ export default function TripItem(props: Props) {
 				>
 					<Grid>Đã đặt</Grid>
 					<Grid>
-						<Typography>3/32</Typography>
+						<Typography>{`${props.trip.totalChairRemain || 0}/${
+							props.trip.totalChair || 0
+						} Ghế`}</Typography>
 					</Grid>
 				</Grid>
 			</Grid>
@@ -210,7 +225,9 @@ export default function TripItem(props: Props) {
 										name="radio-button-demo"
 										inputProps={{ "aria-label": "B" }}
 									/>
-									{/* <Typography>{props.trip.route.localStart}</Typography> */}
+									<Typography>
+										{props.trip?.route?.localStart}
+									</Typography>
 								</Grid>
 							}
 						/>
@@ -245,7 +262,9 @@ export default function TripItem(props: Props) {
 										name="radio-button-demo"
 										inputProps={{ "aria-label": "B" }}
 									/>
-									<Typography>{props.trip.route?.localEnd}</Typography>
+									<Typography>
+										{props.trip.route?.localEnd}
+									</Typography>
 								</Grid>
 							}
 						/>
