@@ -1,7 +1,7 @@
-import { Summary, IntervalTicketChart } from "../submodules/base-ticket-team/controller.ts/Statistical";
+import { Summary, IntervalTicketChart, PropsSummary } from "../submodules/base-ticket-team/controller.ts/Statistical";
 
 export interface IStatisticalController {
    statisticalSummary(): Promise<Summary>;
-   statisticalIntervalTicket(params:{type : "month"| "day"}): Promise<IntervalTicketChart[]>;
+   statisticalIntervalTicket(params: PropsSummary): Promise<IntervalTicketChart[]>;
    statisticalIntervalRevenueTicket(params:{type : "month"| "day"}): Promise<IntervalTicketChart[]>
 }

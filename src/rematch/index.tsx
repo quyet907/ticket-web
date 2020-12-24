@@ -1,11 +1,14 @@
 import { useDispatch } from "react-redux";
 import { authenticationModel } from "./Authentication";
+import { notification } from "./Notification";
 export interface AppModel {
-   authentication: typeof authenticationModel
+   authentication: typeof authenticationModel,
+   notification: typeof notification
 }
 
-export const apModel: AppModel = {
-   authentication: authenticationModel
+export const appModel: AppModel = {
+   authentication: authenticationModel,
+   notification: notification
 }
 
 export const useRematchDispatch = <D extends {}, MD>(

@@ -1,24 +1,22 @@
+import { ThemeProvider } from "@material-ui/core";
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
-import App from "./App";
-import reportWebVitals from "./reportWebVitals";
-import { ThemeProvider } from "@material-ui/core";
-import theme from "./theme/MuiTheme";
-import GlobalStyles from "./theme/GlobalStyles";
 import { Provider } from "react-redux";
+import AppWithSnackBar from "./App";
+import "./index.css";
 import { store } from "./rematch/Store";
+import reportWebVitals from "./reportWebVitals";
+import GlobalStyles from "./theme/GlobalStyles";
+import theme from "./theme/MuiTheme";
 
 ReactDOM.render(
-   <React.StrictMode>
-      <Provider store={store}>
-         <ThemeProvider theme={theme}>
-            <GlobalStyles></GlobalStyles>
-            <App />
-         </ThemeProvider>
-      </Provider>
-
-   </React.StrictMode>,
+   <Provider store={store}>
+      <ThemeProvider theme={theme}>
+         <GlobalStyles></GlobalStyles>
+         <AppWithSnackBar />
+      </ThemeProvider>
+   </Provider>
+   ,
    document.getElementById("root")
 );
 
