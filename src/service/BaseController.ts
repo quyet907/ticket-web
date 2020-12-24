@@ -46,6 +46,7 @@ export class BaseController<T> {
     return this.client
       .post(`${this.serviceURL}/${this.basePath}`, params)
       .then((res) => {
+        // 
         return res.data;
       });
   }
@@ -62,6 +63,7 @@ export class BaseController<T> {
     return this.client
       .delete(`${this.serviceURL}/${this.basePath}/${id}`)
       .then((res) => {
+        // 
         return res.data;
       });
   }
