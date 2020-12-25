@@ -111,7 +111,7 @@ export default function BaseTable<T>(props: Props<T>) {
 			getSort = props.query?.sort || [];
 			var check = getSort?.findIndex((sort) => sort === `${label}` || sort === `-${label}`);
 			if (check !== undefined && check < 0) {
-				getSort.push(label);
+				getSort[0] = label;
 			}
 			if (check !== undefined && check >= 0) {
 				if (getSort[check] === `${label}`) {
@@ -167,7 +167,7 @@ export default function BaseTable<T>(props: Props<T>) {
 												}}
 											>
 											</TableSortLabel> */}
-											<ButtonSort
+											{(header.sort) ? <ButtonSort
 												active={checkActionSort(header.id.toString())}
 												direction={
 													checkDirection(header.id.toString()) as any
@@ -175,7 +175,7 @@ export default function BaseTable<T>(props: Props<T>) {
 												onClick={() => {
 													onSort(header.id.toString());
 												}}
-											/>
+											/> : <></>}
 										</Grid>
 									);
 								})}
@@ -297,6 +297,7 @@ export default function BaseTable<T>(props: Props<T>) {
 export interface HeadCell<T> {
 	id: keyof T | "";
 	label: string;
+	sort : boolean
 }
 
 export interface IBaseTable<T> {
