@@ -41,8 +41,8 @@ const useStyles = makeStyles((theme: Theme) => ({
 		flex: "1 1 auto",
 		height: "100%",
 		overflow: "auto",
-		padding: theme.spacing(3),
-		// paddingLeft: theme.spacing(4),
+		padding: theme.spacing(4),
+		paddingLeft: theme.spacing(6),
 		backgroundColor: "rgb(247, 249, 252)",
 		borderLeft: "1px solid",
 		borderColor: colors.grey[300]

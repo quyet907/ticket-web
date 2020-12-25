@@ -1,6 +1,10 @@
 import {
+	Box,
+	Breadcrumbs,
+	Divider,
 	FormControl,
 	Grid,
+	Link,
 	makeStyles,
 	MenuItem,
 	Select,
@@ -60,35 +64,44 @@ export default function HomeSaleTicket() {
 		[]
 	);
 	return (
-		<Grid className={clsx(globalStyle.pp5, globalStyle.container)}>
+		<Grid>
 			<Grid>
-				<Typography variant={"h1"}>
-					<b>Sale Ticket</b>
+				<Typography variant={"h4"}>
+					<b>Ban ve</b>
 				</Typography>
+				<Box mt={1} mb={2}>
+					<Breadcrumbs aria-label="breadcrumb">
+						<Link color="secondary" href="/ticket" onClick={() => {}}>
+							<Typography variant="caption" color="primary">
+								Ban ve
+							</Typography>
+						</Link>
+						<Typography color="textSecondary" variant="caption">
+							So do ghe
+						</Typography>
+					</Breadcrumbs>
+				</Box>
+				<Divider />
 			</Grid>
-			<Grid className={clsx(globalStyle.pp5)}>
-				<Grid
-					container
-					direction="row"
-					justify="space-evenly"
-					className={clsx(classes.FormSearch)}
-				>
-					<Grid>
+			<Grid className={globalStyle.mt3}>
+				<Grid container direction="row" spacing={6}>
+					<Grid item>
 						<TextField
 							fullWidth
-							variant="outlined"
+							variant="standard"
 							label={"Tìm theo địa điểm"}
 							value={search}
 							onChange={(e) => {
 								setSearch(e.target.value);
 								onSearch(e.target.value);
 							}}
+							style={{ width: 300 }}
 						/>
 					</Grid>
-					<Grid>
+					<Grid item>
 						<TextField
 							fullWidth
-							variant="outlined"
+							variant="standard"
 							label={"Ngày bắt đầu"}
 							type={"date"}
 							value={moment(query.from).format("YYYY-MM-DD")}
@@ -98,13 +111,14 @@ export default function HomeSaleTicket() {
 									from: new Date(e.target.value),
 								});
 							}}
+							style={{ width: 300 }}
 						/>
 					</Grid>
 
-					<Grid>
+					<Grid item>
 						<TextField
 							fullWidth
-							variant="outlined"
+							variant="standard"
 							label={"Ngày kết thúc"}
 							type={"date"}
 							value={moment(query.to).format("YYYY-MM-DD")}
@@ -114,19 +128,17 @@ export default function HomeSaleTicket() {
 									to: new Date(e.target.value),
 								});
 							}}
+							style={{ width: 300 }}
 						/>
 					</Grid>
 				</Grid>
 			</Grid>
 
-			<Grid
-				style={{
-					// border: "1px solid #ccc",
-					padding: 30,
-				}}
-			>
+			<Grid className={globalStyle.mt3}>
 				{tripHome?.rows?.map((item) => (
-					<TripItem trip={item}></TripItem>
+					<Grid item xs={12} md={6}>
+						<TripItem trip={item}></TripItem>
+					</Grid>
 				))}
 			</Grid>
 
