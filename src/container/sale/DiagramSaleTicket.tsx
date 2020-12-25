@@ -117,23 +117,22 @@ export default function DiagramSaleTicket() {
 											>
 												{row.map((ticket: Ticket) => {
 													return Object.entries(ticket).length !== 0 ? (
-														<Grow in={true} timeout={1000}>
-															<Box flex={1} overflow="hidden" p={1}>
-																<DetailInfoTicket
-																	ticketInfo={ticket}
-																	onCreateOrEdit={
-																		onCreateOrUpdate
-																	}
-																/>
-															</Box>
-														</Grow>
-													) : (
 														<Box flex={1} overflow="hidden" p={1}>
 															<DetailInfoTicket
-																ticketInfo={{}}
+																ticketInfo={ticket}
 																onCreateOrEdit={onCreateOrUpdate}
 															/>
 														</Box>
+													) : (
+														// <Box flex={1} overflow="hidden" p={1}>
+														// 	<DetailInfoTicket
+														// 		ticketInfo={{}}
+														// 		onCreateOrEdit={
+														// 			onCreateOrUpdate
+														// 		}
+														// 	/>
+														// </Box>
+														<div></div>
 													);
 												})}
 											</Box>
