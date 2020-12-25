@@ -11,18 +11,17 @@ type Props = {
 export default function DetailInfoTicket(props: Props) {
 	function statusUnset(): React.ReactElement {
 		return (
-			<Box
-				display="flex"
-				height="100%"
-				flexDirection="column"
-				alignItems="center"
-				justifyContent="center"
-				p={1}
-				boxSizing="border-box"
-			>
-				<IconButton>
-					<Add />
-				</IconButton>
+			<Box height="100%" p={1} boxSizing="border-box">
+				<Box display="flex" justifyContent="space-between" alignItems="center">
+					<Typography variant="h5">A1</Typography>
+					<Tooltip title="Doi ghe" enterDelay={0} leaveDelay={0} placement="top">
+						<IconButton size="small">
+							<Loop fontSize="small" color="secondary" />
+						</IconButton>
+					</Tooltip>
+				</Box>
+				
+			
 			</Box>
 		);
 	}

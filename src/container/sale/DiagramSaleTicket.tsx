@@ -109,6 +109,8 @@ export default function DiagramSaleTicket() {
 							>
 								<Grid>
 									{floor.map((row, indexRow) => {
+										console.log(row);
+										
 										return (
 											<Box
 												display="flex"
