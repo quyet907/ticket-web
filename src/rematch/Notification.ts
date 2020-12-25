@@ -22,9 +22,9 @@ export enum VariantTypeEnum {
 
 
 const initState: NotificationModel = {
-  latestAt : new Date(),
-  message : "",
-  variant : "success"
+	latestAt: new Date(),
+	message: "",
+	variant: "success"
 };
 
 export const notification = createModel<NotificationModel>({

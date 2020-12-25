@@ -19,8 +19,14 @@ import { accountController } from "./service";
 
 const App = () => {
 	const { enqueueSnackbar } = useSnackbar();
-	const notification: NotificationModel = useSelector((state: AppState) => state.notification);
-	const authen: Authentication = useSelector((state: AppState) => state.authentication);
+	const notification: NotificationModel = useSelector(
+		(state: AppState) => state.notification
+	);
+
+
+	const authen: Authentication = useSelector(
+		(state: AppState) => state.authentication
+	);
 	const authenticationDispatch = useRematchDispatch(
 		(dispatch: Dispatch) => dispatch.authentication
 	);
@@ -68,7 +74,11 @@ export default function AppWithSnackBar() {
 			autoHideDuration={3000}
 			action={
 				<React.Fragment>
-					<IconButton aria-label="close" color="inherit" onClick={() => {}}>
+					<IconButton
+						aria-label="close"
+						color="inherit"
+						onClick={() => { }}
+					>
 						<Close />
 					</IconButton>
 				</React.Fragment>

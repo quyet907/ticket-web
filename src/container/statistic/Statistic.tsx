@@ -13,160 +13,243 @@ let iconTicket = <Loyalty fontSize="large" color="primary" />;
 let iconTrip = <Commute fontSize="large" color="primary" />;
 let iconRevenue = <AttachMoney fontSize="large" color="primary" />;
 
+const dayAgo = (number: number) => {
+   let date = new Date();
+   date.setDate(date.getDate() - number);
+   return date;
+};
+
+const nextDay = (number: number) => {
+   let date = new Date();
+   date.setDate(date.getDate() + number);
+   return date;
+};
+
 function Statistic() {
-	const globalStyle = useGlobalStyles();
-	const [dataTicket, setDataTicket] = useState<any>({
-		labels: [""],
-		datasets: [
-			{
-				type: "line",
-				label: "",
-				data: [""],
-				fill: false,
-				backgroundColor: "rgba(66, 135, 245,1)",
-				borderColor: "rgba(66, 135, 245,1)",
-			},
-		],
-	});
+   const globalStyle = useGlobalStyles();
+   const [startDate, setStartDate] = useState<Date>(dayAgo(6))
+   const [endDate, setEndDate] = useState<Date>(new Date())
+   const [titleChart, setTitleChart] = useState<string>("7 ngày")
+   const [summary, setSummary] = useState<Summary>({});
 
-	useEffect(() => {
-		statisticController
-			.statisticalIntervalTicket({
-				from: new Date("2020/12/24"),
-				to: new Date("2020/12/31"),
-				interval: "day",
-			})
-			.then((res) => {
-				console.log(res);
+   const [dataTicket, setDataTicket] = useState<any>({
+      labels: [],
+      datasets: [
+         {
+            type: "bar",
+            label: "",
+            data: [],
+            fill: false,
+            backgroundColor: "rgba(66, 135, 245,1)",
+            borderColor: "rgba(66, 135, 245,1)",
+         },
+      ],
+   });
 
-				var countDataTempt: number[] = [];
-				var dateDataTempt: string[] = [];
+   const [dataRevenue, setDataRevenue] = useState<any>({
+      labels: [],
+      datasets: [
+         {
+            type: "line",
+            label: "",
+            data: [],
+            fill: false,
+            backgroundColor: "rgba(66, 135, 245,1)",
+            borderColor: "rgba(66, 135, 245,1)",
+         },
+      ],
+   });
 
-				res.forEach((element) => {
-					countDataTempt.push(element.data || 0);
-					dateDataTempt.push(element.day ? moment(element.day).format("DD-MM") : "");
-				});
+   const dataSevenDayAgo = () => {
+      setStartDate(dayAgo(6))
+      setEndDate(new Date())
+      setTitleChart("7 ngày")
+   }
 
-				setDataTicket({
-					...dataTicket,
-					labels: dateDataTempt,
-					datasets: [
-						...dataTicket.datasets,
-						{
-							...dataTicket.datasets[0],
-							data: countDataTempt,
-						},
-					],
-				});
-			})
-			.catch((err) => console.log(err));
-	}, []);
+   const dataThirtyDayAgo = () => {
+      setStartDate(dayAgo(29))
+      setEndDate(new Date())
+      setTitleChart("30 ngày")
+   }
 
-	const [dataRevenue, setdataRevenue] = useState<any>({
-		labels: [9, 2, 3, 4, 4, 0, 6, 6, 7],
-		datasets: [
-			{
-				type: "line",
-				label: "",
-				data: [1, 2, 3, 4, 4, 5, 6, 6, 7],
-				fill: false,
-				backgroundColor: "rgba(66, 135, 245,1)",
-				borderColor: "rgba(66, 135, 245,1)",
-			},
-		],
-	});
+   const dataThisWeek = () => {
+      setStartDate(dayAgo(new Date().getDay() - 1))
+      setEndDate(nextDay(7 - new Date().getDay()))
+      setTitleChart("Tuần này")
+   }
 
-	const [summary, setSummary] = useState<Summary>({});
+   const dataThisMonth = () => {
+      let date = new Date()
+      let firstDayOfThisMonth = new Date(date.getFullYear(), date.getMonth(), 1)
+      let lastDayOfThisMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0)
 
-	useEffect(() => {
-		statisticController
-			.statisticalSummary()
-			.then((res) => {
-				setSummary(res);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	}, []);
+      setStartDate(firstDayOfThisMonth)
+      setEndDate(lastDayOfThisMonth)
+      setTitleChart("Tháng này")
+   }
 
-	console.count("Rendering");
-	return (
-		<Grid xs={12} container spacing={3}>
-			<Grow in={true} timeout={1000}>
-				<Grid item xs={12} md={6} lg={3} xl={3}>
-					<SummaryGeneral
-						icon={iconCustomer}
-						title="Tổng số khách hàng"
-						value={summary?.totalCustomer || 0}
-					/>
-				</Grid>
-			</Grow>
-			<Grow in={true} timeout={1000}>
-				<Grid item xs={12} md={6} lg={3} xl={3}>
-					<SummaryGeneral
-						icon={iconTicket}
-						title="Tổng số vé"
-						value={summary?.totalTicket || 0}
-					/>
-				</Grid>
-			</Grow>
-			<Grow in={true} timeout={1000}>
-				<Grid item xs={12} md={6} lg={3} xl={3}>
-					<SummaryGeneral
-						icon={iconTrip}
-						title="Tổng số chuyến đi"
-						value={summary?.totalTrip || 0}
-					/>
-				</Grid>
-			</Grow>
-			<Grow in={true} timeout={1000}>
-				<Grid item xs={12} md={6} lg={3} xl={3}>
-					<SummaryGeneral
-						icon={iconRevenue}
-						title="Tổng doanh thu"
-						value={summary?.totalRevenue || 0}
-						isMoney={true}
-					/>
-				</Grid>
-			</Grow>
+   useEffect(() => {
+      statisticController
+         .statisticalIntervalTicket({
+            from: startDate,
+            to: endDate,
+            interval: "day",
+         })
+         .then((res) => {
+            console.log(res);
 
-			<Grow in={true} timeout={1000}>
-				<Grid item xs={12} lg={9}>
-					<Paper elevation={3}>
-						{/* <Button variant='contained' color="primary">
-                  Xem theo tuần
+            var valueDataTempt: number[] = [];
+            var dateDataTempt: string[] = [];
+
+            res.forEach((element) => {
+               valueDataTempt.push(element.data || 0);
+               dateDataTempt.push(
+                  element.day ? moment(element.day).format("DD-MM") : ""
+               );
+            });
+
+            setDataTicket({
+               ...dataTicket,
+               labels: dateDataTempt,
+               datasets: [
+                  // ...dataTicket.datasets,
+                  {
+                     ...dataTicket.datasets[0],
+                     data: valueDataTempt,
+                  },
+               ],
+            });
+         })
+         .catch((err) => console.log(err));
+   }, [startDate, endDate]);
+
+   useEffect(() => {
+      statisticController
+         .statisticalIntervalRevenueTicket({
+            from: startDate,
+            to: endDate,
+            interval: "day",
+         })
+         .then((res) => {
+            console.log(res);
+
+            var valueDataTempt: number[] = [];
+            var dateDataTempt: string[] = [];
+
+            res.forEach((element) => {
+               valueDataTempt.push(element.data || 0);
+               dateDataTempt.push(
+                  element.day ? moment(element.day).format("DD-MM") : ""
+               );
+            });
+
+            setDataRevenue({
+               ...dataRevenue,
+               labels: dateDataTempt,
+               datasets: [
+                  // ...dataTicket.datasets,
+                  {
+                     ...dataRevenue.datasets[0],
+                     data: valueDataTempt,
+                  },
+               ],
+            });
+         })
+         .catch((err) => console.log(err));
+   }, [startDate, endDate]);
+	
+
+   console.count("Rendering");
+   return (
+      <Grid xs={12} container spacing={3}>
+         <Grid item xs={12} md={6} lg={3} xl={3}>
+            <SummaryGeneral
+               icon={iconCustomer}
+               title="Tổng số khách hàng"
+               value={summary?.totalCustomer || 0}
+            />
+         </Grid>
+         <Grid item xs={12} md={6} lg={3} xl={3}>
+            <SummaryGeneral
+               icon={iconTicket}
+               title="Tổng số vé"
+               value={summary?.totalTicket || 0}
+            />
+         </Grid>
+         <Grid item xs={12} md={6} lg={3} xl={3}>
+            <SummaryGeneral
+               icon={iconTrip}
+               title="Tổng số chuyến đi"
+               value={summary?.totalTrip || 0}
+            />
+         </Grid>
+         <Grid item xs={12} md={6} lg={3} xl={3}>
+            <SummaryGeneral
+               icon={iconRevenue}
+               title="Tổng doanh thu"
+               value={summary?.totalRevenue || 0}
+               isMoney={true}
+            />
+         </Grid>
+
+         <Grid item xs={12} lg={9}>
+            <Paper elevation={3}>
+               <Button variant="contained" color="primary" onClick={() => dataSevenDayAgo()}>
+                  07 ngày
                </Button>
-               <Button variant='contained' color="primary">
-                  Xem theo tháng
+               <Button variant="contained" color="primary" onClick={() => dataThisWeek()}>
+                  Tuần này
                </Button>
-               <Button variant='contained' color="primary">
-                  Xem theo năm
-               </Button> */}
-						<Bar
-							data={dataTicket}
-							options={{
-								title: {
-									display: true,
-									text: "Vé được bán trong tuần qua",
-									color: "white",
-								},
-								animation: {
-									duration: 3000,
-								},
-								tooltips: {
-									mode: "index",
-									axis: "x",
-								},
-								responsive: true,
-								maintainAspectRatio: true,
-							}}
-							// height={100}
-						/>
-					</Paper>
-				</Grid>
-			</Grow>
-		</Grid>
-	);
+               <Button variant="contained" color="primary" onClick={() => dataThirtyDayAgo()} >
+                  30 ngày
+               </Button>
+               <Button variant="contained" color="primary" onClick={() => dataThisMonth()}>
+                  Tháng này
+               </Button>
+               <Bar
+                  data={dataTicket}
+                  options={{
+                     title: {
+                        display: true,
+                        text: "Vé được bán trong " + titleChart,
+                        color: "white",
+                     },
+                     animation: {
+                        duration: 3000,
+                     },
+                     tooltips: {
+                        mode: "index",
+                        axis: "x",
+                     },
+                     responsive: true,
+                     maintainAspectRatio: true,
+                  }}
+               // height={100}
+               />
+               <Bar
+                  data={dataRevenue}
+                  options={{
+                     title: {
+                        display: true,
+                        text: "Doanh thu trong " + titleChart,
+                        color: "white",
+                     },
+                     animation: {
+                        duration: 3000,
+                     },
+                     tooltips: {
+                        mode: "index",
+                        axis: "x",
+                     },
+                     responsive: true,
+                     maintainAspectRatio: true,
+                  }}
+               // height={100}
+               />
+            </Paper>
+         </Grid>
+      </Grid>
+   );
 }
 
 export default Statistic;
