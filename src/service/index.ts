@@ -56,7 +56,7 @@ appClient.interceptors.response.use(
 	(error: AxiosError) => {
 		if(error.message == "Network Error"){
 			dispatch.notification.error("Lỗi kết nối máy chủ")
-			window.location.href = "network-error"
+			// window.location.href = "network-error"
 		}
 		else if (error.response) {
 			if (error.response.status === 401) {

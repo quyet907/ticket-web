@@ -25,12 +25,10 @@ export class StatisticalService implements IStatisticalController {
       return res.data
     }).catch(err => null)
   }
-  statisticalIntervalRevenueTicket(params: { type: "month" | "day"; }): Promise<IntervalTicketChart[]> {
+  statisticalIntervalRevenueTicket(params: PropsSummary): Promise<IntervalTicketChart[]> {
     return this.client.get(`${this.serviceURL}/${this.basePath}/IntervalRevenue`, { params }).then(res => {
-      console.log(res.data)
       return res.data
-    }).
-      catch(err => null)
+    }).catch(err => null)
   }
 }
 

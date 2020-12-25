@@ -24,7 +24,6 @@ export default function SummaryGeneral(props: Props) {
 								height: 56,
 							}}
 						>
-							{/* <props.icon fontSize="large" color="primary"/> */}
 							{props.icon}
 						</Avatar>
 					</Box>
@@ -42,7 +41,6 @@ export default function SummaryGeneral(props: Props) {
 						</Box>
 						<Box>
 							<Typography variant="h2">
-								{/* {getFormatNumber(Math.round(Math.random() * 10000))} */}
 								{props.isMoney ?
 									Intl.NumberFormat("de-DE", {
 										style: "currency",

@@ -34,4 +34,5 @@ export const store = init({
 export type Store = typeof store
 export type Dispatch = RematchDispatch<AppModel>
 export type AppState = RematchRootState<AppModel>
+
 export const { dispatch } = store
