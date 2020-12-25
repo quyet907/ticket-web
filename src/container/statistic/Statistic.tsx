@@ -1,4 +1,4 @@
-import { Button, Grid, Grow, Paper } from "@material-ui/core";
+import { Button, Grid, Paper } from "@material-ui/core";
 import { AttachMoney, Commute, Loyalty, People } from "@material-ui/icons";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
@@ -157,7 +157,17 @@ function Statistic() {
          })
          .catch((err) => console.log(err));
    }, [startDate, endDate]);
-	
+
+   useEffect(() => {
+      statisticController
+         .statisticalSummary()
+         .then((res) => {
+            setSummary(res);
+         })
+         .catch((err) => {
+            console.log(err);
+         });
+   }, []);
 
    console.count("Rendering");
    return (
