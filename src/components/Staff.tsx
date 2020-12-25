@@ -110,13 +110,13 @@ export default function StaffView() {
 // Table show
     const getTable: IBaseTable<Staff> = {
       header: [
-        { id: "name", label: "Ho ten" },
-        { id: "birthAt", label: "Ngay sinh" },
-        { id: "address", label: "Dia chi" },
-        { id: "phoneNumber", label: "So dien thoai" },
-        { id: "identityCard", label: "CMND" },
-        { id: "positionId", label: "Chuc vu" },
-        { id: "", label: "Hanh dong" },
+        { id: "name", label: "Ho ten", sort : true },
+        { id: "birthAt", label: "Ngay sinh", sort : true },
+        { id: "address", label: "Dia chi", sort : true },
+        { id: "phoneNumber", label: "So dien thoai", sort : true },
+        { id: "identityCard", label: "CMND", sort : true },
+        { id: "positionId", label: "Chuc vu", sort : false },
+        { id: "", label: "Hanh dong" , sort : false},
       ],
       paging: { ...object, rows: [] },
       value: createValue,

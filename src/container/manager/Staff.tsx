@@ -15,6 +15,7 @@ import clsx from "clsx";
 import { useGlobalStyles } from "../../styles/GlobalStyle";
 import { useRematchDispatch } from "../../rematch";
 import { Dispatch } from "../../rematch/store";
+import { getHighlightedText } from "../../helper/getHighlightedText";
 
 export default function StaffView() {
 	const noti = useRematchDispatch((dispatch: Dispatch) => dispatch.notification)
@@ -89,12 +90,13 @@ export default function StaffView() {
 	function convertDataToTable(data: Staff[]): IBaseTable<Staff> {
 		const createValue = data.map((item: Staff) => {
 			var value: any[] = [];
-			value.push(item.name || "");
+			value.push(getHighlightedText(item.name, query.search));
 			value.push(moment(item.birthAt).format("DD-MM-YYYY"));
-			value.push(item.address);
-			value.push(item.phoneNumber);
-			value.push(item.identityCard);
-			value.push(item.position_staff?.name);
+			value.push(getHighlightedText(item.address, query.search));
+			value.push(getHighlightedText(item.phoneNumber, query.search));
+			value.push(getHighlightedText(item.identityCard, query.search) );
+			value.push(getHighlightedText(item.position_staff?.name, query.search) );
+			value.push(getHighlightedText(item.sex, query.search) );
 			// value.push(ActionHelper.getActionUpdate(item, onCreateOrUpdate));
 			// value.push(ActionHelper.getActionDelete(item, onDelete));
 			value.push(ActionHelper.getActionUpdateAndDelete(item, onCreateOrUpdate, onConfirm));
@@ -104,13 +106,14 @@ export default function StaffView() {
 
 		const getTable: IBaseTable<Staff> = {
 			header: [
-				{ id: "name", label: "Họ và tên" },
-				{ id: "birthAt", label: "Ngày sinh" },
-				{ id: "address", label: "Địa chỉ" },
-				{ id: "phoneNumber", label: "Số điện thoại" },
-				{ id: "identityCard", label: "Chứng minh nhân dân" },
-				{ id: "positionId", label: "Chức vụ" },
-				{ id: "", label: "Hành động" },
+				{ id: "name", label: "Họ và tên", sort : true },
+				{ id: "birthAt", label: "Ngày sinh", sort : true },
+				{ id: "address", label: "Địa chỉ", sort : true },
+				{ id: "phoneNumber", label: "Số điện thoại", sort : true },
+				{ id: "identityCard", label: "Chứng minh nhân dân", sort : true },
+				{ id: "positionId", label: "Chức vụ" , sort : false  },
+				{ id: "sex", label: "Giới tính", sort : true },
+				{ id: "", label: "Hành động", sort : false },
 			],
 			paging: { ...object, rows: [] },
 			value: createValue,

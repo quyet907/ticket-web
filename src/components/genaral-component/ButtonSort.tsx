@@ -12,9 +12,9 @@ type Props = {
 const usesStyle = makeStyles((theme) => ({
 	root: {
 		color: "white",
-		padding: 10,
+		// padding: 10,
 		"&:hover": {
-			color: theme.palette.primary.main,
+			color: "white",
 		},
 	},
 }));
@@ -36,7 +36,7 @@ export default function ButtonSort(props: Props) {
 			}}
 		>
 			{
-                (props.active)? (props.direction === "desc") ? (
+                (props.active)? (props.direction === "asc") ? (
                     <ArrowUpwardIcon className={classes.root} />
                 ) : (
                     <ArrowDownwardIcon className={classes.root} />

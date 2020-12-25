@@ -11,6 +11,7 @@ import { IList } from "../../submodules/base-ticket-team/query/IList";
 import { Paging } from "../../submodules/base-ticket-team/query/Paging";
 import clsx from "clsx";
 import { useGlobalStyles } from "../../styles/GlobalStyle";
+import { getHighlightedText } from "../../helper/getHighlightedText";
 
 // import Page from 'src/components/Page';
 
@@ -90,17 +91,17 @@ export default function PositionStaffContainer() {
 	function convertDataToTable(data: PositionStaff[]): IBaseTable<PositionStaff> {
 		const createValue = data.map((item: PositionStaff) => {
 			var value: any[] = [];
-			value.push(item.name || "");
-			value.push(item.description || "");
+			value.push(getHighlightedText(item.name || "", query.search));
+			value.push(getHighlightedText(item.description || "", query.search));
 			value.push(ActionHelper.getActionUpdateAndDelete(item, onCreateOrUpdate, onConfirm));
 			return value;
 		});
 
 		const getTable: IBaseTable<PositionStaff> = {
 			header: [
-				{ id: "name", label: "Tên chức vụ" },
-				{ id: "description", label: "Mô tả" },
-				{ id: "", label: "Hành động" },
+				{ id: "name", label: "Tên chức vụ", sort : true },
+				{ id: "description", label: "Mô tả" , sort : true},
+				{ id: "", label: "Hành động", sort : false },
 			],
 			paging: { ...object, rows: [] },
 			value: createValue,

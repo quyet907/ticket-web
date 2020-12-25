@@ -110,11 +110,11 @@ export default function TripContainer() {
 
 		const getTable: IBaseTable<Trip> = {
 			header: [
-				{ id: "route" as any, label: "Tuyến đường" },
-				{ id: "price", label: "Giá" },
-				{ id: "timeStart", label: "Giờ khởi hành" },
-				{ id: "drive", label: "Người lái xe" },
-				{ id: "", label: "Hành động" },
+				{ id: "route" as any, label: "Tuyến đường", sort : true },
+				{ id: "price", label: "Giá", sort : true },
+				{ id: "timeStart", label: "Giờ khởi hành", sort : true },
+				{ id: "drive", label: "Người lái xe", sort : false },
+				{ id: "", label: "Hành động", sort : false },
 			],
 			paging: { ...object, rows: [] },
 			value: createValue,
