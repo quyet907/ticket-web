@@ -16,6 +16,7 @@ import { Car } from "../../submodules/base-ticket-team/base-carOwner/Car";
 import { IList } from "../../submodules/base-ticket-team/query/IList";
 import { Paging } from "../../submodules/base-ticket-team/query/Paging";
 import { useHistory } from "react-router-dom";
+import { getHighlightedText } from "../../helper/getHighlightedText";
 const useStyles = makeStyles((theme) => ({
 	root: {
 		backgroundColor: theme.palette.background.default,
@@ -108,11 +109,11 @@ export default function CarContainer() {
 	function convertDataToTable(data: Car[]): IBaseTable<Car> {
 		const createValue = data.map((item: Car) => {
 			var value: any[] = [];
-			value.push(item.name || "");
-			value.push(item.description);
-			value.push(item.origin);
+			value.push(getHighlightedText(item.name, query.search));
+			value.push(getHighlightedText(item.description, query.search));
+			value.push(getHighlightedText(item.origin, query.search));
 			value.push(moment(item.entryAt).format("YYYY-MM-DD"));
-			value.push(item.licensePlates);
+			value.push(getHighlightedText(item.licensePlates, query.search));
 			value.push(item.totalChair as any);
 
 			value.push(
@@ -129,13 +130,13 @@ export default function CarContainer() {
 
 		const getTable: IBaseTable<Car> = {
 			header: [
-				{ id: "name", label: "Ten xe" },
-				{ id: "description", label: "Mô tả" },
-				{ id: "origin", label: "Xuất xứ" },
-				{ id: "entryAt", label: "Ngày nhập" },
-				{ id: "licensePlates", label: "Biển số xe" },
-				{ id: "", label: "Tổng số ghế" },
-				{ id: "action" as any, label: "Hành động" },
+				{ id: "name", label: "Ten xe", sort : true },
+				{ id: "description", label: "Mô tả", sort : true },
+				{ id: "origin", label: "Xuất xứ", sort : true },
+				{ id: "entryAt", label: "Ngày nhập", sort : true },
+				{ id: "licensePlates", label: "Biển số xe", sort : true },
+				{ id: "", label: "Tổng số ghế" , sort : true },
+				{ id: "action" as any, label: "Hành động", sort : false },
 			],
 			paging: { ...object, rows: [] },
 			value: createValue,

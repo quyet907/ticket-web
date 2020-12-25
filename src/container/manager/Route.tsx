@@ -14,6 +14,7 @@ import { Paging } from "../../submodules/base-ticket-team/query/Paging";
 // import Page from 'src/components/Page';
 import clsx from "clsx";
 import { useGlobalStyles } from "../../styles/GlobalStyle";
+import { getHighlightedText } from "../../helper/getHighlightedText";
 
 export default function RouteContainer() {
 	const globalStyle = useGlobalStyles();
@@ -83,8 +84,8 @@ export default function RouteContainer() {
 	function convertDataToTable(data: Route[]): IBaseTable<Route> {
 		const createValue = data.map((item: Route) => {
 			var value: any[] = [];
-			value.push(item.localStart);
-			value.push(item.localEnd);
+			value.push(getHighlightedText(item.localStart, query.search));
+			value.push(getHighlightedText(item.localEnd, query.search) );
 			value.push(moment(item.startAt).format("HH Giờ MM"));
 			value.push(`${item.sumTimeRun} tiếng`);
 			value.push(ActionHelper.getActionUpdateAndDelete(item, onCreateOrUpdate, onConfirm));
@@ -94,11 +95,11 @@ export default function RouteContainer() {
 
 		const getTable: IBaseTable<Route> = {
 			header: [
-				{ id: "localStart", label: "Địa điểm xuất phát" },
-				{ id: "localEnd", label: "Địa điêm đích" },
-				{ id: "startAt", label: "Giờ khởi hành" },
-				{ id: "sumTimeRun", label: "Tổng thời gian chạy dự kiến" },
-				{ id: "", label: "Hanh dong" },
+				{ id: "localStart", label: "Địa điểm xuất phát", sort : true },
+				{ id: "localEnd", label: "Địa điêm đích", sort : true },
+				{ id: "startAt", label: "Giờ khởi hành", sort : false },
+				{ id: "sumTimeRun", label: "Tổng thời gian chạy dự kiến", sort : true },
+				{ id: "", label: "Hanh dong", sort : false },
 			],
 			paging: { ...object, rows: [] },
 			value: createValue,

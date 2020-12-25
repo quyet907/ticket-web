@@ -13,6 +13,7 @@ import PopUpConfirm from "../../components/dialogs/DialogConfirm";
 import PopUpEditCustomer from "../../components/dialogs/PopUpEditCustomer";
 import clsx from "clsx";
 import { useGlobalStyles } from "../../styles/GlobalStyle";
+import { getHighlightedText } from "../../helper/getHighlightedText";
 // import Page from 'src/components/Page';
 
 export default function Customers() {
@@ -83,27 +84,27 @@ export default function Customers() {
 	function convertDataToTable(data: Customer[]): IBaseTable<Customer> {
 		const createValue = data.map((item: Customer) => {
 			var value: any[] = [];
-			value.push(item.name || "");
-			value.push(item.CMND || "");
+			value.push(getHighlightedText(item.name || "", query.search) );
+			value.push(getHighlightedText(item.CMND || "", query.search));
 			value.push(moment(item.birthAt).format("DD-MM-YYYY"));
-			value.push(item.email || "");
-			value.push(item.phoneNumber || "");
-			value.push(item.sex || "");
-			value.push(item.description || "");
+			value.push(getHighlightedText(item.email || "", query.search));
+			value.push(getHighlightedText( item.phoneNumber || "", query.search));
+			value.push(getHighlightedText(item.sex || ""));
+			value.push( getHighlightedText(item.description || "", query.search));  
 			value.push(ActionHelper.getActionUpdateAndDelete(item, onCreateOrUpdate, onConfirm));
 			return value;
 		});
 
 		const getTable: IBaseTable<Customer> = {
 			header: [
-				{ id: "name", label: "Họ tên" },
-				{ id: "CMND", label: "CMND" },
-				{ id: "birthAt", label: "Ngày sinh" },
-				{ id: "email", label: "Email" },
-				{ id: "phoneNumber", label: "Số điện thoại" },
-				{ id: "sex", label: "Giới tính" },
-				{ id: "description", label: "Mô tả" },
-				{ id: "", label: "Thao tác" },
+				{ id: "name", label: "Họ tên", sort : true },
+				{ id: "CMND", label: "CMND" , sort : true},
+				{ id: "birthAt", label: "Ngày sinh" , sort : true},
+				{ id: "email", label: "Email", sort : true },
+				{ id: "phoneNumber", label: "Số điện thoại", sort : true },
+				{ id: "sex", label: "Giới tính", sort : true },
+				{ id: "description", label: "Mô tả", sort : true },
+				{ id: "", label: "Thao tác" ,sort : false},
 			],
 			paging: { ...object, rows: [] },
 			value: createValue,
