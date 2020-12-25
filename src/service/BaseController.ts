@@ -1,5 +1,5 @@
 import { AxiosInstance } from "axios";
-import { dispatch } from "../rematch/Store";
+import { dispatch } from "../rematch/store";
 import { ICount } from "../submodules/base-ticket-team/query/ICount";
 import { IFind } from "../submodules/base-ticket-team/query/IFind";
 import { IList } from "../submodules/base-ticket-team/query/IList";
@@ -44,9 +44,11 @@ export class BaseController<T> {
   }
 
   public create(params: T): Promise<T> {
+    console.log("save succes")
     return this.client
       .post(`${this.serviceURL}/${this.basePath}`, params)
       .then((res) => {
+        dispatch.notification.success("Lưu thành công!!!");
         return res.data;
       });
   }
@@ -63,7 +65,7 @@ export class BaseController<T> {
     return this.client
       .delete(`${this.serviceURL}/${this.basePath}/${id}`)
       .then((res) => {
-        // 
+        dispatch.notification.success("Xóa thành công !!!");
         return res.data;
       });
   }

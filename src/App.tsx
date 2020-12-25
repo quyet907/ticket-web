@@ -1,61 +1,67 @@
+import { IconButton } from "@material-ui/core";
+import { Close, TransferWithinAStationSharp } from "@material-ui/icons";
+import { SnackbarProvider, useSnackbar } from "notistack";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
-import LoginView from "./components/auth/Login";
-import RegisterView from "./components/auth/Register";
+import NetworkError from "./components/error/NetworkError";
+import Notfound from "./components/error/Notfound";
+import AppLoadingTop from "./components/genaral-component/LoaddingTop";
 import DashboardLayout from "./components/layouts/DashboardLayout/DashboardLayout";
-import { AppState } from "./rematch/Store";
-import { accountController } from "./service";
-import { SnackbarProvider, VariantType, useSnackbar } from "notistack";
-import { Button, IconButton } from "@material-ui/core";
-import { Close } from "@material-ui/icons";
+import NewLogin from "./container/login/NewLogin";
+import RegisterView from "./container/login/Register";
+import { useRematchDispatch } from "./rematch";
+import { Authentication } from "./rematch/Authentication";
 import { NotificationModel } from "./rematch/Notification";
+import { AppState, Dispatch } from "./rematch/store";
+import { accountController } from "./service";
 
 const App = () => {
-	const [isAuthentication, setAuthentication] = useState<boolean>(false);
 	const { enqueueSnackbar } = useSnackbar();
+	const notification: NotificationModel = useSelector(
+		(state: AppState) => state.notification
+	);
+	const authen: Authentication = useSelector(
+		(state: AppState) => state.authentication
+	);
+	const authenticationDispatch = useRematchDispatch(
+		(dispatch: Dispatch) => dispatch.authentication
+	);
 
-	const notification: NotificationModel = useSelector((state: AppState) => state.notification);
-
+	console.log(authen);
 	useEffect(() => {
 		const { message, variant } = notification;
-		enqueueSnackbar("message", { variant });
+		if (message) {
+			enqueueSnackbar(message, { variant });
+		}
 	}, [notification]);
 
-	const auThen: string = useSelector((state: AppState) => {
-		return state.authentication;
-	});
-
 	useEffect(() => {
-		accountController
-			.getMe()
-			.then(() => setAuthentication(true))
-			.catch(() => setAuthentication(false));
-	}, [auThen]);
-
-	const handleClick = () => {
-		enqueueSnackbar("I love snacks.");
-	};
-
-	const handleClickVariant = (variant: VariantType) => () => {
-		// variant could be success, error, warning, info, or default
-		enqueueSnackbar("This is a success message!", { variant });
-	};
+		accountController.getMe().then((res) => {
+			const token = localStorage.getItem("token");
+			authenticationDispatch.login({ auth: res, token: token });
+		});
+	}, []);
 
 	return (
-		<Router>
-			{/* <Redirect exact from="*" to={isAuthentication ? "/dashboard" : "/login"} /> */}
-			<Switch>
-				<Route exact path="*" component={isAuthentication ? DashboardLayout : LoginView} />
-				<Route exact path="/register" component={RegisterView} />
-				<Route exact path="/login" component={LoginView} />
-			</Switch>
-		</Router>
-		// <>
-		// 	<Button onClick={handleClick}>Show snackbar</Button>
-		// 	<Button onClick={handleClickVariant("success")}>Show success snackbar</Button>
-		// </>
+		<div>
+			<AppLoadingTop></AppLoadingTop>
+			<Router>
+				{/* <Redirect exact from="*" to={isAuthentication ? "/dashboard" : "/login"} /> */}
+				<Switch>
+					{/* <Route exact path="/network-error" component={NetworkError} /> */}
+					{/* <Route exact path="/not-found" component={Notfound} /> */}
+					<Route
+						exact
+						path="*"
+						component={authen.isAuthen ? DashboardLayout : NewLogin}
+					/>
+					<Route exact path="/login" component={NewLogin} />
+					<Route exact path="/register" component={RegisterView} />
+				</Switch>
+			</Router>
+		</div>
 	);
 };
 
@@ -67,7 +73,11 @@ export default function AppWithSnackBar() {
 				autoHideDuration={3000}
 				action={
 					<React.Fragment>
-						<IconButton aria-label="close" color="inherit" onClick={() => {}}>
+						<IconButton
+							aria-label="close"
+							color="inherit"
+							onClick={() => {}}
+						>
 							<Close />
 						</IconButton>
 					</React.Fragment>

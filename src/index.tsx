@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import AppWithSnackBar from "./App";
 import "./index.css";
-import { store } from "./rematch/Store";
+import { store } from "./rematch/store";
 import reportWebVitals from "./reportWebVitals";
 import GlobalStyles from "./theme/GlobalStyles";
 import theme from "./theme/MuiTheme";

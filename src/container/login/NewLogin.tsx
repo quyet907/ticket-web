@@ -10,12 +10,12 @@ import {
 import { Alert } from "@material-ui/lab";
 import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";
-import { Link as RouterLink, useHistory } from "react-router-dom";
+// import { Link as RouterLink, useHistory } from "react-router-dom";
 import * as Yup from "yup";
 import Facebook from "../../icons/Facebook";
 import Google from "../../icons/Google";
 import { useRematchDispatch } from "../../rematch";
-import { Dispatch } from "../../rematch/Store";
+import { Dispatch } from "../../rematch/store";
 import { accountController } from "../../service";
 
 const useStyles = makeStyles((theme) => ({
@@ -39,13 +39,11 @@ type LoginProps = {
 	username?: string;
 	password?: string;
 };
-const LoginView = () => {
-	const staffDispatch = useRematchDispatch((dispatch: Dispatch) => {
-		return dispatch.authentication;
-	});
-
+export default function NewLogin() {
+	
 	const classes = useStyles();
-	const history = useHistory();
+	const authenticationDispatch = useRematchDispatch((dispatch: Dispatch) => dispatch.authentication);
+	// const history = useHistory();
 	const formik = useFormik<LoginProps>({
 		initialValues: {},
 		initialErrors: {},
@@ -65,11 +63,9 @@ const LoginView = () => {
 			accountController
 				.login(formik.values.username || "", formik.values.password || "")
 				.then((res) => {
-					localStorage.setItem("token", res.token);
-					staffDispatch.login();
+					authenticationDispatch.login(res);	
 				})
 				.catch((err) => {
-					handleClick();
 					console.log(err);
 				});
 		},
@@ -91,15 +87,6 @@ const LoginView = () => {
 		});
 	}
 
-	const [openError, setOpenError] = useState<boolean>(false)
-
-	const handleClick = () => {
-		setOpenError(true)
-	}
-
-	const handleClose = () => {
-		setOpenError(false)
-	}
 
 	return (
 		// <Page className={clsx(classes.root)} title="Login">
@@ -111,9 +98,6 @@ const LoginView = () => {
 		// alignItems="center"
 		>
 			<Container maxWidth="sm" className={classes.formLogin}>
-				<Snackbar open={openError} autoHideDuration={3000} onClose={handleClose}	>
-					<Alert color='warning' onClose={handleClose}>{`Tài khoản hoặc mật khẩu không chính xác`}</Alert>
-				</Snackbar>
 				<Box mb={3}>
 					<Typography color="textPrimary" variant="h2">
 						{`Đăng nhập`}
@@ -196,9 +180,7 @@ const LoginView = () => {
 				</Box>
 				<Typography color="textSecondary" variant="body1">
 					{`Chưa có tài khoản?`}
-					<Link component={RouterLink} to="/register" variant="h6">
-						{`Đăng ký`}
-					</Link>
+					
 				</Typography>
 			</Container>
 		</Box>
@@ -206,4 +188,3 @@ const LoginView = () => {
 	);
 };
 
-export default LoginView;

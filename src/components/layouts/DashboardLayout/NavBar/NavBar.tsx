@@ -13,7 +13,7 @@ import {
 import { Link as RouterLink, useLocation } from "react-router-dom";
 import { names, uniqueNamesGenerator } from "unique-names-generator";
 import { useRematchDispatch } from "../../../../rematch";
-import { Dispatch } from "../../../../rematch/Store";
+import { Dispatch } from "../../../../rematch/store";
 import { useGlobalStyles } from "../../../../styles/GlobalStyle";
 import NavItem from "./NavItem";
 
@@ -107,14 +107,12 @@ const NavBar = (props: Props) => {
 	const classes = useStyles();
 	const globalStyle = useGlobalStyles();
 	const location = useLocation();
+	const authenDispath = useRematchDispatch((dispatch : Dispatch)  => dispatch.authentication)
 
-	const staffDispatch = useRematchDispatch((dispatch: Dispatch) => {
-		return dispatch.authentication;
-	});
 
 	const doSomething = (key: string) => {
 		if (key === 'Đăng xuất') {
-			staffDispatch.logout();
+			authenDispath.logout()
 		}
 	}
 

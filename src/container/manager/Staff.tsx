@@ -13,8 +13,11 @@ import { IList } from "../../submodules/base-ticket-team/query/IList";
 import { Paging } from "../../submodules/base-ticket-team/query/Paging";
 import clsx from "clsx";
 import { useGlobalStyles } from "../../styles/GlobalStyle";
+import { useRematchDispatch } from "../../rematch";
+import { Dispatch } from "../../rematch/store";
 
 export default function StaffView() {
+	const noti = useRematchDispatch((dispatch: Dispatch) => dispatch.notification)
 	const globalStyle = useGlobalStyles();
 	const [object, setObject] = useState<Paging<Staff>>({
 		page: 1,

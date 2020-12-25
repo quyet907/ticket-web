@@ -69,6 +69,7 @@ export default function PopUpEditTrip(props: Props) {
 		formik.setErrors({});
 		formik.setValues({
 			...props.obj,
+			timeStart : props.obj.timeStart || new Date()
 		});
 	}, [props]);
 

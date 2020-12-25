@@ -2,26 +2,54 @@ import { createModel } from "@rematch/core";
 import { appClient } from "../service";
 import { Staff } from "../submodules/base-ticket-team/base-carOwner/Staff";
 
-const initToken: string = ''
 
-export const authenticationModel = createModel<Staff>({
-   state: initToken,
+export type Authentication = {
+   auth : Staff,
+   token : string
+   isAuthen : boolean
+} 
+const initAuthentication: Authentication = {
+   auth : {},
+   token : "",
+   isAuthen : true
+}
+
+export const authenticationModel = createModel<Authentication>({
+   state: initAuthentication,
    reducers: {
-      fetchData(state, token) {
-         state = token
+      update(state: Authentication, data : any = {}) {
+         state = {
+            ...state,
+            auth : data.auth,
+            token : data.token,
+            isAuthen : data.isAuthen
+         }
          return state
       }
    },
 
    effects: (dispatch: any) => ({
-      login() {
-         dispatch.authentication.fetchData(localStorage.getItem('token'))
-         appClient.defaults.headers["Authorization"] = localStorage.getItem('token');
+      login(payload: Authentication, state : any) {
+         console.log(payload)
+         if(payload.auth && payload.token){
+            const updateState: Authentication = {
+               auth : payload.auth,
+               token : payload.token,
+               isAuthen : true
+            }
+            dispatch.authentication.update(updateState)
+            localStorage.setItem('token', updateState.token)
+            appClient.defaults.headers["Authorization"] = updateState.token;
+         }
       },
       logout() {
          localStorage.setItem('token', '')
-         dispatch.authentication.fetchData(localStorage.getItem('token'))
-         appClient.defaults.headers["Authorization"] = localStorage.getItem('token');
+         dispatch.authentication.update({
+            auth : null,
+            token : null,
+            isAuthen : false
+         })
+         appClient.defaults.headers["Authorization"] = null;
       }
    }),
 });

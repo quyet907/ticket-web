@@ -100,28 +100,28 @@ function Statistic() {
             <SummaryGeneral
                icon={iconCustomer}
                title="Tổng số khách hàng"
-               value={summary.totalCustomer || 0}
+               value={summary?.totalCustomer || 0}
             />
          </Grid>
          <Grid item xs={12} md={6} lg={3} xl={3}>
             <SummaryGeneral
                icon={iconTicket}
                title="Tổng số vé"
-               value={summary.totalTicket || 0}
+               value={summary?.totalTicket || 0}
             />
          </Grid>
          <Grid item xs={12} md={6} lg={3} xl={3}>
             <SummaryGeneral
                icon={iconTrip}
                title="Tổng số chuyến đi"
-               value={summary.totalTrip || 0}
+               value={summary?.totalTrip || 0}
             />
          </Grid>
          <Grid item xs={12} md={6} lg={3} xl={3}>
             <SummaryGeneral
                icon={iconRevenue}
                title="Tổng doanh thu"
-               value={summary.totalRevenue || 0}
+               value={summary?.totalRevenue || 0}
                isMoney={true}
             />
          </Grid>

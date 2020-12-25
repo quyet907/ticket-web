@@ -1,6 +1,7 @@
-import axios from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { number } from "joi";
 import appConfig from "../configs/AppConfig";
+import { dispatch } from "../rematch/store";
 import { serviceName } from "../submodules/base-ticket-team/query/NameService";
 import { AccountController } from "./axios/AccountController";
 import { CarService } from "./CarService";
@@ -17,7 +18,7 @@ import { TripService } from "./TripService";
 const getTokenFromLocalStorage = () => {
 	return localStorage.getItem("token")
 }
-
+var timeoutLoading: any;
 export const appClient = axios.create({
 	baseURL: "",
 	timeout: 10000,
@@ -27,6 +28,7 @@ export const appClient = axios.create({
 		},
 		Authorization: getTokenFromLocalStorage(),
 	},
+
 });
 
 
@@ -34,6 +36,8 @@ export const appClient = axios.create({
 
 appClient.interceptors.request.use(
 	function (config) {
+		clearTimeout(timeoutLoading);
+      dispatch.loadingTop.showLoad();
 		return config;
 	},
 	function (error) {
@@ -42,22 +46,32 @@ appClient.interceptors.request.use(
 );
 
 appClient.interceptors.response.use(
-	(response) => {
+	(response : AxiosResponse) => {
+		timeoutLoading = setTimeout(() => {
+			dispatch.loadingTop.hiddenLoad();
+			clearTimeout(timeoutLoading);
+		  }, 100);
 		return response;
 	},
-	(error) => {
-		console.log(error)
-		if (error.response) {
+	(error: AxiosError) => {
+		if(error.message == "Network Error"){
+			dispatch.notification.error("Lỗi kết nối máy chủ")
+			window.location.href = "network-error"
+		}
+		else if (error.response) {
 			if (error.response.status === 401) {
-				console.log("da gap loi 401")
-			} else if (error.response.status === 403) {
-			} else if (error.response.status && error.response.status >= 500) {
+				dispatch.authentication.logout();
+				dispatch.notification.error("Lỗi xác thực, vui lòng đăng nhập lại")
+			}  else if (error.response.status && error.response.status === 500) {
+				dispatch.notification.error("Có lỗi xảy ra")
 			} else if (
 				error.response.status &&
 				error.response.status === 400 &&
 				error.response.data
 			) {
+
 			} else {
+				
 			}
 		} else {
 		}

@@ -12,6 +12,8 @@ import { Formik } from 'formik';
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import * as Yup from 'yup';
+import { useRematchDispatch } from '../../rematch';
+import { Dispatch } from '../../rematch/store';
 // import Page from 'src/components/Page';
 
 const useStyles = makeStyles((theme) => ({
@@ -24,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const RegisterView = () => {
+  const authenticationDispatch = useRematchDispatch((dispatch: Dispatch) => dispatch.notification);
   const classes = useStyles();
 
   return (

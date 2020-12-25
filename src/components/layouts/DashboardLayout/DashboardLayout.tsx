@@ -54,20 +54,6 @@ function DashboardLayout() {
 	const [isMobileNavOpen, setMobileNavOpen] = useState(false);
 	const globalStyles = useGlobalStyles();
 
-	const { path } = useRouteMatch();
-
-	const [isAuThen, setIsAuThen] = useState<boolean>(false)
-
-	useEffect(() => {
-		accountController.getMe().then((res) => {
-			setIsAuThen(true)
-		}).catch((res) => {
-			setIsAuThen(false)
-		})
-	}, [])
-
-	console.log(isAuThen)
-
 	return (
 		<div className={classes.root}>
 			{/* <TopBar onMobileNavOpen={() => setMobileNavOpen(true)} /> */}
