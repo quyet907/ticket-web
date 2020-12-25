@@ -19,12 +19,8 @@ import { accountController } from "./service";
 
 const App = () => {
 	const { enqueueSnackbar } = useSnackbar();
-	const notification: NotificationModel = useSelector(
-		(state: AppState) => state.notification
-	);
-	const authen: Authentication = useSelector(
-		(state: AppState) => state.authentication
-	);
+	const notification: NotificationModel = useSelector((state: AppState) => state.notification);
+	const authen: Authentication = useSelector((state: AppState) => state.authentication);
 	const authenticationDispatch = useRematchDispatch(
 		(dispatch: Dispatch) => dispatch.authentication
 	);
@@ -45,7 +41,7 @@ const App = () => {
 	}, []);
 
 	return (
-		<div>
+		<>
 			<AppLoadingTop></AppLoadingTop>
 			<Router>
 				{/* <Redirect exact from="*" to={isAuthentication ? "/dashboard" : "/login"} /> */}
@@ -61,30 +57,24 @@ const App = () => {
 					<Route exact path="/register" component={RegisterView} />
 				</Switch>
 			</Router>
-		</div>
+		</>
 	);
 };
 
 export default function AppWithSnackBar() {
 	return (
-		<div>
-			<SnackbarProvider
-				maxSnack={3}
-				autoHideDuration={3000}
-				action={
-					<React.Fragment>
-						<IconButton
-							aria-label="close"
-							color="inherit"
-							onClick={() => {}}
-						>
-							<Close />
-						</IconButton>
-					</React.Fragment>
-				}
-			>
-				<App></App>
-			</SnackbarProvider>
-		</div>
+		<SnackbarProvider
+			maxSnack={3}
+			autoHideDuration={3000}
+			action={
+				<React.Fragment>
+					<IconButton aria-label="close" color="inherit" onClick={() => {}}>
+						<Close />
+					</IconButton>
+				</React.Fragment>
+			}
+		>
+			<App></App>
+		</SnackbarProvider>
 	);
 }

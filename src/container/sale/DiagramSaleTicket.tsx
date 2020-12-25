@@ -1,24 +1,15 @@
-import {
-	Grid,
-	makeStyles,
-	Menu,
-	MenuItem,
-	Typography,
-} from "@material-ui/core";
-import React, { useEffect, useState } from "react";
+import { Box, Grid, Grow, makeStyles, Typography } from "@material-ui/core";
 import clsx from "clsx";
-import ChairItem from "../../components/chair/ChairItem";
-import DetailInfoTicket from "./DetailInfoTicket";
-import { ChairCar } from "../../submodules/base-ticket-team/base-carOwner/ChairCar";
-import { useGlobalStyles } from "../../styles/GlobalStyle";
-import DialogSaleTicket from "./DialogSaleTicket";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { ticketController, tripController } from "../../service";
-import { DiagramChairOfTrip } from "../../submodules/base-ticket-team/controller.ts/DiagramChairOfTrip";
+import { useGlobalStyles } from "../../styles/GlobalStyle";
 import { Ticket } from "../../submodules/base-ticket-team/base-carOwner/Ticket";
-import { IList } from "../../submodules/base-ticket-team/query/IList";
-import { Paging } from "../../submodules/base-ticket-team/query/Paging";
 import { Trip } from "../../submodules/base-ticket-team/base-carOwner/Trip";
+import { DiagramChairOfTrip } from "../../submodules/base-ticket-team/controller.ts/DiagramChairOfTrip";
+import { IList } from "../../submodules/base-ticket-team/query/IList";
+import DetailInfoTicket from "./DetailInfoTicket";
+import DialogSaleTicket from "./DialogSaleTicket";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -80,10 +71,7 @@ export default function DiagramSaleTicket() {
 	}, [query]);
 
 	return (
-		<Grid
-			className={clsx(globalStyle.container)}
-			style={{ padding: 30, boxSizing: "border-box" }}
-		>
+		<Grid style={{ padding: 30, boxSizing: "border-box" }}>
 			{/* <Menu
 				keepMounted
 				open={true}
@@ -109,58 +97,52 @@ export default function DiagramSaleTicket() {
 			<Grid container direction="row" justify="center">
 				<Typography variant="h1">Sơ đồ ghế</Typography>
 			</Grid>
-			<Grid
-				container
-				alignItems="center"
-				xs={12}
-				style={{
-					height: "100%",
-				}}
-			>
+			<Grid container>
 				<Grid xs={12} container direction="row" justify="space-evenly">
-					{diagram?.dataListChair?.map(
-						(floor: any[], indexFloor: any) => {
-							return (
-								<Grid
-									item
-									className={clsx(
-										classes.borderRadius,
-										classes.marginDefault
-									)}
-								>
-									<Grid>
-										{floor.map((row, indexRow) => {
-											return (
-												<Grid
-													container
-													style={{ padding: 10 }}
-												>
-													{row.map(
-														(ticket: Ticket) => {
-															return Object.entries(
-																ticket
-															).length !== 0 ? (
+					{diagram?.dataListChair?.map((floor: any[], indexFloor: any) => {
+						return (
+							<Grid
+								xs={12}
+								item
+								className={clsx(classes.marginDefault)}
+								style={{ backgroundColor: "#fff" }}
+							>
+								<Grid>
+									{floor.map((row, indexRow) => {
+										return (
+											<Box
+												display="flex"
+												justifyContent="space-between"
+												mb={1}
+											>
+												{row.map((ticket: Ticket) => {
+													return Object.entries(ticket).length !== 0 ? (
+														<Grow in={true} timeout={1000}>
+															<Box flex={1} overflow="hidden" p={1}>
 																<DetailInfoTicket
-																	ticketInfo={
-																		ticket
-																	}
+																	ticketInfo={ticket}
 																	onCreateOrEdit={
 																		onCreateOrUpdate
 																	}
 																/>
-															) : (
-																<div></div>
-															);
-														}
-													)}
-												</Grid>
-											);
-										})}
-									</Grid>
+															</Box>
+														</Grow>
+													) : (
+														<Box flex={1} overflow="hidden" p={1}>
+															<DetailInfoTicket
+																ticketInfo={{}}
+																onCreateOrEdit={onCreateOrUpdate}
+															/>
+														</Box>
+													);
+												})}
+											</Box>
+										);
+									})}
 								</Grid>
-							);
-						}
-					)}
+							</Grid>
+						);
+					})}
 				</Grid>
 			</Grid>
 		</Grid>

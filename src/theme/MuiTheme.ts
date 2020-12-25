@@ -9,17 +9,17 @@ const theme = createMuiTheme({
 		},
 		primary: {
 			main: colors.blue[400],
+			contrastText: '#fff',
 		},
 		secondary: {
-			main: "#ff798e",
+			main: colors.green[400],
+			contrastText: '#fff',
 		},
-		text: {
-			primary: colors.blueGrey[900],
-			secondary: colors.blueGrey[600],
-		},
+		
 	},
 	shadows,
 	typography: {
+		
 		h1: {
 			fontWeight: 500,
 			fontSize: 35,

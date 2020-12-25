@@ -68,7 +68,7 @@ export default function TripItem(props: Props) {
 					style={{
 						width: "100%",
 					}}
-					src="https://i.pinimg.com/474x/66/bb/b7/66bbb75c21dd28720e9de7f6448ab381.jpg"
+					src="https://picsum.photos/1000"
 				/>
 			</Grid>
 

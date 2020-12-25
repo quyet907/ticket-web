@@ -1,19 +1,15 @@
-import React, { useEffect, useState } from "react";
 import {
-	Box,
-	Button,
 	colors,
-	Container,
+
 	Grid,
 	makeStyles,
 	Paper,
-	TextField,
-	Typography,
+	TextField
 } from "@material-ui/core";
-import parse from "autosuggest-highlight/parse";
-import match from "autosuggest-highlight/match";
 import { Autocomplete } from "@material-ui/lab";
-import clsx from "clsx"
+import match from "autosuggest-highlight/match";
+import parse from "autosuggest-highlight/parse";
+import React from "react";
 import { useGlobalStyles } from "../../styles/GlobalStyle";
 
 // import Page from 'src/components/Page';
