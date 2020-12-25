@@ -124,15 +124,15 @@ export default function DiagramSaleTicket() {
 															/>
 														</Box>
 													) : (
-														// <Box flex={1} overflow="hidden" p={1}>
-														// 	<DetailInfoTicket
-														// 		ticketInfo={{}}
-														// 		onCreateOrEdit={
-														// 			onCreateOrUpdate
-														// 		}
-														// 	/>
-														// </Box>
-														<div></div>
+														<Box flex={0.2} overflow="hidden" p={1}>
+															{/* <DetailInfoTicket
+																ticketInfo={{}}
+																onCreateOrEdit={
+																	onCreateOrUpdate
+																}
+															/> */}
+														</Box>
+														// <div></div>
 													);
 												})}
 											</Box>

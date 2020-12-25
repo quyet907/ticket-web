@@ -1,5 +1,5 @@
-import { Box, Chip, Container, Grid, IconButton, Paper, Typography } from "@material-ui/core";
-import { Add } from "@material-ui/icons";
+import { Box, Chip, Container, Grid, IconButton, Paper, Tooltip, Typography } from "@material-ui/core";
+import { Add, Edit, Loop } from "@material-ui/icons";
 import React from "react";
 import { Ticket } from "../../submodules/base-ticket-team/base-carOwner/Ticket";
 
@@ -32,12 +32,17 @@ export default function DetailInfoTicket(props: Props) {
 			<Box height="100%" p={1} boxSizing="border-box">
 				<Box display="flex" justifyContent="space-between" alignItems="center">
 					<Typography variant="h5">A1</Typography>
-					<Typography variant="caption">{ticketInfo?.customer?.name}</Typography>
+					<Tooltip title="Doi ghe" enterDelay={0} leaveDelay={0} placement="top">
+						<IconButton size="small">
+							<Loop fontSize="small" color="secondary" />
+						</IconButton>
+					</Tooltip>
 				</Box>
 				<Box mt={1}>
 					<Typography variant="h6">{ticketInfo?.customer?.phoneNumber}</Typography>
 				</Box>
-				<Box textAlign="right" mt={1}>
+				<Box display="flex" justifyContent="space-between" alignItems="center" mt={1}>
+					<Typography variant="caption">{ticketInfo?.customer?.name}</Typography>
 					<Chip
 						style={{ borderRadius: 5 }}
 						size="small"
