@@ -1,6 +1,4 @@
-import { Avatar, Box, Grid, Paper, Typography } from "@material-ui/core";
-import PersonIcon from "@material-ui/icons/Person";
-import PeopleIcon from '@material-ui/icons/People';
+import { Avatar, Box, Grid, Paper, Typography, useTheme } from "@material-ui/core";
 import React from "react";
 
 type Props = {
@@ -11,14 +9,15 @@ type Props = {
 };
 
 export default function SummaryGeneral(props: Props) {
+	const muiTheme = useTheme()
 	return (
 		<Grid item xs={12}>
-			<Paper elevation={3}>
+			<Paper elevation={3} style={{padding: muiTheme.spacing(2), height: 100}}>
 				<Box display="flex" flexDirection="row">
 					<Box>
 						<Avatar
 							style={{
-								backgroundColor: "#fff",
+								backgroundColor: muiTheme.palette.common.white,
 								border: "1px solid grey",
 								width: 56,
 								height: 56,

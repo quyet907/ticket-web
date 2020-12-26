@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/alt-text */
-import { Box, makeStyles, Paper, Typography } from "@material-ui/core";
+import { Box, makeStyles, Paper, Typography, useTheme } from "@material-ui/core";
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { useGlobalStyles } from "../../styles/GlobalStyle";
@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
 		borderRadius: 10,
 	},
 	root: {
+		padding: theme.spacing(2),
 		height: 150,
 		"&:hover": {
 			boxShadow: "14px 8px 15px -4px rgba(0,0,0,0.29)",
@@ -31,14 +32,29 @@ type Props = {
 export default function TripItem(props: Props) {
 	const classes = useStyles();
 	const history = useHistory();
+	const muiTheme = useTheme();
 	return (
-		<Paper className={classes.root} onClick={() => history.push(`/sale/${props.trip.id}`)}>
+		<Paper
+			elevation={2}
+			className={classes.root}
+			onClick={() => history.push(`/sale/${props.trip.id}`)}
+		>
 			<Box display="flex" height="100%" flex={1}>
-				<Box height="100%" width={110}>
+				<Box
+					height="100%"
+					width={120}
+					borderRadius={5}
+					style={{ background: muiTheme.palette.grey[300] }}
+				>
 					<img
 						src="https://picsum.photos/1000"
 						alt="car-img"
-						style={{ height: "100%", objectFit: "cover" }}
+						style={{
+							height: "100%",
+							width: "100%",
+							objectFit: "cover",
+							borderRadius: 5,
+						}}
 					/>
 				</Box>
 				<Box ml={3}>
