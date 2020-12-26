@@ -88,7 +88,6 @@ export default function DialogSaleTicket(props: Props) {
 		validationSchema: validate,
 		initialErrors: {},
 		onSubmit: () => {
-			console.log(ticket);
 			props.onSave({
 				...ticket,
 				customer: formikForCustomer.values,
