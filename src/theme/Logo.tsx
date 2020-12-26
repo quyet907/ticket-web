@@ -5,7 +5,7 @@ const Logo = (
 		React.ClassAttributes<HTMLImageElement> &
 		React.ImgHTMLAttributes<HTMLImageElement>
 ) => {
-	return <img alt="Logo" src="/static/logo.svg" {...props} />;
+	return <img height = {60} alt="Logo" src="/static/images/logo.jpg" {...props} />;
 };
 
 export default Logo;

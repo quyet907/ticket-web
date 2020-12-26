@@ -13,6 +13,7 @@ import { Car } from "../../submodules/base-ticket-team/base-carOwner/Car";
 import { ChairCar } from "../../submodules/base-ticket-team/base-carOwner/ChairCar";
 import { CreateChairCar } from "../../submodules/base-ticket-team/controller.ts/CreateChairCar";
 import { ListChairCar } from "../../submodules/base-ticket-team/controller.ts/ListChairCar";
+import PopUpConfirm from "../dialogs/DialogConfirm";
 import DiagramChair from "./DiagramChair";
 import PopUpAutoCreateChair from "./PopUpAutoCreateChair";
 import PopUpEditChairCar from "./PopUpEditChairCar";
@@ -104,6 +105,7 @@ export default function DialogChair(props: Props) {
 
 	function onCancelAutoCreate(){
 		setShowFormAutoCreate(false);
+		props.onClose()
 		
 		
 	}
@@ -117,6 +119,15 @@ export default function DialogChair(props: Props) {
 			setEventReload(!eventReload);
 
 		})
+	}
+
+	function onCancelConfirm() {
+		setShowConfirm(false);
+	}
+	function onConfirm(item: ChairCar ) {
+		setSelected(item);
+		setShowConfirm(true);
+		setShowForm(false)
 	}
 
 	useEffect(() => {
@@ -135,6 +146,7 @@ export default function DialogChair(props: Props) {
 	return (
 		<div>
 			<PopUpEditChairCar
+				onDelete = {onConfirm}
 				isDisplay={showForm}
 				onCancel={onCloseForm}
 				obj={selected}
@@ -146,6 +158,7 @@ export default function DialogChair(props: Props) {
 				isDisplay = {showFormAutoCreate}
 				titlePopup = {"Bạn cần tạo ghế cho xe"}
 			></PopUpAutoCreateChair>
+			<PopUpConfirm isDisplay={showConfirm} onCancel={onCancelConfirm} onDelete={onDelete} />
 			<Dialog
 				open={props.open}
 				onClose={props.onClose}

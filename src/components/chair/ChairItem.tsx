@@ -35,7 +35,7 @@ export default function ChairItem(props: Props) {
 							style={{
 								fontSize: "1rem",
                                 backgroundColor: "black",
-                                padding : 10
+                                // padding : 10
 							}}
 							container
                             direction={"column"}
@@ -50,6 +50,7 @@ export default function ChairItem(props: Props) {
                             <Box mt={1}/>
 							<Grid>Tên ghế : {props.chair.name}</Grid>
                             <Box mt={1}/>
+							<Button>Xóa ghế</Button>
 						</Grid>
 					) : (
 						<></>

@@ -18,6 +18,8 @@ import MenuIcon from "@material-ui/icons/Menu";
 import NotificationsIcon from "@material-ui/icons/NotificationsOutlined";
 import InputIcon from "@material-ui/icons/Input";
 import Logo from "../../../theme/Logo";
+import { useRematchDispatch } from "../../../rematch";
+import { Dispatch } from "../../../rematch/store";
 // import Logo from "src/components/Logo";
 
 const useStyles = makeStyles((theme) => ({
@@ -40,6 +42,8 @@ type Props = {
 const TopBar: FC<Props> = (props) => {
 	const classes = useStyles();
 	const [notifications] = useState([]);
+	const authenDispath = useRematchDispatch((dispatch: Dispatch) => dispatch.authentication)
+
 
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -50,6 +54,13 @@ const TopBar: FC<Props> = (props) => {
 	const handleClose = () => {
 		setAnchorEl(null);
 	};
+
+	function Logout() {
+		setAnchorEl(null);
+		authenDispath.logout()
+	}
+
+
 
 	return (
 		<AppBar className={clsx(classes.root, props.className)} elevation={0}>
@@ -66,7 +77,7 @@ const TopBar: FC<Props> = (props) => {
 						</Badge>
 					</IconButton>
 					<IconButton color="inherit">
-						<InputIcon />
+						<InputIcon onClick = {()=> Logout()} />
 					</IconButton>
 				</Hidden>
 				<Hidden lgUp>

@@ -9,6 +9,7 @@ import NetworkError from "./components/error/NetworkError";
 import Notfound from "./components/error/Notfound";
 import AppLoadingTop from "./components/genaral-component/LoaddingTop";
 import DashboardLayout from "./components/layouts/DashboardLayout/DashboardLayout";
+import Notification from "./components/genaral-component/Notication";
 import NewLogin from "./container/login/NewLogin";
 import RegisterView from "./container/login/Register";
 import { useRematchDispatch } from "./rematch";
@@ -17,27 +18,15 @@ import { NotificationModel } from "./rematch/Notification";
 import { AppState, Dispatch } from "./rematch/store";
 import { accountController } from "./service";
 
-const App = () => {
-	const { enqueueSnackbar } = useSnackbar();
-	const notification: NotificationModel = useSelector(
-		(state: AppState) => state.notification
-	);
-
-
+export const App = () => {
+	console.count("render app ")
 	const authen: Authentication = useSelector(
 		(state: AppState) => state.authentication
 	);
 	const authenticationDispatch = useRematchDispatch(
 		(dispatch: Dispatch) => dispatch.authentication
 	);
-
-	console.log(authen);
-	useEffect(() => {
-		const { message, variant } = notification;
-		if (message) {
-			enqueueSnackbar(message, { variant });
-		}
-	}, [notification]);
+	console.log(authen)
 
 	useEffect(() => {
 		accountController.getMe().then((res) => {
@@ -49,6 +38,7 @@ const App = () => {
 	return (
 		<>
 			<AppLoadingTop></AppLoadingTop>
+			<Notification></Notification>
 			<Router>
 				{/* <Redirect exact from="*" to={isAuthentication ? "/dashboard" : "/login"} /> */}
 				<Switch>
@@ -66,25 +56,3 @@ const App = () => {
 		</>
 	);
 };
-
-export default function AppWithSnackBar() {
-	return (
-		<SnackbarProvider
-			maxSnack={3}
-			autoHideDuration={3000}
-			action={
-				<React.Fragment>
-					<IconButton
-						aria-label="close"
-						color="inherit"
-						onClick={() => { }}
-					>
-						<Close />
-					</IconButton>
-				</React.Fragment>
-			}
-		>
-			<App></App>
-		</SnackbarProvider>
-	);
-}

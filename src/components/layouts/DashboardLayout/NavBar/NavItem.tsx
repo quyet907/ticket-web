@@ -58,7 +58,6 @@ const NavItem = (props: Props) => {
 						className={classes.button}
 						component={RouterLink}
 						to={props.href}
-						onClick={props.onClick}
 					>
 						{props.icon && (
 							<props.icon className={classes.icon} size="20" />
@@ -76,7 +75,6 @@ type Props = {
 	href: string;
 	icon: React.FC<IconProps>;
 	title: string;
-	onClick :()=> void
 };
 
 export default NavItem;

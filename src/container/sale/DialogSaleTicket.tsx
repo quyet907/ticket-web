@@ -95,6 +95,7 @@ export default function DialogSaleTicket(props: Props) {
 		},
 	});
 
+	console.log(props?.ticket?.statusTicket)
 	useEffect(() => {
 		if(props.ticket){
 			setTicket({
@@ -102,7 +103,7 @@ export default function DialogSaleTicket(props: Props) {
 				localPickup:
 					props?.ticket?.localPickup || props?.trip?.route?.localStart,
 				localDrop: props?.ticket?.localDrop || props?.trip?.route?.localEnd,
-				statusTicket : StatusTicket.unpaid
+				statusTicket : props.ticket.statusTicket ||  StatusTicket.payed
 			});
 			if (props.ticket.localPickup !== props.trip.route?.localStart) {
 				setLocalOption({
@@ -356,14 +357,16 @@ export default function DialogSaleTicket(props: Props) {
 											value={ticket.statusTicket}
 											labelWidth={80}
 											onChange={(e=>{
+												
+												console.log(e.target.value)
 												setTicket({...ticket,statusTicket:e.target.value as any })
 											})}
 										>
 											<MenuItem value={StatusTicket.payed}>
 												Đã đã tiền
 											</MenuItem>
-											<MenuItem value={StatusTicket.unpaid}>
-												Chưa trả tiền
+											<MenuItem value={StatusTicket.order}>
+												Đặt trước
 											</MenuItem>
 											<MenuItem value={StatusTicket.welcomed}>
 												Đã đón

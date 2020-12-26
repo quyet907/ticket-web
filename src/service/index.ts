@@ -54,6 +54,10 @@ appClient.interceptors.response.use(
 		return response;
 	},
 	(error: AxiosError) => {
+		timeoutLoading = setTimeout(() => {
+			dispatch.loadingTop.hiddenLoad();
+			clearTimeout(timeoutLoading);
+		  }, 100);
 		if(error.message == "Network Error"){
 			dispatch.notification.error("Lỗi kết nối máy chủ")
 			// window.location.href = "network-error"

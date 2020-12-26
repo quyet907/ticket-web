@@ -8,7 +8,9 @@ import {
 	Grid,
 	IconButton,
 	TextField,
+	Theme,
 	Typography,
+	withStyles,
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import SaveIcon from "@material-ui/icons/Save";
@@ -26,7 +28,20 @@ interface Props {
 	onSave(item: PositionStaff): void;
 	isDisplay: boolean;
 	onCancel(): void;
+	onDelete(item : ChairCar):void;
 }
+
+const ButtonDelete = withStyles((theme: Theme) => ({
+	root: {
+		// margin : 10,
+		background: theme.palette.error.main,
+		color : "white",
+		padding : 12,
+		border: "none",
+		boxShadow: "none",
+		"&:hover": {background: theme.palette.error.main},
+	},
+}))(Button);
 
 export default function PopUpEditChairCar(props: Props) {
 	const globalStyles = useGlobalStyles();
@@ -62,6 +77,11 @@ export default function PopUpEditChairCar(props: Props) {
 							onChange={(e) => setData({ ...data, description: e.target.value })}
 						/>
 					</Grid>
+					{props.obj.id ? <Grid className={globalStyles.mb3} item xs={12}>
+						<ButtonDelete fullWidth  
+							onClick = {()=> props.onDelete(props.obj)}
+						>Xóa</ButtonDelete>
+					</Grid> : <></>}
 				</Grid>
 			</DialogContent>
 			<BaseDialogActions onCancel={props.onCancel} onSave={() => onSave(data)} />

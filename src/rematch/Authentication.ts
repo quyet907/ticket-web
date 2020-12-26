@@ -37,19 +37,19 @@ export const authenticationModel = createModel<Authentication>({
                token : payload.token,
                isAuthen : true
             }
-            dispatch.authentication.update(updateState)
             appClient.defaults.headers["Authorization"] = updateState.token;
             localStorage.setItem('token', updateState.token);
+            dispatch.authentication.update(updateState)
          }
       },
       logout() {
          localStorage.setItem('token', '')
+         appClient.defaults.headers["Authorization"] = null;
          dispatch.authentication.update({
             auth : null,
             token : null,
             isAuthen : false
          })
-         appClient.defaults.headers["Authorization"] = null;
       }
    }),
 });
