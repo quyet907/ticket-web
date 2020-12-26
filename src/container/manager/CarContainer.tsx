@@ -3,7 +3,7 @@
 import { Box, Container, Grid, makeStyles, Typography } from "@material-ui/core";
 import clsx from "clsx";
 import moment from "moment";
-import React, { useEffect, useState } from "react";
+import React, {  useEffect, useState } from "react";
 import { ActionHelper } from "../../comon/ActionHelper";
 import DialogChair from "../../components/chair/DialogChair";
 import PopUpConfirm from "../../components/dialogs/DialogConfirm";
@@ -17,6 +17,8 @@ import { IList } from "../../submodules/base-ticket-team/query/IList";
 import { Paging } from "../../submodules/base-ticket-team/query/Paging";
 import { useHistory } from "react-router-dom";
 import { getHighlightedText } from "../../helper/getHighlightedText";
+import { useRematchDispatch } from "../../rematch";
+import { Dispatch } from "../../rematch/store";
 const useStyles = makeStyles((theme) => ({
 	root: {
 		backgroundColor: theme.palette.background.default,
@@ -29,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
 export default function CarContainer() {
 	const history = useHistory();
 	const globalStyle = useGlobalStyles();
+	const notification = useRematchDispatch((dispatch : Dispatch)=>dispatch.notification)
 	const [object, setObject] = useState<Paging<Car>>({
 		page: 1,
 		pageSize: 5,
@@ -97,7 +100,11 @@ export default function CarContainer() {
 	}
 
 	function onNextPageTrip(item: Car) {
-		history.push(`trip/${item.id}`);
+		if(item.totalChair){
+			history.push(`trip/${item.id}`);
+		}else {
+			notification.error("Bạn cần tạo ghế cho xe đầu tiên")
+		}
 	}
 
 	useEffect(() => {
@@ -112,7 +119,7 @@ export default function CarContainer() {
 			value.push(getHighlightedText(item.name, query.search));
 			value.push(getHighlightedText(item.description, query.search));
 			value.push(getHighlightedText(item.origin, query.search));
-			value.push(moment(item.entryAt).format("YYYY-MM-DD"));
+			value.push(moment(item.entryAt).format("DD-MM-YYYY"));
 			value.push(getHighlightedText(item.licensePlates, query.search));
 			value.push(getHighlightedText(item.totalChair as any, query.search )  );
 
@@ -148,7 +155,7 @@ export default function CarContainer() {
 		// <Page className={classes.root} title="Customers">
 		<Grid xs={12}>
 			<Grid>
-				<Typography variant={"h1"}>Xe vip pro</Typography>
+				<Typography variant={"h1"}>Xe</Typography>
 			</Grid>
 			<PopUpConfirm isDisplay={showConfirm} onCancel={onCancelConfirm} onDelete={onDelete} />
 

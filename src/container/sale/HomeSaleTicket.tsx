@@ -45,7 +45,7 @@ export default function HomeSaleTicket() {
 		from: new Date(),
 		to: new Date(),
 		page: 1,
-		pageSize: 6,
+		pageSize: 4,
 		search: "",
 	});
 	useEffect(() => {
@@ -67,16 +67,16 @@ export default function HomeSaleTicket() {
 	return (
 		<Grid>
 			<Header
-				title="Ban ve"
+				title="Bán vé "
 				breadcrumbs={
 					<Breadcrumbs aria-label="breadcrumb">
 						<Link color="secondary" href="/ticket" onClick={() => {}}>
 							<Typography variant="caption" color="primary">
-								Ban ve
+								Bán vé
 							</Typography>
 						</Link>
 						<Typography color="textSecondary" variant="caption">
-							So do ghe
+							Sơ đồ ghế
 						</Typography>
 					</Breadcrumbs>
 				}
@@ -148,6 +148,7 @@ export default function HomeSaleTicket() {
 								<FormControl variant="outlined">
 									<Select
 										value={query.pageSize}
+										
 										onChange={(e) => {
 											var getValue: string = e.target.value as any;
 											var getValueNumber: number = parseInt(getValue);
@@ -157,9 +158,9 @@ export default function HomeSaleTicket() {
 											});
 										}}
 									>
-										<MenuItem value={5}>5</MenuItem>
-										<MenuItem value={10}>10</MenuItem>
-										<MenuItem value={15}>15</MenuItem>
+										<MenuItem value={4}>4</MenuItem>
+										<MenuItem value={8}>8</MenuItem>
+										<MenuItem value={12}>12</MenuItem>
 									</Select>
 								</FormControl>
 							</Grid>

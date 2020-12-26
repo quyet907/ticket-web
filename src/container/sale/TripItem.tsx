@@ -100,7 +100,7 @@ export default function TripItem(props: Props) {
 							<Box mr={1}>
 								<AccessTimeRounded />
 							</Box>
-							<Typography variant="h5">{props.trip.route?.sumTimeRun} gio</Typography>
+							<Typography variant="h5">{moment(props.trip.timeStart).format("DD-MM-YYYY")}</Typography>
 						</Box>
 
 						<Box display="flex" alignItems="center" ml={3}>

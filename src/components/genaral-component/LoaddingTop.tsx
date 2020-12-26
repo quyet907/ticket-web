@@ -8,7 +8,7 @@ import { AppState } from "../../rematch/store";
 const useStyles = makeStyles(theme=>({
 	load : {
 		position : "fixed",
-		top : 0,
+		top : 64,
 		left : 0,
 		width : "100%"
 	}
@@ -27,7 +27,7 @@ export default function AppLoadingTop() {
 	}, [loadingTop])
 	return (
 		<div className = {classes.load}>
-			<LinearProgress   color="primary"  hidden ={!loading}/>
+			<LinearProgress   color="secondary"  hidden ={!loading}/>
 		</div>
 	) 
 }

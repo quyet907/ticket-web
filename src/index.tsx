@@ -2,8 +2,8 @@ import { ThemeProvider } from "@material-ui/core";
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import AppWithSnackBar from "./App";
 import "./index.css";
+import {App} from "./App"
 import { store } from "./rematch/store";
 import reportWebVitals from "./reportWebVitals";
 import GlobalStyles from "./theme/GlobalStyles";
@@ -13,7 +13,7 @@ ReactDOM.render(
    <Provider store={store}>
       <ThemeProvider theme={theme}>
          <GlobalStyles></GlobalStyles>
-         <AppWithSnackBar />
+         <App/>
       </ThemeProvider>
    </Provider>
    ,

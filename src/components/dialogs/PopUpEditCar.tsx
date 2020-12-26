@@ -46,7 +46,7 @@ export default function PopUpEditCar(props: Props) {
 		formik.resetForm();
 		formik.setTouched({})
 		formik.setErrors({});
-		formik.setValues(props.obj);
+		formik.setValues({...props.obj, entryAt :props.obj.entryAt || new Date() });
 	}, [props]);
 
 	return (

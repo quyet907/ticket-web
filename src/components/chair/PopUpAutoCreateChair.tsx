@@ -32,7 +32,11 @@ export default function PopUpAutoCreateChair(props: Props) {
 	const globalStyles = useGlobalStyles();
 	const [data, setData] = useState<CreateChairCar>({});
 	useEffect(() => {
-		setData({});
+		setData({
+			floor : 1,
+			row : 5,
+			column : 4
+		});
 	}, [props]);
 
 	function onSave(item: ChairCar){

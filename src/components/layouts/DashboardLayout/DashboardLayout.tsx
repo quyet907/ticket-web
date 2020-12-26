@@ -72,6 +72,8 @@ function DashboardLayout() {
 							<Route exact path={`/ticket`} component={HomeSaleTicket} />
 							<Route exact path={`/car`} component={CarContainer} />
 							<Route exact path={`/sale/:id`} component={DiagramSaleTicket} />
+							<Redirect exact from="*" to={"dashboard"} />
+
 						</Switch>
 					</div>
 				</div>

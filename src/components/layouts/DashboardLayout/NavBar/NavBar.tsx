@@ -49,11 +49,6 @@ const items = [
 		title: "Nhân viên",
 	},
 	{
-		href: "/trip",
-		icon: MapPin,
-		title: "Chuyến đi",
-	},
-	{
 		href: "/route",
 		icon: Map,
 		title: "Tuyến đường",
@@ -72,11 +67,6 @@ const items = [
 		href: "/404",
 		icon: AlertCircle,
 		title: "Error",
-	},
-	{
-		href: "/login",
-		icon: LogOut,
-		title: "Đăng xuất",
 	},
 ];
 
@@ -109,16 +99,11 @@ const NavBar = (props: Props) => {
 	const classes = useStyles();
 	const globalStyle = useGlobalStyles();
 	const location = useLocation();
-	const authenDispath = useRematchDispatch((dispatch: Dispatch) => dispatch.authentication)
 
 
 	const thisUser: Authentication = useSelector((state: AppState) => state.authentication)
 
-	const doSomething = (key: string) => {
-		if (key === 'Đăng xuất') {
-			authenDispath.logout()
-		}
-	}
+	
 
 	useEffect(() => {
 		if (props.openMobile && props.onMobileClose()) {
@@ -153,7 +138,6 @@ const NavBar = (props: Props) => {
 							key={item.title}
 							title={item.title}
 							icon={item.icon}
-							onClick={() => doSomething(item.title)}
 						/>
 					))}
 				</List>
