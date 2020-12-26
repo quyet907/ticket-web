@@ -10,10 +10,12 @@ import {
 	Truck,
 	Users
 } from "react-feather";
+import { useSelector } from "react-redux";
 import { Link as RouterLink, useLocation } from "react-router-dom";
 import { names, uniqueNamesGenerator } from "unique-names-generator";
 import { useRematchDispatch } from "../../../../rematch";
-import { Dispatch } from "../../../../rematch/store";
+import { Authentication } from "../../../../rematch/Authentication";
+import { AppState, Dispatch } from "../../../../rematch/store";
 import { useGlobalStyles } from "../../../../styles/GlobalStyle";
 import NavItem from "./NavItem";
 
@@ -107,8 +109,10 @@ const NavBar = (props: Props) => {
 	const classes = useStyles();
 	const globalStyle = useGlobalStyles();
 	const location = useLocation();
-	const authenDispath = useRematchDispatch((dispatch : Dispatch)  => dispatch.authentication)
+	const authenDispath = useRematchDispatch((dispatch: Dispatch) => dispatch.authentication)
 
+
+	const thisUser: Authentication = useSelector((state: AppState) => state.authentication)
 
 	const doSomething = (key: string) => {
 		if (key === 'Đăng xuất') {
@@ -128,15 +132,15 @@ const NavBar = (props: Props) => {
 				<Avatar
 					className={classes.avatar}
 					component={RouterLink}
-					src={user.avatar}
+					src={thisUser.auth.avt}
 					to="/app/account"
 				/>
 				<Box mt={1} alignItems="center" display="flex" flexDirection="column">
-					<Typography color="textPrimary" variant="h1">
-						{user.name}
+					<Typography color="textPrimary" variant="h4">
+						{thisUser.auth.name}
 					</Typography>
 					<Typography color="textSecondary" variant="body2">
-						{user.jobTitle}
+						{thisUser.auth.position_staff?.name}
 					</Typography>
 				</Box>
 			</Box>
