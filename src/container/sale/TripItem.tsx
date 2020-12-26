@@ -34,7 +34,7 @@ export default function TripItem(props: Props) {
 	return (
 		<Paper elevation={2} className={classes.root} onClick={() => history.push(`/sale/${props.trip.id}`)}>
 			<Box display="flex" height="100%" flex={1}>
-				<Box height="100%" width={110}>
+				<Box height="100%" width={110} borderRadius={5}>
 					<img
 						src="https://picsum.photos/1000"
 						alt="car-img"
