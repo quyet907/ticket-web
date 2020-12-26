@@ -10,7 +10,7 @@ import {
 	Typography,
 	useTheme,
 } from "@material-ui/core";
-import { Add, Edit, Loop } from "@material-ui/icons";
+import { Add, Close, Edit, Loop, Print } from "@material-ui/icons";
 import React from "react";
 import { StatusTicket, Ticket } from "../../submodules/base-ticket-team/base-carOwner/Ticket";
 import clsx from "clsx";
@@ -125,11 +125,18 @@ export default function DetailInfoTicket(props: Props) {
 			>
 				<Box display="flex" justifyContent="space-between" alignItems="center">
 					<Typography variant="h5">{props.ticketInfo.chair_car?.name}</Typography>
-					<Tooltip title="Doi ghe" enterDelay={0} leaveDelay={0} placement="top">
-						<IconButton size="small">
-							<Loop fontSize="small" color="secondary" />
-						</IconButton>
-					</Tooltip>
+					<Box>
+						<Tooltip title="In ve" enterDelay={0} leaveDelay={0} placement="top">
+							<IconButton size="small">
+								<Print fontSize="small" color="secondary" />
+							</IconButton>
+						</Tooltip>
+						<Tooltip title="Xoa ve" enterDelay={0} leaveDelay={0} placement="top">
+							<IconButton size="small">
+								<Close fontSize="small" style={{ color: "red" }} />
+							</IconButton>
+						</Tooltip>
+					</Box>
 				</Box>
 				<Box mt={1}>
 					<Typography

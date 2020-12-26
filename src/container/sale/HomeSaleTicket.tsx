@@ -69,7 +69,7 @@ export default function HomeSaleTicket() {
 				<Typography variant={"h3"}>
 					<b>Ban ve</b>
 				</Typography>
-				<Box mb={1}>
+				<Box mt={1} mb={2}>
 					<Breadcrumbs aria-label="breadcrumb">
 						<Link color="secondary" href="/ticket" onClick={() => {}}>
 							<Typography variant="caption" color="primary">
