@@ -89,6 +89,11 @@ const theme = createMuiTheme({
 			rounded: {
 				borderRadius: "5px"
 			}
+		},
+		MuiChip: {
+			root: {
+				borderRadius: "5px"
+			}
 		}
 	},
 });

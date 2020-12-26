@@ -162,7 +162,6 @@ export default function DetailInfoTicket(props: Props) {
 						{ticketInfo?.customer?.name}
 					</Typography>
 					<Chip
-						style={{ borderRadius: 5 }}
 						size="small"
 						label={"Đã trả tiền"}
 						color={"secondary"}
