@@ -44,7 +44,7 @@ export default function HomeSaleTicket() {
 		from: new Date(),
 		to: new Date(),
 		page: 1,
-		pageSize: 5,
+		pageSize: 6,
 		search: "",
 	});
 	useEffect(() => {
@@ -66,10 +66,10 @@ export default function HomeSaleTicket() {
 	return (
 		<Grid>
 			<Grid>
-				<Typography variant={"h4"}>
+				<Typography variant={"h3"}>
 					<b>Ban ve</b>
 				</Typography>
-				<Box mt={1} mb={2}>
+				<Box mb={1}>
 					<Breadcrumbs aria-label="breadcrumb">
 						<Link color="secondary" href="/ticket" onClick={() => {}}>
 							<Typography variant="caption" color="primary">
@@ -136,7 +136,7 @@ export default function HomeSaleTicket() {
 
 			<Grid container direction="row" spacing={3} className={globalStyle.mt3}>
 				{tripHome?.rows?.map((item) => (
-					<Grid item xs={12} md={6}>
+					<Grid item xs={12}  lg={6}>
 						<TripItem trip={item}></TripItem>
 					</Grid>
 				))}

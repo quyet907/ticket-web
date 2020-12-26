@@ -13,6 +13,7 @@ import Statistic from "../../../container/statistic/Statistic";
 import { accountController } from "../../../service";
 import { useGlobalStyles } from "../../../styles/GlobalStyle";
 import NavBar from "./NavBar/NavBar";
+import TopBar from "./TopBar";
 
 const useStyles = makeStyles((theme: Theme) => ({
 	root: {
@@ -41,11 +42,11 @@ const useStyles = makeStyles((theme: Theme) => ({
 		flex: "1 1 auto",
 		height: "100%",
 		overflow: "auto",
-		padding: theme.spacing(4),
-		paddingLeft: theme.spacing(6),
+		padding: theme.spacing(6),
+		paddingTop: theme.spacing(12),
 		backgroundColor: "rgb(247, 249, 252)",
 		borderLeft: "1px solid",
-		borderColor: colors.grey[300]
+		borderColor: colors.grey[300],
 	},
 }));
 
@@ -56,8 +57,8 @@ function DashboardLayout() {
 
 	return (
 		<div className={classes.root}>
-			{/* <TopBar onMobileNavOpen={() => setMobileNavOpen(true)} /> */}
-			<NavBar onMobileClose={() => setMobileNavOpen(false)} openMobile={isMobileNavOpen}/>
+			<TopBar onMobileNavOpen={() => setMobileNavOpen(true)} />
+			<NavBar onMobileClose={() => setMobileNavOpen(false)} openMobile={isMobileNavOpen} />
 			<div className={classes.wrapper}>
 				<div className={classes.contentContainer}>
 					<div className={classes.content}>

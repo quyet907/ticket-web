@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
 		borderRadius: 10,
 	},
 	root: {
+		padding: theme.spacing(2),
 		height: 150,
 		"&:hover": {
 			boxShadow: "14px 8px 15px -4px rgba(0,0,0,0.29)",
@@ -38,7 +39,7 @@ export default function TripItem(props: Props) {
 					<img
 						src="https://picsum.photos/1000"
 						alt="car-img"
-						style={{ height: "100%", objectFit: "cover" }}
+						style={{ height: "100%", objectFit: "cover", borderRadius: 5 }}
 					/>
 				</Box>
 				<Box ml={3}>

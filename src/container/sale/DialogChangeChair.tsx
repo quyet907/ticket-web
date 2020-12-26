@@ -92,7 +92,7 @@ export default function DialogChangeChair(props: Props) {
 					</IconButton>
 					<Typography variant="h6">Vui lòng chọn ghế cần thay đổi</Typography>
 					<Button autoFocus color="inherit" onClick={props.onClose}>
-						save
+						Save
 					</Button>
 				</Toolbar>
 			</AppBar>

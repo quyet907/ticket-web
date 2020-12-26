@@ -84,7 +84,6 @@ const theme = createMuiTheme({
 		MuiPaper: {
 			root: {
 				boxSizing: "border-box",
-				padding: "20px",
 				backgroundColor: colors.common.white
 			},
 			rounded: {
