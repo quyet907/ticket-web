@@ -114,7 +114,7 @@ export default function CarContainer() {
 			value.push(getHighlightedText(item.origin, query.search));
 			value.push(moment(item.entryAt).format("YYYY-MM-DD"));
 			value.push(getHighlightedText(item.licensePlates, query.search));
-			value.push(item.totalChair as any);
+			value.push(getHighlightedText(item.totalChair as any, query.search )  );
 
 			value.push(
 				ActionHelper.getAllActionForCar(
@@ -135,7 +135,7 @@ export default function CarContainer() {
 				{ id: "origin", label: "Xuất xứ", sort : true },
 				{ id: "entryAt", label: "Ngày nhập", sort : true },
 				{ id: "licensePlates", label: "Biển số xe", sort : true },
-				{ id: "", label: "Tổng số ghế" , sort : true },
+				{ id: "totalChair" as any, label: "Tổng số ghế" , sort : true },
 				{ id: "action" as any, label: "Hành động", sort : false },
 			],
 			paging: { ...object, rows: [] },

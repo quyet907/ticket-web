@@ -1,14 +1,27 @@
-import { Box, Grid, Grow, makeStyles, Typography } from "@material-ui/core";
+import {
+	Box,
+	Button,
+	Grid,
+	Grow,
+	makeStyles,
+	Typography,
+} from "@material-ui/core";
 import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { useRematchDispatch } from "../../rematch";
+import { Dispatch } from "../../rematch/store";
 import { ticketController, tripController } from "../../service";
 import { useGlobalStyles } from "../../styles/GlobalStyle";
-import { Ticket } from "../../submodules/base-ticket-team/base-carOwner/Ticket";
+import {
+	StatusTicket,
+	Ticket,
+} from "../../submodules/base-ticket-team/base-carOwner/Ticket";
 import { Trip } from "../../submodules/base-ticket-team/base-carOwner/Trip";
 import { DiagramChairOfTrip } from "../../submodules/base-ticket-team/controller.ts/DiagramChairOfTrip";
 import { IList } from "../../submodules/base-ticket-team/query/IList";
 import DetailInfoTicket from "./DetailInfoTicket";
+import DialogChangeChair from "./DialogChangeChair";
 import DialogSaleTicket from "./DialogSaleTicket";
 
 const useStyles = makeStyles((theme) => ({
@@ -27,8 +40,8 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 export default function DiagramSaleTicket() {
+	const  notication  = useRematchDispatch((dispatch : Dispatch)=> dispatch.notification)
 	const params = useParams<{ id: string }>();
-	const listChairDiagram = JSON.parse(dataFake);
 	const globalStyle = useGlobalStyles();
 	const classes = useStyles();
 	const [diagram, setDiagram] = useState<DiagramChairOfTrip>({});
@@ -38,13 +51,12 @@ export default function DiagramSaleTicket() {
 		pageSize: 5,
 		search: "",
 	});
-	const [selected, setSelected] = useState<Ticket>({} as Ticket);
+	const [selected, setSelected] = useState<Ticket[]>([]);
 	const [showForm, setShowForm] = useState<boolean>(false);
 	const [showConfirm, setShowConfirm] = useState<boolean>(false);
 	const [trip, setTrip] = useState<Trip>({});
 
-	function onCreateOrUpdate(ticket: Ticket) {
-		setSelected(ticket);
+	function onCreateOrUpdate() {
 		setShowForm(true);
 	}
 
@@ -53,13 +65,27 @@ export default function DiagramSaleTicket() {
 	}
 
 	function onSave(ticket: Ticket) {
+		var getSelected = [...selected];
+
 		ticketController.create(ticket).then((res) => {
 			setQuery({ ...query });
 			setShowForm(false);
 		});
 	}
 
-	function onSelected(ticket: Ticket) {}
+	function onSelected(ticket: Ticket) {
+		var getSelected = [...selected];
+		const getIndex = getSelected.findIndex(
+			(item) =>
+				(item?.chairCarId || "") === (ticket?.chairCarId || "")
+		);
+		if (getIndex >= 0) {
+			getSelected.splice(getIndex, 1);
+		} else getSelected.push(ticket);
+		setSelected(getSelected);
+	}
+
+	console.log(selected);
 
 	useEffect(() => {
 		tripController.getChairByTrip({ id: params.id }).then((res) => {
@@ -69,6 +95,30 @@ export default function DiagramSaleTicket() {
 			setTrip(res);
 		});
 	}, [query]);
+
+	function checkIdsExitAll(selected: Ticket[]): boolean {
+		for (let i = 0; i < selected.length; i++) {
+			if (selected[i].id) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	async function changeChair(selected: Ticket[]){
+		if(selected.length !==2){
+			notication.error("Vui lòng chọn 2 đối tượng để thực hiện tính năng này")
+		}else {
+			var ticket1 = {...selected[0]};
+			ticket1.chairCarId = selected[1].chairCarId;
+			var ticket2 = {...selected[1]};
+			ticket2.chairCarId = selected[0].chairCarId
+			ticketController.create([ticket1, ticket2] as any).then((res) => {
+				setQuery({ ...query });
+				setShowForm(false);
+			});
+		}
+	}
 
 	return (
 		<Grid style={{ padding: 30, boxSizing: "border-box" }}>
@@ -84,14 +134,83 @@ export default function DiagramSaleTicket() {
 				<MenuItem onClick={(e) => {}}>Highlight</MenuItem>
 				<MenuItem onClick={(e) => {}}>Email</MenuItem>
 			</Menu> */}
+			<Grid container >
+				<Button
+					color={"secondary"}
+					style={{
+						display:
+							selected.length === 1 && selected[0].id
+								? "block"
+								: "none",
+					}}
+				>
+					Chỉnh sửa
+				</Button>
+
+				<Button
+					color={"secondary"}
+					style={{
+						display:
+							selected.length >= 1 && !checkIdsExitAll(selected)
+								? "block"
+								: "none",
+					}}
+				>
+					Tạo vé
+				</Button>
+				<Button
+					color={"secondary"}
+					style={{
+						display:
+							selected.length === 2 && checkIdsExitAll(selected)
+								? "block"
+								: "none",
+					}}
+					onClick = {(e)=> changeChair(selected)}
+				>
+					Đổi ghế
+				</Button>
+				<Button
+					color={"secondary"}
+					style={{
+						display:
+							selected.length === 1 && selected[0].id
+								? "block"
+								: "none",
+					}}
+					
+				>
+					Hủy vé
+				</Button>
+
+				<Button color={"secondary"} onClick={(e) => setSelected([])}
+					style={{
+						display:
+							selected.length >=1
+								? "block"
+								: "none",
+					}}
+				>
+					Hủy lựa chọn
+				</Button>
+			</Grid>
+
 			<Grid>
 				<DialogSaleTicket
 					open={showForm}
 					onCancel={onCloseForm}
 					onSave={onSave}
-					ticket={selected}
+					ticket={selected[0]}
 					trip={trip}
 				></DialogSaleTicket>
+
+				{/* <DialogChangeChair
+					itemChange = {selected}
+					diagrams={diagram as any}
+					open={showChangeChair}
+					onClose = {onCloseFormChangeChair}
+					onSave = {onSaveChangeChair}
+				></DialogChangeChair> */}
 			</Grid>
 
 			<Grid container direction="row" justify="center">
@@ -99,51 +218,80 @@ export default function DiagramSaleTicket() {
 			</Grid>
 			<Grid container>
 				<Grid xs={12} container direction="row" justify="space-evenly">
-					{diagram?.dataListChair?.map((floor: any[], indexFloor: any) => {
-						return (
-							<Grid
-								xs={12}
-								item
-								className={clsx(classes.marginDefault)}
-								style={{ backgroundColor: "#fff" }}
-							>
-								<Grid>
-									{floor.map((row, indexRow) => {
-										console.log(row);
-										
-										return (
-											<Box
-												display="flex"
-												justifyContent="space-between"
-												mb={1}
-											>
-												{row.map((ticket: Ticket) => {
-													return Object.entries(ticket).length !== 0 ? (
-														<Box flex={1} overflow="hidden" p={1}>
-															<DetailInfoTicket
-																ticketInfo={ticket}
-																onCreateOrEdit={onCreateOrUpdate}
-															/>
-														</Box>
-													) : (
-														<Box flex={0.2} overflow="hidden" p={1}>
-															{/* <DetailInfoTicket
+					{diagram?.dataListChair?.map(
+						(floor: any[], indexFloor: any) => {
+							return (
+								<Grid
+									xs={12}
+									item
+									className={clsx(classes.marginDefault)}
+									style={{ backgroundColor: "#fff" }}
+								>
+									<Grid>
+										{floor.map((row, indexRow) => {
+											return (
+												<Box
+													display="flex"
+													justifyContent="space-between"
+													mb={1}
+												>
+													{row.map(
+														(ticket: Ticket) => {
+															return Object.entries(
+																ticket
+															).length !== 0 ? (
+																<Box
+																	flex={1}
+																	overflow="hidden"
+																	p={1}
+																>
+																	<DetailInfoTicket
+																		ticketInfo={
+																			ticket
+																		}
+																		onClick={
+																			onSelected
+																		}
+																		selected={
+																			!!selected.find(
+																				(
+																					item
+																				) =>
+																					(item
+																						?.chairCarId ||
+																						"") ===
+																					(ticket
+																						?.chairCarId ||
+																						"")
+																			)
+																		}
+																	/>
+																</Box>
+															) : (
+																<Box
+																	flex={0.2}
+																	overflow="hidden"
+																	p={1}
+																>
+																	{/* <DetailInfoTicket
 																ticketInfo={{}}
 																onCreateOrEdit={
 																	onCreateOrUpdate
 																}
 															/> */}
-														</Box>
-														// <div></div>
-													);
-												})}
-											</Box>
-										);
-									})}
+																</Box>
+																// <div></div>
+															);
+														}
+													)}
+												</Box>
+											);
+										})}
+									</Grid>
 								</Grid>
-							</Grid>
-						);
-					})}
+							);
+						}
+					)}
 				</Grid>
 			</Grid>
 		</Grid>

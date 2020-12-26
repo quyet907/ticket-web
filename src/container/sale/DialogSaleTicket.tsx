@@ -8,9 +8,12 @@ import {
 	FormControlLabel,
 	FormLabel,
 	Grid,
+	InputLabel,
 	makeStyles,
+	MenuItem,
 	Radio,
 	RadioGroup,
+	Select,
 	TextField,
 	Typography,
 } from "@material-ui/core";
@@ -22,7 +25,7 @@ import * as Yup from "yup";
 import { useGlobalStyles } from "../../styles/GlobalStyle";
 import { Customer } from "../../submodules/base-ticket-team/base-carOwner/Customer";
 import { DetailLuggage } from "../../submodules/base-ticket-team/base-carOwner/DetailLuggage";
-import { Ticket } from "../../submodules/base-ticket-team/base-carOwner/Ticket";
+import { StatusTicket, Ticket } from "../../submodules/base-ticket-team/base-carOwner/Ticket";
 import { Trip } from "../../submodules/base-ticket-team/base-carOwner/Trip";
 
 const useStyle = makeStyles((theme) => ({
@@ -94,35 +97,37 @@ export default function DialogSaleTicket(props: Props) {
 	});
 
 	useEffect(() => {
-		console.log(props.trip)
-		console.log(props.ticket)
-		setTicket({
-			...props.ticket,
-			localPickup:
-				props.ticket.localPickup || props.trip.route?.localStart,
-			localDrop: props.ticket.localDrop || props.trip.route?.localEnd,
-		});
-		if(props.ticket.localPickup !== props.trip.route?.localStart){
-			setLocalOption({
-				...localOption,
-				localStart : props.ticket.localPickup
-			})
-		}
-		else {setLocalOption({
-			...localOption,
-			localStart : ""
-		})}
-		
-		if(props.ticket.localDrop !== props.trip.route?.localEnd){
-			setLocalOption({
-				...localOption,
-				localEnd : props.ticket.localDrop
-			})
-		}else{
-			setLocalOption({
-				...localOption,
-				localEnd : ""
-			})
+		if(props.ticket){
+			setTicket({
+				...props.ticket,
+				localPickup:
+					props?.ticket?.localPickup || props?.trip?.route?.localStart,
+				localDrop: props?.ticket?.localDrop || props?.trip?.route?.localEnd,
+				statusTicket : StatusTicket.unpaid
+			});
+			if (props.ticket.localPickup !== props.trip.route?.localStart) {
+				setLocalOption({
+					...localOption,
+					localStart: props.ticket.localPickup,
+				});
+			} else {
+				setLocalOption({
+					...localOption,
+					localStart: "",
+				});
+			}
+	
+			if (props.ticket.localDrop !== props.trip.route?.localEnd) {
+				setLocalOption({
+					...localOption,
+					localEnd: props.ticket.localDrop,
+				});
+			} else {
+				setLocalOption({
+					...localOption,
+					localEnd: "",
+				});
+			}
 		}
 
 		formikForCustomer.resetForm();
@@ -198,7 +203,9 @@ export default function DialogSaleTicket(props: Props) {
 											control={<Radio />}
 											label={
 												<TextField
-													value = {localOption.localStart}
+													value={
+														localOption.localStart
+													}
 													onChange={(e) => {
 														if (
 															ticket.localPickup ===
@@ -252,7 +259,7 @@ export default function DialogSaleTicket(props: Props) {
 											control={<Radio />}
 											label={
 												<TextField
-													value = {localOption.localEnd}
+													value={localOption.localEnd}
 													onChange={(e) => {
 														if (
 															ticket.localDrop ===
@@ -337,6 +344,37 @@ export default function DialogSaleTicket(props: Props) {
 											formikForCustomer.errors.phoneNumber
 										}
 									/>
+								</Grid>
+								
+								<Grid className={clsx(globalStyle.mt3)}>
+									<FormControl
+										variant="outlined"
+										fullWidth 
+									>
+										<InputLabel>{"Trang thái vé"}</InputLabel>
+										<Select
+											name={"statusTicket"}
+											value={ticket.statusTicket}
+											labelWidth={80}
+											onChange={(e=>{
+												setTicket({...ticket,statusTicket:e.target.value as any })
+											})}
+										>
+											<MenuItem value={StatusTicket.payed}>
+												Đã đã tiền
+											</MenuItem>
+											<MenuItem value={StatusTicket.unpaid}>
+												Chưa trả tiền
+											</MenuItem>
+											<MenuItem value={StatusTicket.welcomed}>
+												Đã đón
+											</MenuItem>
+											<MenuItem value={StatusTicket.cancel}>
+												Không đón được
+											</MenuItem>
+											
+										</Select>
+									</FormControl>
 								</Grid>
 
 								<Grid className={clsx(globalStyle.mt3)}>
