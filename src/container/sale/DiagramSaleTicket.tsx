@@ -9,6 +9,7 @@ import {
 import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import PopUpConfirm from "../../components/dialogs/DialogConfirm";
 import { useRematchDispatch } from "../../rematch";
 import { Dispatch } from "../../rematch/store";
 import { ticketController, tripController } from "../../service";
@@ -66,10 +67,17 @@ export default function DiagramSaleTicket() {
 
 	function onSave(ticket: Ticket) {
 		var getSelected = [...selected];
-
-		ticketController.create(ticket).then((res) => {
+		getSelected.map(item=>{
+			item.localDrop = ticket.localDrop;
+			item.localPickup = ticket.localPickup;
+			item.customer = ticket.customer;
+			item.customerId = ticket.customerId
+			return item
+		})
+		ticketController.createMany(getSelected).then((res) => {
 			setQuery({ ...query });
 			setShowForm(false);
+			setSelected([]);
 		});
 	}
 
@@ -85,7 +93,6 @@ export default function DiagramSaleTicket() {
 		setSelected(getSelected);
 	}
 
-	console.log(selected);
 
 	useEffect(() => {
 		tripController.getChairByTrip({ id: params.id }).then((res) => {
@@ -109,16 +116,32 @@ export default function DiagramSaleTicket() {
 		if(selected.length !==2){
 			notication.error("Vui lòng chọn 2 đối tượng để thực hiện tính năng này")
 		}else {
-			var ticket1 = {...selected[0]};
-			ticket1.chairCarId = selected[1].chairCarId;
-			var ticket2 = {...selected[1]};
-			ticket2.chairCarId = selected[0].chairCarId
-			ticketController.create([ticket1, ticket2] as any).then((res) => {
+			ticketController.changeChair([...selected]).then((res) => {
 				setQuery({ ...query });
+				setSelected([])
 				setShowForm(false);
 			});
 		}
+		
 	}
+
+	function onConfirm(item: Ticket) {
+		setSelected([item]);
+		setShowConfirm(true);
+	}
+
+	function onCancelConfirm() {
+		setShowConfirm(false);
+	}
+
+	function onDelete() {
+		ticketController.delete(selected[0].id || "").then((res) => {
+			setQuery({ ...query });
+			setSelected([])
+		});
+		setShowConfirm(false);
+	}
+
 
 	return (
 		<Grid style={{ padding: 30, boxSizing: "border-box" }}>
@@ -134,6 +157,11 @@ export default function DiagramSaleTicket() {
 				<MenuItem onClick={(e) => {}}>Highlight</MenuItem>
 				<MenuItem onClick={(e) => {}}>Email</MenuItem>
 			</Menu> */}
+
+    		<PopUpConfirm isDisplay={showConfirm} onCancel={onCancelConfirm} onDelete={onDelete} />
+
+
+
 			<Grid container >
 				<Button
 					color={"secondary"}
@@ -143,6 +171,7 @@ export default function DiagramSaleTicket() {
 								? "block"
 								: "none",
 					}}
+					onClick = {(e)=> onCreateOrUpdate()}
 				>
 					Chỉnh sửa
 				</Button>
@@ -155,6 +184,7 @@ export default function DiagramSaleTicket() {
 								? "block"
 								: "none",
 					}}
+					onClick = {(e)=> onCreateOrUpdate()}
 				>
 					Tạo vé
 				</Button>
@@ -177,6 +207,9 @@ export default function DiagramSaleTicket() {
 							selected.length === 1 && selected[0].id
 								? "block"
 								: "none",
+					}}
+					onClick = {(e)=>{
+						onConfirm(selected[0])
 					}}
 					
 				>
