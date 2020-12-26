@@ -110,7 +110,7 @@ export default function StaffView() {
 				{ id: "birthAt", label: "Ngày sinh", sort : true },
 				{ id: "address", label: "Địa chỉ", sort : true },
 				{ id: "phoneNumber", label: "Số điện thoại", sort : true },
-				{ id: "identityCard", label: "Chứng minh nhân dân", sort : true },
+				{ id: "identityCard", label: "CMND", sort : true },
 				{ id: "positionId", label: "Chức vụ" , sort : false  },
 				{ id: "sex", label: "Giới tính", sort : true },
 				{ id: "", label: "Hành động", sort : false },
