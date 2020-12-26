@@ -134,7 +134,7 @@ export default function HomeSaleTicket() {
 				</Grid>
 			</Grid>
 
-			<Grid className={globalStyle.mt3}>
+			<Grid container direction="row" spacing={3} className={globalStyle.mt3}>
 				{tripHome?.rows?.map((item) => (
 					<Grid item xs={12} md={6}>
 						<TripItem trip={item}></TripItem>
