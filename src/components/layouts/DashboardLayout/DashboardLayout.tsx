@@ -17,8 +17,7 @@ import TopBar from "./TopBar";
 
 const useStyles = makeStyles((theme: Theme) => ({
 	root: {
-		backgroundColor: theme.palette.common.white,
-		// backgroundColor : "black",
+		// backgroundColor: theme.palette.common.white,
 		display: "flex",
 		height: "100%",
 		overflow: "hidden",
@@ -40,13 +39,14 @@ const useStyles = makeStyles((theme: Theme) => ({
 	},
 	content: {
 		flex: "1 1 auto",
-		height: "100%",
+		// height: "100vh",
 		overflow: "auto",
 		padding: theme.spacing(6),
 		paddingTop: theme.spacing(12),
 		backgroundColor: "rgb(247, 249, 252)",
 		borderLeft: "1px solid",
 		borderColor: colors.grey[300],
+		
 	},
 }));
 
@@ -63,6 +63,9 @@ function DashboardLayout() {
 				<div className={classes.contentContainer}>
 					<div className={classes.content}>
 						<Switch>
+							<Route exact path={`/`}>
+								<Redirect to="/dashboard"></Redirect>
+							</Route>
 							<Route exact path={`/dashboard`} component={Statistic} />
 							<Route exact path={`/customer`} component={Customers} />
 							<Route exact path={`/position`} component={PositionStaffContainer} />
@@ -72,6 +75,7 @@ function DashboardLayout() {
 							<Route exact path={`/ticket`} component={HomeSaleTicket} />
 							<Route exact path={`/car`} component={CarContainer} />
 							<Route exact path={`/sale/:id`} component={DiagramSaleTicket} />
+						
 						</Switch>
 					</div>
 				</div>

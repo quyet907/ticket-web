@@ -10,12 +10,21 @@ type Props = {
 export default function Header(props: Props) {
 	return (
 		<Grid>
-			<Typography variant={"h3"}>
-				<b>{props.title}</b>
-			</Typography>
-			<Box mt={1} mb={2} display="flex" justifyContent="space-between">
+			<Box
+				mt={1}
+				mb={1}
+				display="flex"
+				justifyContent="space-between"
+				alignItems="center"
+			>
+				<Typography variant={"h3"}>
+					<b>{props.title}</b>
+				</Typography>
+				{props.action}
+			</Box>
+
+			<Box mb={2}>
 				<Box>{props.breadcrumbs}</Box>
-				<Box>{props.action}</Box>
 			</Box>
 			<Divider />
 		</Grid>

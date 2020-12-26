@@ -6,18 +6,17 @@ import AppWithSnackBar from "./App";
 import "./index.css";
 import { store } from "./rematch/store";
 import reportWebVitals from "./reportWebVitals";
-import GlobalStyles from "./theme/GlobalStyles";
+// import GlobalStyles from "./theme/GlobalStyles";
 import theme from "./theme/MuiTheme";
 
 ReactDOM.render(
-   <Provider store={store}>
-      <ThemeProvider theme={theme}>
-         <GlobalStyles></GlobalStyles>
-         <AppWithSnackBar />
-      </ThemeProvider>
-   </Provider>
-   ,
-   document.getElementById("root")
+	<Provider store={store}>
+		<ThemeProvider theme={theme}>
+			{/* <GlobalStyles></GlobalStyles> */}
+			<AppWithSnackBar />
+		</ThemeProvider>
+	</Provider>,
+	document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function

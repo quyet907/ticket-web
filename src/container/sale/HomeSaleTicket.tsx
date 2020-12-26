@@ -75,9 +75,6 @@ export default function HomeSaleTicket() {
 								Ban ve
 							</Typography>
 						</Link>
-						<Typography color="textSecondary" variant="caption">
-							So do ghe
-						</Typography>
 					</Breadcrumbs>
 				}
 			/>
@@ -143,9 +140,9 @@ export default function HomeSaleTicket() {
 			<Grid container direction="row" justify="center">
 				<Grid className={clsx(globalStyle.pp3)}>
 					<Grid container direction="row" justify="center">
-						<Grid item className={clsx(globalStyle.mr5)}>
-							<Grid>
-								<FormControl variant="outlined">
+						<Grid item xs >
+							<Box>
+								<FormControl variant="outlined" size="small">
 									<Select
 										value={query.pageSize}
 										onChange={(e) => {
@@ -157,12 +154,12 @@ export default function HomeSaleTicket() {
 											});
 										}}
 									>
-										<MenuItem value={5}>5</MenuItem>
+										<MenuItem value={6}>6</MenuItem>
 										<MenuItem value={10}>10</MenuItem>
 										<MenuItem value={15}>15</MenuItem>
 									</Select>
 								</FormControl>
-							</Grid>
+							</Box>
 						</Grid>
 						<Grid item>
 							<Grid

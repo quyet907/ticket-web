@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
 		border: "1px solid #ddd",
 		"&:hover": {
 			boxShadow: "0px 0px 10px 1px rgba(2,0,0,0.1)",
-			borderColor: "white",
+			// borderColor: "white",
 		},
 	},
 	active: {
@@ -107,7 +107,7 @@ export default function DetailInfoTicket(props: Props) {
 					<Typography variant="h5">{props.ticketInfo.chair_car?.name}</Typography>
 					<Tooltip title="Doi ghe" enterDelay={0} leaveDelay={0} placement="top">
 						<IconButton size="small">
-							<Loop fontSize="small" color="secondary" />
+							{/* <Loop fontSize="small" color="secondary" /> */}
 						</IconButton>
 					</Tooltip>
 				</Box>
@@ -161,11 +161,7 @@ export default function DetailInfoTicket(props: Props) {
 					>
 						{ticketInfo?.customer?.name}
 					</Typography>
-					<Chip
-						size="small"
-						label={"Đã trả tiền"}
-						color={"secondary"}
-					/>
+					<Chip size="small" label="Đã trả tiền" color="secondary" />
 				</Box>
 			</Box>
 		);
@@ -174,8 +170,7 @@ export default function DetailInfoTicket(props: Props) {
 	return (
 		<Paper
 			style={{
-				borderRadius: 0,
-				padding: 0,
+				borderRadius: 5,
 				cursor: "pointer",
 				position: "relative",
 				height: "100%",

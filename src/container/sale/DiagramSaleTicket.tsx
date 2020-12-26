@@ -1,9 +1,21 @@
-import { Box, Button, Grid, makeStyles, Typography } from "@material-ui/core";
-import clsx from "clsx";
-import React, { useEffect, useState, useRef } from "react";
-import { useReactToPrint } from "react-to-print";
+import {
+	Box,
+	Breadcrumbs,
+	Button,
+	Grid,
+	Grow,
+	Link,
+	makeStyles,
+
+
+	Paper,
+	Typography
+} from "@material-ui/core";
+import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router";
+import { useReactToPrint } from "react-to-print";
 import PopUpConfirm from "../../components/dialogs/DialogConfirm";
+import Header from "../../components/genaral-component/Header";
 import { useRematchDispatch } from "../../rematch";
 import { Dispatch } from "../../rematch/store";
 import { ticketController, tripController } from "../../service";
@@ -12,33 +24,35 @@ import { Ticket } from "../../submodules/base-ticket-team/base-carOwner/Ticket";
 import { Trip } from "../../submodules/base-ticket-team/base-carOwner/Trip";
 import { DiagramChairOfTrip } from "../../submodules/base-ticket-team/controller.ts/DiagramChairOfTrip";
 import { IList } from "../../submodules/base-ticket-team/query/IList";
+import theme from "../../theme/MuiTheme";
 import DetailInfoTicket from "./DetailInfoTicket";
 import DialogSaleTicket from "./DialogSaleTicket";
-import {PrintTicket} from "./PrintTicket";
+import { PrintTicket } from "./PrintTicket";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		minHeight: "100%",
-		paddingBottom: theme.spacing(3),
-		paddingTop: theme.spacing(3),
+		// paddingBottom: theme.spacing(3),
+		// paddingTop: theme.spacing(3),
 	},
 	borderRadius: {
 		borderRadius: 20,
 		backgroundColor: "rgba(120, 120,120,0.1)",
 		boxShadow: "0px 0px 2px 2px rgba(100, 100,100,0.2)",
 	},
-	marginDefault: {
-		margin: 30,
+	content: {
+		width: "100%",
+		boxSizing: "border-box",
+		padding: theme.spacing(3),
+		marginTop: theme.spacing(3),
+	},
+	action: {
+		// marginTop: theme.spacing(1),
 	},
 }));
 export default function DiagramSaleTicket() {
-	
-
-	const notication = useRematchDispatch(
-		(dispatch: Dispatch) => dispatch.notification
-	);
+	const notication = useRematchDispatch((dispatch: Dispatch) => dispatch.notification);
 	const params = useParams<{ id: string }>();
-	const globalStyle = useGlobalStyles();
+	const globalStyles = useGlobalStyles()
 	const classes = useStyles();
 	const [diagram, setDiagram] = useState<DiagramChairOfTrip>({});
 
@@ -107,9 +121,7 @@ export default function DiagramSaleTicket() {
 
 	async function changeChair(selected: Ticket[]) {
 		if (selected.length !== 2) {
-			notication.error(
-				"Vui lòng chọn 2 đối tượng để thực hiện tính năng này"
-			);
+			notication.error("Vui lòng chọn 2 đối tượng để thực hiện tính năng này");
 		} else {
 			ticketController.changeChair([...selected]).then((res) => {
 				setQuery({ ...query });
@@ -142,138 +154,165 @@ export default function DiagramSaleTicket() {
 	});
 
 	return (
-		<Grid style={{ padding: 30, boxSizing: "border-box" }}>
-			{/* <Menu
-				keepMounted
-				open={true}
-				onClose={() => {}}
-				anchorReference="anchorPosition"
-				anchorPosition={{ left: 500, top: 500 }}
-			>
-				<MenuItem onClick={(e) => {}}>Copy</MenuItem>
-				<MenuItem onClick={(e) => {}}>Print</MenuItem>
-				<MenuItem onClick={(e) => {}}>Highlight</MenuItem>
-				<MenuItem onClick={(e) => {}}>Email</MenuItem>
-			</Menu> */}
-			<div style={{ display: "none" }}>
-				<PrintTicket ref={componentRef as any} ticket = {selected[0]} trip = {trip} />
-			</div>
+		<Grid container>
+			<Grid item xs>
+				<Header
+					title="Sơ đồ ghế "
+					breadcrumbs={
+						<Breadcrumbs aria-label="breadcrumb">
+							<Link color="secondary" href="/ticket" onClick={() => {}}>
+								<Typography variant="caption" color="primary">
+									Ban ve
+								</Typography>
+							</Link>
+							<Typography color="textSecondary" variant="caption">
+								Sơ đồ ghế
+							</Typography>
+						</Breadcrumbs>
+					}
+					action={
+						<Box
+							style={{
+								position: "fixed",
+								top: theme.spacing(12),
+								right: theme.spacing(6),
+								display: selected.length > 0 ? "block" : "none",
+								alignSelf: "stretch",
+								zIndex: 6,
+							}}
+						>
+							<Paper
+								style={{
+									backgroundColor: theme.palette.common.white,
+									padding: theme.spacing(1.5),
+									display: "flex",
+									width: "fit-content",
+									boxSizing: "border-box",
+									marginRight: theme.spacing(1),
+									boxShadow: "14px 8px 15px -4px rgba(0,0,0,0.29)",
+									WebkitBoxShadow: "13px 7px 15px -4px rgba(0,0,0,0.29)",
+									border: "1px solid rgba(0, 0, 0, 0.05)"
+								}}
+							>
+								{selected.length === 1 && selected[0].id && (
+									<Box mr={2}>
+										<Grow in={true}>
+											<Button color="primary" variant="contained" onClick={handlePrint}>
+												in vé
+											</Button>
+										</Grow>
+									</Box>
+								)}
 
-			<PopUpConfirm
-				isDisplay={showConfirm}
-				onCancel={onCancelConfirm}
-				onDelete={onDelete}
-			/>
+								{selected.length === 1 && selected[0].id && (
+									<Box mr={2}>
+										<Grow in={true} timeout={500}>
+											<Button
+											color="secondary"
+												variant="contained"
+												onClick={(e) => onCreateOrUpdate()}
+											>
+												Chỉnh sửa
+											</Button>
+										</Grow>
+									</Box>
+								)}
 
-			<Grid container>
-				<Button
-					color={"secondary"}
-					style={{
-						display:
-							selected.length === 1&& selected[0].id
-								? "block"
-								: "none",
-					}}
-					onClick={handlePrint}
-				>
-					in vé
-				</Button>
+								{selected.length >= 1 && !checkIdsExitAll(selected) && (
+									<Box mr={2}>
+										<Grow in={true} timeout={500}>
+											<Button
+												variant="contained"
+												onClick={(e) => onCreateOrUpdate()}
+											>
+												Tạo vé
+											</Button>
+										</Grow>
+									</Box>
+								)}
 
-				<Button
-					color={"secondary"}
-					style={{
-						display:
-							selected.length === 1 && selected[0].id
-								? "block"
-								: "none",
-					}}
-					onClick={(e) => onCreateOrUpdate()}
-				>
-					Chỉnh sửa
-				</Button>
+								{selected.length === 2 && checkIdsExitAll(selected) && (
+									<Box mr={2}>
+										<Grow in={true} timeout={500}>
+											<Button
+												color={"secondary"}
+												variant="contained"
+												onClick={(e) => changeChair(selected)}
+											>
+												Đổi ghế
+											</Button>
+										</Grow>
+									</Box>
+								)}
 
-				<Button
-					color={"secondary"}
-					style={{
-						display:
-							selected.length >= 1 && !checkIdsExitAll(selected)
-								? "block"
-								: "none",
-					}}
-					onClick={(e) => onCreateOrUpdate()}
-				>
-					Tạo vé
-				</Button>
-				<Button
-					color={"secondary"}
-					style={{
-						display:
-							selected.length === 2 && checkIdsExitAll(selected)
-								? "block"
-								: "none",
-					}}
-					onClick={(e) => changeChair(selected)}
-				>
-					Đổi ghế
-				</Button>
-				<Button
-					color={"secondary"}
-					style={{
-						display:
-							selected.length === 1 && selected[0].id
-								? "block"
-								: "none",
-					}}
-					onClick={(e) => {
-						onConfirm(selected[0]);
-					}}
-				>
-					Hủy vé
-				</Button>
+								{selected.length === 1 && selected[0].id && (
+									<Box mr={2}>
+										<Grow in={true} timeout={500}>
+											<Button
+												className={globalStyles.buttonAlert}
+												variant="contained"
+												onClick={(e) => {
+													onConfirm(selected[0]);
+												}}
+											>
+												Hủy vé
+											</Button>
+										</Grow>
+									</Box>
+								)}
 
-				<Button
-					color={"secondary"}
-					onClick={(e) => setSelected([])}
-					style={{
-						display: selected.length >= 1 ? "block" : "none",
-					}}
-				>
-					Hủy lựa chọn
-				</Button>
+								{selected.length >= 1 && (
+									<Box>
+										<Grow in={true} timeout={500}>
+											<Button
+												color={"default"}
+												onClick={(e) => setSelected([])}
+												variant="contained"
+											>
+												Hủy lựa chọn
+											</Button>
+										</Grow>
+									</Box>
+								)}
+							</Paper>
+						</Box>
+					}
+				/>
 			</Grid>
+			<Paper className={classes.content}>
+				<div style={{ display: "none" }}>
+					<PrintTicket ref={componentRef as any} ticket={selected[0]} trip={trip} />
+				</div>
 
-			<Grid>
-				<DialogSaleTicket
-					open={showForm}
-					onCancel={onCloseForm}
-					onSave={onSave}
-					ticket={selected[0]}
-					trip={trip}
-				></DialogSaleTicket>
+				<PopUpConfirm
+					isDisplay={showConfirm}
+					onCancel={onCancelConfirm}
+					onDelete={onDelete}
+				/>
 
-				{/* <DialogChangeChair
+				<Grid>
+					<DialogSaleTicket
+						open={showForm}
+						onCancel={onCloseForm}
+						onSave={onSave}
+						ticket={selected[0]}
+						trip={trip}
+					></DialogSaleTicket>
+
+					{/* <DialogChangeChair
 					itemChange = {selected}
 					diagrams={diagram as any}
 					open={showChangeChair}
 					onClose = {onCloseFormChangeChair}
 					onSave = {onSaveChangeChair}
 				></DialogChangeChair> */}
-			</Grid>
+				</Grid>
 
-			<Grid container direction="row" justify="center">
-				<Typography variant="h1">Sơ đồ ghế</Typography>
-			</Grid>
-			<Grid container>
-				<Grid xs={12} container direction="row" justify="space-evenly">
-					{diagram?.dataListChair?.map(
-						(floor: any[], indexFloor: any) => {
+				<Grid container>
+					<Grid xs={12} container direction="row" justify="space-evenly">
+						{diagram?.dataListChair?.map((floor: any[], indexFloor: any) => {
 							return (
-								<Grid
-									xs={12}
-									item
-									className={clsx(classes.marginDefault)}
-									style={{ backgroundColor: "#fff" }}
-								>
+								<Grid xs={12} item style={{ backgroundColor: "#fff" }}>
 									<Grid>
 										{floor.map((row, indexRow) => {
 											return (
@@ -282,63 +321,46 @@ export default function DiagramSaleTicket() {
 													justifyContent="space-between"
 													mb={1}
 												>
-													{row.map(
-														(ticket: Ticket) => {
-															return Object.entries(
-																ticket
-															).length !== 0 ? (
-																<Box
-																	flex={1}
-																	overflow="hidden"
-																	p={1}
-																>
-																	<DetailInfoTicket
-																		ticketInfo={
-																			ticket
-																		}
-																		onClick={
-																			onSelected
-																		}
-																		selected={
-																			!!selected.find(
-																				(
-																					item
-																				) =>
-																					(item?.chairCarId ||
-																						"") ===
-																					(ticket?.chairCarId ||
-																						"")
-																			)
-																		}
-																	/>
-																</Box>
-															) : (
-																<Box
-																	flex={0.2}
-																	overflow="hidden"
-																	p={1}
-																>
-																	{/* <DetailInfoTicket
+													{row.map((ticket: Ticket) => {
+														return Object.entries(ticket).length !==
+															0 ? (
+															<Box flex={1} overflow="hidden" p={1}>
+																<DetailInfoTicket
+																	ticketInfo={ticket}
+																	onClick={onSelected}
+																	selected={
+																		!!selected.find(
+																			(item) =>
+																				(item?.chairCarId ||
+																					"") ===
+																				(ticket?.chairCarId ||
+																					"")
+																		)
+																	}
+																/>
+															</Box>
+														) : (
+															<Box flex={0.2} overflow="hidden" p={1}>
+																{/* <DetailInfoTicket
 																ticketInfo={{}}
 																onCreateOrEdit={
 																	onCreateOrUpdate
 																}
 															/> */}
-																</Box>
-																// <div></div>
-															);
-														}
-													)}
+															</Box>
+															// <div></div>
+														);
+													})}
 												</Box>
 											);
 										})}
 									</Grid>
 								</Grid>
 							);
-						}
-					)}
+						})}
+					</Grid>
 				</Grid>
-			</Grid>
+			</Paper>
 		</Grid>
 	);
 }
