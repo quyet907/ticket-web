@@ -16,6 +16,7 @@ import clsx from "clsx";
 import _ from "lodash";
 import moment from "moment";
 import React, { useCallback, useEffect, useState } from "react";
+import Header from "../../components/genaral-component/Header";
 import { tripController } from "../../service";
 import { useGlobalStyles } from "../../styles/GlobalStyle";
 import {
@@ -65,11 +66,9 @@ export default function HomeSaleTicket() {
 	);
 	return (
 		<Grid>
-			<Grid>
-				<Typography variant={"h3"}>
-					<b>Ban ve</b>
-				</Typography>
-				<Box mt={1} mb={2}>
+			<Header
+				title="Ban ve"
+				breadcrumbs={
 					<Breadcrumbs aria-label="breadcrumb">
 						<Link color="secondary" href="/ticket" onClick={() => {}}>
 							<Typography variant="caption" color="primary">
@@ -80,9 +79,8 @@ export default function HomeSaleTicket() {
 							So do ghe
 						</Typography>
 					</Breadcrumbs>
-				</Box>
-				<Divider />
-			</Grid>
+				}
+			/>
 			<Grid className={globalStyle.mt3}>
 				<Grid container direction="row" spacing={6}>
 					<Grid item>
@@ -136,7 +134,7 @@ export default function HomeSaleTicket() {
 
 			<Grid container direction="row" spacing={3} className={globalStyle.mt3}>
 				{tripHome?.rows?.map((item) => (
-					<Grid item xs={12}  lg={6}>
+					<Grid item xs={12} lg={6}>
 						<TripItem trip={item}></TripItem>
 					</Grid>
 				))}
