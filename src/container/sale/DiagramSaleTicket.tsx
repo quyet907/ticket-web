@@ -1,29 +1,20 @@
-import {
-	Box,
-	Button,
-	Grid,
-	Grow,
-	makeStyles,
-	Typography,
-} from "@material-ui/core";
+import { Box, Button, Grid, makeStyles, Typography } from "@material-ui/core";
 import clsx from "clsx";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import { useReactToPrint } from "react-to-print";
 import { useParams } from "react-router";
 import PopUpConfirm from "../../components/dialogs/DialogConfirm";
 import { useRematchDispatch } from "../../rematch";
 import { Dispatch } from "../../rematch/store";
 import { ticketController, tripController } from "../../service";
 import { useGlobalStyles } from "../../styles/GlobalStyle";
-import {
-	StatusTicket,
-	Ticket,
-} from "../../submodules/base-ticket-team/base-carOwner/Ticket";
+import { Ticket } from "../../submodules/base-ticket-team/base-carOwner/Ticket";
 import { Trip } from "../../submodules/base-ticket-team/base-carOwner/Trip";
 import { DiagramChairOfTrip } from "../../submodules/base-ticket-team/controller.ts/DiagramChairOfTrip";
 import { IList } from "../../submodules/base-ticket-team/query/IList";
 import DetailInfoTicket from "./DetailInfoTicket";
-import DialogChangeChair from "./DialogChangeChair";
 import DialogSaleTicket from "./DialogSaleTicket";
+import {PrintTicket} from "./PrintTicket";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -41,7 +32,11 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 export default function DiagramSaleTicket() {
-	const  notication  = useRematchDispatch((dispatch : Dispatch)=> dispatch.notification)
+	
+
+	const notication = useRematchDispatch(
+		(dispatch: Dispatch) => dispatch.notification
+	);
 	const params = useParams<{ id: string }>();
 	const globalStyle = useGlobalStyles();
 	const classes = useStyles();
@@ -67,13 +62,13 @@ export default function DiagramSaleTicket() {
 
 	function onSave(ticket: Ticket) {
 		var getSelected = [...selected];
-		getSelected.map(item=>{
+		getSelected.map((item) => {
 			item.localDrop = ticket.localDrop;
 			item.localPickup = ticket.localPickup;
 			item.customer = ticket.customer;
-			item.customerId = ticket.customerId
-			return item
-		})
+			item.customerId = ticket.customerId;
+			return item;
+		});
 		ticketController.createMany(getSelected).then((res) => {
 			setQuery({ ...query });
 			setShowForm(false);
@@ -84,15 +79,13 @@ export default function DiagramSaleTicket() {
 	function onSelected(ticket: Ticket) {
 		var getSelected = [...selected];
 		const getIndex = getSelected.findIndex(
-			(item) =>
-				(item?.chairCarId || "") === (ticket?.chairCarId || "")
+			(item) => (item?.chairCarId || "") === (ticket?.chairCarId || "")
 		);
 		if (getIndex >= 0) {
 			getSelected.splice(getIndex, 1);
 		} else getSelected.push(ticket);
 		setSelected(getSelected);
 	}
-
 
 	useEffect(() => {
 		tripController.getChairByTrip({ id: params.id }).then((res) => {
@@ -112,17 +105,18 @@ export default function DiagramSaleTicket() {
 		return false;
 	}
 
-	async function changeChair(selected: Ticket[]){
-		if(selected.length !==2){
-			notication.error("Vui lòng chọn 2 đối tượng để thực hiện tính năng này")
-		}else {
+	async function changeChair(selected: Ticket[]) {
+		if (selected.length !== 2) {
+			notication.error(
+				"Vui lòng chọn 2 đối tượng để thực hiện tính năng này"
+			);
+		} else {
 			ticketController.changeChair([...selected]).then((res) => {
 				setQuery({ ...query });
-				setSelected([])
+				setSelected([]);
 				setShowForm(false);
 			});
 		}
-		
 	}
 
 	function onConfirm(item: Ticket) {
@@ -137,11 +131,15 @@ export default function DiagramSaleTicket() {
 	function onDelete() {
 		ticketController.delete(selected[0].id || "").then((res) => {
 			setQuery({ ...query });
-			setSelected([])
+			setSelected([]);
 		});
 		setShowConfirm(false);
 	}
 
+	const componentRef = useRef();
+	const handlePrint = useReactToPrint({
+		content: () => componentRef.current as any,
+	});
 
 	return (
 		<Grid style={{ padding: 30, boxSizing: "border-box" }}>
@@ -157,12 +155,30 @@ export default function DiagramSaleTicket() {
 				<MenuItem onClick={(e) => {}}>Highlight</MenuItem>
 				<MenuItem onClick={(e) => {}}>Email</MenuItem>
 			</Menu> */}
+			<div style={{ display: "none" }}>
+				<PrintTicket ref={componentRef as any} ticket = {selected[0]} trip = {trip} />
+			</div>
 
-    		<PopUpConfirm isDisplay={showConfirm} onCancel={onCancelConfirm} onDelete={onDelete} />
+			<PopUpConfirm
+				isDisplay={showConfirm}
+				onCancel={onCancelConfirm}
+				onDelete={onDelete}
+			/>
 
+			<Grid container>
+				<Button
+					color={"secondary"}
+					style={{
+						display:
+							selected.length === 1&& selected[0].id
+								? "block"
+								: "none",
+					}}
+					onClick={handlePrint}
+				>
+					in vé
+				</Button>
 
-
-			<Grid container >
 				<Button
 					color={"secondary"}
 					style={{
@@ -171,7 +187,7 @@ export default function DiagramSaleTicket() {
 								? "block"
 								: "none",
 					}}
-					onClick = {(e)=> onCreateOrUpdate()}
+					onClick={(e) => onCreateOrUpdate()}
 				>
 					Chỉnh sửa
 				</Button>
@@ -184,7 +200,7 @@ export default function DiagramSaleTicket() {
 								? "block"
 								: "none",
 					}}
-					onClick = {(e)=> onCreateOrUpdate()}
+					onClick={(e) => onCreateOrUpdate()}
 				>
 					Tạo vé
 				</Button>
@@ -196,7 +212,7 @@ export default function DiagramSaleTicket() {
 								? "block"
 								: "none",
 					}}
-					onClick = {(e)=> changeChair(selected)}
+					onClick={(e) => changeChair(selected)}
 				>
 					Đổi ghế
 				</Button>
@@ -208,20 +224,18 @@ export default function DiagramSaleTicket() {
 								? "block"
 								: "none",
 					}}
-					onClick = {(e)=>{
-						onConfirm(selected[0])
+					onClick={(e) => {
+						onConfirm(selected[0]);
 					}}
-					
 				>
 					Hủy vé
 				</Button>
 
-				<Button color={"secondary"} onClick={(e) => setSelected([])}
+				<Button
+					color={"secondary"}
+					onClick={(e) => setSelected([])}
 					style={{
-						display:
-							selected.length >=1
-								? "block"
-								: "none",
+						display: selected.length >= 1 ? "block" : "none",
 					}}
 				>
 					Hủy lựa chọn
@@ -290,11 +304,9 @@ export default function DiagramSaleTicket() {
 																				(
 																					item
 																				) =>
-																					(item
-																						?.chairCarId ||
+																					(item?.chairCarId ||
 																						"") ===
-																					(ticket
-																						?.chairCarId ||
+																					(ticket?.chairCarId ||
 																						"")
 																			)
 																		}
