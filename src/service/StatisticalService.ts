@@ -13,8 +13,8 @@ export class StatisticalService implements IStatisticalController {
     this.client = client;
     this.serviceURL = serviceURL;
   }
-  statisticalSummary(): Promise<Summary> {
-    return this.client.get(`${this.serviceURL}/${this.basePath}/StatisticalSummary`).then(res => {
+  statisticalSummary(params: PropsSummary): Promise<Summary> {
+    return this.client.get(`${this.serviceURL}/${this.basePath}/StatisticalSummary`, { params }).then(res => {
       console.log(res.data)
       return res.data
     }).

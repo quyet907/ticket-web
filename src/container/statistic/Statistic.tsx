@@ -27,8 +27,8 @@ const nextDay = (number: number) => {
 
 function Statistic() {
    const globalStyle = useGlobalStyles();
-   const [startDate, setStartDate] = useState<Date>(dayAgo(6))
-   const [endDate, setEndDate] = useState<Date>(new Date())
+   const [startDate, setStartDate] = useState<Date | undefined>(dayAgo(6))
+   const [endDate, setEndDate] = useState<Date | undefined>(new Date())
    const [titleChart, setTitleChart] = useState<string>("7 ngày")
    const [summary, setSummary] = useState<Summary>({});
 
@@ -59,6 +59,12 @@ function Statistic() {
          },
       ],
    });
+
+   const all=()=>{
+      setStartDate(undefined)
+      setEndDate(undefined)
+      setTitleChart("Tất cả")
+   }
 
    const dataSevenDayAgo = () => {
       setStartDate(dayAgo(6))
@@ -156,18 +162,19 @@ function Statistic() {
             });
          })
          .catch((err) => console.log(err));
-   }, [startDate, endDate]);
 
-   useEffect(() => {
-      statisticController
-         .statisticalSummary()
+         statisticController
+         .statisticalSummary({from: startDate,
+            to: endDate,
+            interval: "day"})
          .then((res) => {
             setSummary(res);
          })
          .catch((err) => {
             console.log(err);
          });
-   }, []);
+   }, [startDate, endDate]);
+
 
    console.count("Rendering");
    return (
@@ -204,6 +211,9 @@ function Statistic() {
 
          <Grid item xs={12} lg={9}>
             <Paper elevation={3}>
+               <Button variant="contained" color="primary" onClick={() => all()}>
+                  Tất cả
+               </Button>
                <Button variant="contained" color="primary" onClick={() => dataSevenDayAgo()}>
                   07 ngày
                </Button>
