@@ -4,8 +4,11 @@ import {
 	Container,
 	Grid,
 	Link,
-	makeStyles, Slide, Snackbar, TextField,
-	Typography
+	makeStyles,
+	Slide,
+	Snackbar,
+	TextField,
+	Typography,
 } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import { useFormik } from "formik";
@@ -27,11 +30,12 @@ const useStyles = makeStyles((theme) => ({
 		paddingTop: theme.spacing(3),
 	},
 	formLogin: {
-		background: "rgba(245,245,245,0.1)",
-		boxShadow: "0px 0px 200px 0px rgba(100,100,100,0.1)",
+		background: "rgba(255,255,255,0.9)",
 		padding: 50,
-		borderRadius: 40,
-		border: "1px solid #ccc",
+		borderRadius: 10,
+		boxShadow: "14px 8px 15px -4px rgba(0,0,0,0.29)",
+		WebkitBoxShadow: "13px 7px 15px -4px rgba(0,0,0,0.29)",
+		border: "1px solid rgba(0, 0, 0, 0.05)",
 	},
 }));
 
@@ -40,9 +44,10 @@ type LoginProps = {
 	password?: string;
 };
 export default function NewLogin() {
-
 	const classes = useStyles();
-	const authenticationDispatch = useRematchDispatch((dispatch: Dispatch) => dispatch.authentication);
+	const authenticationDispatch = useRematchDispatch(
+		(dispatch: Dispatch) => dispatch.authentication
+	);
 	// const history = useHistory();
 	const formik = useFormik<LoginProps>({
 		initialValues: {},
@@ -66,7 +71,7 @@ export default function NewLogin() {
 					if (res) {
 						authenticationDispatch.login(res);
 					}
-				})
+				});
 		},
 	});
 
@@ -86,7 +91,6 @@ export default function NewLogin() {
 		});
 	}
 
-
 	return (
 		// <Page className={clsx(classes.root)} title="Login">
 		<Box
@@ -94,7 +98,8 @@ export default function NewLogin() {
 			flexDirection="column"
 			height="100%"
 			justifyContent="center"
-		// alignItems="center"
+			style={{ backgroundImage: 'url("https://picsum.photos/2000")' }}
+			// alignItems="center"
 		>
 			<Container maxWidth="sm" className={classes.formLogin}>
 				<Box mb={3}>
@@ -116,7 +121,7 @@ export default function NewLogin() {
 							variant="contained"
 						>
 							Facebook
-                  </Button>
+						</Button>
 					</Grid>
 					<Grid item xs={12} md={6}>
 						<Button
@@ -127,7 +132,7 @@ export default function NewLogin() {
 							variant="contained"
 						>
 							Google
-                  </Button>
+						</Button>
 					</Grid>
 				</Grid>
 				<Box mt={3} mb={1}>
@@ -136,9 +141,7 @@ export default function NewLogin() {
 					</Typography>
 				</Box>
 				<TextField
-					error={Boolean(
-						formik.touched.username && formik.errors.username
-					)}
+					error={Boolean(formik.touched.username && formik.errors.username)}
 					fullWidth
 					helperText={formik.touched.username && formik.errors.username}
 					label="Địa chỉ Email"
@@ -151,9 +154,7 @@ export default function NewLogin() {
 					variant="outlined"
 				/>
 				<TextField
-					error={Boolean(
-						formik.touched.password && formik.errors.password
-					)}
+					error={Boolean(formik.touched.password && formik.errors.password)}
 					fullWidth
 					helperText={formik.touched.password && formik.errors.password}
 					label="Mật khẩu"
@@ -179,11 +180,9 @@ export default function NewLogin() {
 				</Box>
 				<Typography color="textSecondary" variant="body1">
 					{`Chưa có tài khoản?`}
-
 				</Typography>
 			</Container>
 		</Box>
 		// </Page>
 	);
-};
-
+}

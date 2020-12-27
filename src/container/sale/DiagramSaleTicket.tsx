@@ -14,7 +14,7 @@ import { Home } from "@material-ui/icons";
 import _ from "lodash";
 import React, { useEffect, useRef, useState } from "react";
 import { useCallback } from "react";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import { useReactToPrint } from "react-to-print";
 import PopUpConfirm from "../../components/dialogs/DialogConfirm";
 import Header from "../../components/genaral-component/Header";
@@ -218,6 +218,8 @@ export default function DiagramSaleTicket() {
 		[]
 	);
 
+	const history = useHistory();
+
 	return (
 		<Grid container>
 			<Grid
@@ -228,11 +230,11 @@ export default function DiagramSaleTicket() {
 				direction="row"
 				style={{
 					// height: 60,
-					marginBottom: theme.spacing(3)
+					marginBottom: theme.spacing(3),
 				}}
 			>
 				<Typography variant={"h3"}>
-					<b>Hoem</b>
+					<b>Sơ đồ ghế </b>
 				</Typography>
 				<Typography variant="h3">&nbsp;|&nbsp;</Typography>
 				<Box mb={-0.7}>
@@ -240,9 +242,20 @@ export default function DiagramSaleTicket() {
 						<Link
 							color="inherit"
 							href="/dashboard"
-							// onClick={() => {history.push}}
+							onClick={() => {
+								history.push("/dashboard");
+							}}
 						>
 							<Home color="disabled" className={globalStyles.logoHome} />
+						</Link>
+						<Link
+							onClick={() => {
+								history.push("/ticket");
+							}}
+						>
+							<Typography variant="h6" color="textSecondary">
+								Bán vé
+							</Typography>
 						</Link>
 						<Link
 							color="inherit"
@@ -250,7 +263,7 @@ export default function DiagramSaleTicket() {
 							// onClick={() => {history.push}}
 						>
 							<Typography variant="h6" color="primary">
-								So do
+								Sơ đồ ghế
 							</Typography>
 						</Link>
 					</Breadcrumbs>

@@ -96,10 +96,13 @@ export default function TripContainer() {
 	function convertDataToTable(data: Trip[]): IBaseTable<Trip> {
 		const createValue = data.map((item: Trip) => {
 			var value: any[] = [];
+			value.push(`${item.route?.localStart}- ${item.route?.localEnd}` || "");
 			value.push(
-				`${item.route?.localStart}- ${item.route?.localEnd}` || ""
+				item.price?.toLocaleString("vi-VN", {
+					style: "currency",
+					currency: "VND",
+				}) || ""
 			);
-			value.push(item.price || "");
 			value.push(moment(item.timeStart).format("DD-MM-YYYY"));
 			value.push(item.drive?.name);
 			value.push(ActionHelper.getActionUpdateAndDelete(item, onCreateOrUpdate, onConfirm));
@@ -109,11 +112,11 @@ export default function TripContainer() {
 
 		const getTable: IBaseTable<Trip> = {
 			header: [
-				{ id: "route" as any, label: "Tuyến đường", sort : true },
-				{ id: "price", label: "Giá", sort : true },
-				{ id: "timeStart", label: "Giờ khởi hành", sort : true },
-				{ id: "drive", label: "Người lái xe", sort : false },
-				{ id: "", label: "Hành động", sort : false },
+				{ id: "route" as any, label: "Tuyến đường", sort: true },
+				{ id: "price", label: "Giá", sort: true },
+				{ id: "timeStart", label: "Giờ khởi hành", sort: true },
+				{ id: "drive", label: "Người lái xe", sort: false },
+				{ id: "", label: "Hành động", sort: false },
 			],
 			paging: { ...object, rows: [] },
 			value: createValue,
@@ -123,8 +126,8 @@ export default function TripContainer() {
 
 	return (
 		<Grid item xs={12}>
-			<Header title="Chuyến đi"/>
-			
+			<Header title="Chuyến đi" />
+
 			<PopUpConfirm isDisplay={showConfirm} onCancel={onCancelConfirm} onDelete={onDelete} />
 
 			<PopUpEditTrip

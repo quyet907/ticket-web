@@ -56,6 +56,7 @@ const useStyles = makeStyles((theme) => ({
 		flexDirection: "column",
 		boxShadow: "none",
 		border: "1px solid #ddd",
+		borderRadius: 5,
 		"&:hover": {
 			boxShadow: "0px 0px 10px 1px rgba(2,0,0,0.1)",
 			// borderColor: "white",
@@ -153,7 +154,7 @@ export default function DetailInfoTicket(props: Props) {
 				height="100%"
 				p={1}
 				boxSizing="border-box"
-				style={{ background: props.selected ? materialTheme.palette.primary.main : "none" }}
+				style={{ background: props.selected ? materialTheme.palette.primary.main : "none", }}
 			>
 				<Box display="flex" justifyContent="space-between" alignItems="center">
 					<Typography variant="h5">{getHighlightedText(props.ticketInfo.chair_car?.name, props.search)}</Typography>
@@ -228,7 +229,7 @@ export default function DetailInfoTicket(props: Props) {
 					props.onClick(props.ticketInfo);
 				}}
 			></Grid>
-			<Box height="100%">
+			<Box height="100%" >
 				{props.ticketInfo.id ? statusBooked(props.ticketInfo) : statusUnset()}
 			</Box>
 		</Paper>
