@@ -14,6 +14,14 @@ let iconTicket = <Loyalty fontSize="large" color="primary" />;
 let iconTrip = <Commute fontSize="large" color="primary" />;
 let iconRevenue = <AttachMoney fontSize="large" color="primary" />;
 
+export enum Filter  {
+	_7DAYS = "7 days",
+	_30DAYS = "30 days",
+	WEEK = "This week",
+	MONTH = "This month",
+	ALL = "ALL"
+}
+
 const dayAgo = (number: number) => {
 	let date = new Date();
 	date.setDate(date.getDate() - number);
@@ -61,6 +69,9 @@ function Statistic() {
 		],
 	});
 
+	const onHandleChangeFilter = (filter: Filter) => {
+		
+	}
 	const all = () => {
 		setStartDate(undefined);
 		setEndDate(undefined);
@@ -177,20 +188,20 @@ function Statistic() {
 				title="Tổng quan"
 				breadcrumbs={<div></div>}
 				action={
-					<FormControl variant="outlined" size="small" style={{minWidth: 150}}>
+					<FormControl variant="outlined" size="small" style={{ minWidth: 150 }}>
 						<InputLabel id="demo">Thoi gian</InputLabel>
 						<Select
 							labelId="demo"
 							id="demo-simple-select-outlined"
 							// value={age}
-							// onChange={handleChange}
-							label="Thoi gian" 
+							onChange={() => {}}
+							label="Thoi gian"
 						>
 							<MenuItem value={10}>07 ngày</MenuItem>
 							<MenuItem value={20}>30 ngày</MenuItem>
 							<MenuItem value={30}>Tuần này</MenuItem>
-                     <MenuItem value={1}>Tháng này</MenuItem>
-                     <MenuItem value={8}>Tất cả</MenuItem>
+							<MenuItem value={1}>Tháng này</MenuItem>
+							<MenuItem value={8}>Tất cả</MenuItem>
 						</Select>
 					</FormControl>
 				}
