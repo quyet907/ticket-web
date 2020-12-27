@@ -32,7 +32,7 @@ export default function Notification() {
 		<div style ={{display : !!notication?.message ? "block" : "none"}}>
 			<Snackbar
 				open={!!notication?.message}
-				autoHideDuration={1000}
+				autoHideDuration={3000}
 				onClose={(e) => setNotication({ message: "" })}
 				anchorOrigin={{ vertical: "top", horizontal: "center" }}
 			>

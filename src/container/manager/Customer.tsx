@@ -99,14 +99,14 @@ export default function Customers() {
 
 		const getTable: IBaseTable<Customer> = {
 			header: [
-				{ id: "name", label: "Họ tên", sort: true },
-				{ id: "CMND", label: "CMND", sort: true },
-				{ id: "birthAt", label: "Ngày sinh", sort: true },
-				{ id: "email", label: "Email", sort: true },
-				{ id: "phoneNumber", label: "Số điện thoại", sort: true },
-				{ id: "sex", label: "Giới tính", sort: true },
-				{ id: "description", label: "Mô tả", sort: true },
-				{ id: "", label: "Thao tác", sort: false },
+				{ id: "name", label: "Họ tên", sort : true },
+				{ id: "CMND", label: "CMND" , sort : true},
+				{ id: "birthAt", label: "Ngày sinh" , sort : true},
+				{ id: "email", label: "Email", sort : true },
+				{ id: "phoneNumber", label: "Số điện thoại", sort : true },
+				{ id: "sex", label: "Giới tính", sort : true },
+				{ id: "description", label: "Mô tả", sort : true },
+				{ id: "", label: "Hành động" ,sort : false},
 			],
 			paging: { ...object, rows: [] },
 			value: createValue,

@@ -6,12 +6,14 @@ import {
 	Grow,
 	Link,
 	makeStyles,
-
-
 	Paper,
-	Typography
+	TextField,
+	Typography,
 } from "@material-ui/core";
+import { Home } from "@material-ui/icons";
+import _ from "lodash";
 import React, { useEffect, useRef, useState } from "react";
+import { useCallback } from "react";
 import { useParams } from "react-router";
 import { useReactToPrint } from "react-to-print";
 import PopUpConfirm from "../../components/dialogs/DialogConfirm";
@@ -52,19 +54,20 @@ const useStyles = makeStyles((theme) => ({
 export default function DiagramSaleTicket() {
 	const notication = useRematchDispatch((dispatch: Dispatch) => dispatch.notification);
 	const params = useParams<{ id: string }>();
-	const globalStyles = useGlobalStyles()
+	const globalStyles = useGlobalStyles();
 	const classes = useStyles();
 	const [diagram, setDiagram] = useState<DiagramChairOfTrip>({});
 
 	const [query, setQuery] = useState<IList>({
 		page: 1,
 		pageSize: 5,
-		search: "",
+		search: "M",
 	});
 	const [selected, setSelected] = useState<Ticket[]>([]);
 	const [showForm, setShowForm] = useState<boolean>(false);
 	const [showConfirm, setShowConfirm] = useState<boolean>(false);
 	const [trip, setTrip] = useState<Trip>({});
+	const [search, setSearch] = useState<string>("");
 
 	function onCreateOrUpdate() {
 		setShowForm(true);
@@ -81,7 +84,7 @@ export default function DiagramSaleTicket() {
 			item.localPickup = ticket.localPickup;
 			item.customer = ticket.customer;
 			item.customerId = ticket.customerId;
-			item.statusTicket = ticket.statusTicket
+			item.statusTicket = ticket.statusTicket;
 			return item;
 		});
 		ticketController.createMany(getSelected).then((res) => {
@@ -154,198 +157,248 @@ export default function DiagramSaleTicket() {
 		content: () => componentRef.current as any,
 	});
 
-	function checkCustomerUnique(selected: Ticket[]):boolean {
-		if(selected.length==1){
-			return  true
+	function checkCustomerUnique(selected: Ticket[]): boolean {
+		if (selected.length == 1) {
+			return true;
 		}
 		for (let i = 0; i < selected.length; i++) {
-			if(selected[i].customerId !== selected[0].customerId ){
-				return false
+			if (selected[i].customerId !== selected[0].customerId) {
+				return false;
 			}
 		}
-		return true
+		return true;
 	}
-	function selectedAllTicket(){
+	function selectedAllTicket() {
 		var getSelected = [...selected];
-		diagram.dataListChair?.map(floor=>{
-			floor.map(row=>{
-				row.map(ticket=>{
-					if(getSelected[0].customerId=== ticket.customerId){
-						getSelected.push(ticket)
+		diagram.dataListChair?.map((floor) => {
+			floor.map((row) => {
+				row.map((ticket) => {
+					if (getSelected[0].customerId === ticket.customerId) {
+						getSelected.push(ticket);
 					}
-				})
-			})
-		})
-		var newSelecdted:Ticket[] = []
+				});
+			});
+		});
+		var newSelecdted: Ticket[] = [];
 		for (let i = 0; i < getSelected.length; i++) {
-			var getIndex = getSelected.findIndex(item=> item.id === getSelected[i].id)
-			if((getIndex ===i)){
-				newSelecdted.push(getSelected[i])
+			var getIndex = getSelected.findIndex((item) => item.id === getSelected[i].id);
+			if (getIndex === i) {
+				newSelecdted.push(getSelected[i]);
 			}
 		}
-		setSelected(newSelecdted)
+		setSelected(newSelecdted);
 	}
-	function CheckExistAll():boolean {
-		if(!checkCustomerUnique(selected)){
-			return false 
+	function CheckExistAll(): boolean {
+		if (!checkCustomerUnique(selected)) {
+			return false;
 		}
-		const getDiagram = diagram?.dataListChair ||[]
-		for (let i = 0; i < getDiagram.length ||0 ; i++) {
-			const floor = getDiagram[i]
+		const getDiagram = diagram?.dataListChair || [];
+		for (let i = 0; i < getDiagram.length || 0; i++) {
+			const floor = getDiagram[i];
 			for (let indexFloor = 0; indexFloor < floor.length; indexFloor++) {
 				const row = floor[indexFloor];
 				for (let indexRow = 0; indexRow < row.length; indexRow++) {
 					const ticket = row[indexRow];
-					if(ticket?.customerId === selected[0]?.customerId && ticket.id !== selected[0]?.id ){
-						return true
+					if (
+						ticket?.customerId === selected[0]?.customerId &&
+						ticket.id !== selected[0]?.id
+					) {
+						return true;
 					}
 				}
 			}
 		}
-		return false ;
+		return false;
 	}
+
+	const onSearch = useCallback(
+		_.debounce((search: string) => {
+			setSearch(search);
+		}, 300),
+		[]
+	);
 
 	return (
 		<Grid container>
-			<Grid item xs>
-				<Header
-					title="Sơ đồ ghế "
-					breadcrumbs={
-						<Breadcrumbs aria-label="breadcrumb">
-							<Link color="secondary" href="/ticket" onClick={() => {}}>
-								<Typography variant="caption" color="primary">
-									Ban ve
-								</Typography>
-							</Link>
-							<Typography color="textSecondary" variant="caption">
-								Sơ đồ ghế
-							</Typography>
-						</Breadcrumbs>
-					}
-					action={
-						<Box
-							style={{
-								position: "fixed",
-								top: theme.spacing(12),
-								right: theme.spacing(6),
-								display: selected.length > 0 ? "block" : "none",
-								alignSelf: "stretch",
-								zIndex: 6,
-							}}
+			<Grid
+				item
+				xs={12}
+				md={6}
+				container
+				direction="row"
+				style={{
+					// height: 60,
+					marginBottom: theme.spacing(3)
+				}}
+			>
+				<Typography variant={"h3"}>
+					<b>Hoem</b>
+				</Typography>
+				<Typography variant="h3">&nbsp;|&nbsp;</Typography>
+				<Box mb={-0.7}>
+					<Breadcrumbs separator="›" aria-label="breadcrumb">
+						<Link
+							color="inherit"
+							href="/dashboard"
+							// onClick={() => {history.push}}
 						>
-							<Paper
-								style={{
-									backgroundColor: theme.palette.common.white,
-									padding: theme.spacing(1.5),
-									display: "flex",
-									width: "fit-content",
-									boxSizing: "border-box",
-									marginRight: theme.spacing(1),
-									boxShadow: "14px 8px 15px -4px rgba(0,0,0,0.29)",
-									WebkitBoxShadow: "13px 7px 15px -4px rgba(0,0,0,0.29)",
-									border: "1px solid rgba(0, 0, 0, 0.05)"
-								}}
-							>
-
-								{(CheckExistAll()) && (
-									<Box mr={2}>
-										<Grow in={true} timeout={500}>
-											<Button
-											color="secondary"
-												variant="contained"
-												onClick={(e) => selectedAllTicket()}
-											>
-												Tất cả của khách
-											</Button>
-										</Grow>
-									</Box>
-								)}
-
-								{selected.length === 1 && selected[0].id && (
-									<Box mr={2}>
-										<Grow in={true}>
-											<Button color="primary" variant="contained" onClick={handlePrint}>
-												in vé
-											</Button>
-										</Grow>
-									</Box>
-								)}
-
-								{((selected.length === 1 && selected[0].id) ||(checkCustomerUnique(selected))) && (
-									<Box mr={2}>
-										<Grow in={true} timeout={500}>
-											<Button
-											color="secondary"
-												variant="contained"
-												onClick={(e) => onCreateOrUpdate()}
-											>
-												Chỉnh sửa
-											</Button>
-										</Grow>
-									</Box>
-								)}
-
-								{selected.length >= 1 && !checkIdsExitAll(selected) && (
-									<Box mr={2}>
-										<Grow in={true} timeout={500}>
-											<Button
-												variant="contained"
-												onClick={(e) => onCreateOrUpdate()}
-											>
-												Tạo vé
-											</Button>
-										</Grow>
-									</Box>
-								)}
-
-								{selected.length === 2 && checkIdsExitAll(selected) && (
-									<Box mr={2}>
-										<Grow in={true} timeout={500}>
-											<Button
-												color={"secondary"}
-												variant="contained"
-												onClick={(e) => changeChair(selected)}
-											>
-												Đổi ghế
-											</Button>
-										</Grow>
-									</Box>
-								)}
-
-								{selected.length === 1 && selected[0].id && (
-									<Box mr={2}>
-										<Grow in={true} timeout={500}>
-											<Button
-												className={globalStyles.buttonAlert}
-												variant="contained"
-												onClick={(e) => {
-													onConfirm(selected[0]);
-												}}
-											>
-												Hủy vé
-											</Button>
-										</Grow>
-									</Box>
-								)}
-
-								{selected.length >= 1 && (
-									<Box>
-										<Grow in={true} timeout={500}>
-											<Button
-												color={"default"}
-												onClick={(e) => setSelected([])}
-												variant="contained"
-											>
-												Hủy lựa chọn
-											</Button>
-										</Grow>
-									</Box>
-								)}
-							</Paper>
-						</Box>
-					}
-				/>
+							<Home color="disabled" className={globalStyles.logoHome} />
+						</Link>
+						<Link
+							color="inherit"
+							href="#"
+							// onClick={() => {history.push}}
+						>
+							<Typography variant="h6" color="primary">
+								So do
+							</Typography>
+						</Link>
+					</Breadcrumbs>
+				</Box>
 			</Grid>
+			<Grid
+				item
+				xs={12}
+				md={6}
+				style={{
+					position: "sticky",
+					top: 0,
+					right: 0,
+					display: selected.length > 0 ? "block" : "none",
+					zIndex: 6,
+				}}
+			>
+				<Box display="flex" justifyContent="flex-end" mr={-1} mt={-2}>
+					<Paper
+						style={{
+							backgroundColor: theme.palette.common.white,
+							padding: theme.spacing(1.5),
+							display: "flex",
+							width: "fit-content",
+							boxSizing: "border-box",
+							marginRight: theme.spacing(1),
+							boxShadow: "14px 8px 15px -4px rgba(0,0,0,0.29)",
+							WebkitBoxShadow: "13px 7px 15px -4px rgba(0,0,0,0.29)",
+							border: "1px solid rgba(0, 0, 0, 0.05)",
+						}}
+					>
+						{CheckExistAll() && (
+							<Box mr={2}>
+								<Grow in={true} timeout={500}>
+									<Button
+										color="secondary"
+										variant="contained"
+										onClick={(e) => selectedAllTicket()}
+									>
+										Tất cả của khách
+									</Button>
+								</Grow>
+							</Box>
+						)}
+
+						{selected.length === 1 && selected[0].id && (
+							<Box mr={2}>
+								<Grow in={true}>
+									<Button
+										color="primary"
+										variant="contained"
+										onClick={handlePrint}
+									>
+										in vé
+									</Button>
+								</Grow>
+							</Box>
+						)}
+
+						{((selected.length === 1 && selected[0].id) ||
+							checkCustomerUnique(selected)) && (
+							<Box mr={2}>
+								<Grow in={true} timeout={500}>
+									<Button
+										color="secondary"
+										variant="contained"
+										onClick={(e) => onCreateOrUpdate()}
+									>
+										Chỉnh sửa
+									</Button>
+								</Grow>
+							</Box>
+						)}
+
+						{selected.length >= 1 && !checkIdsExitAll(selected) && (
+							<Box mr={2}>
+								<Grow in={true} timeout={500}>
+									<Button variant="contained" onClick={(e) => onCreateOrUpdate()}>
+										Tạo vé
+									</Button>
+								</Grow>
+							</Box>
+						)}
+
+						{selected.length === 2 && checkIdsExitAll(selected) && (
+							<Box mr={2}>
+								<Grow in={true} timeout={500}>
+									<Button
+										color={"secondary"}
+										variant="contained"
+										onClick={(e) => changeChair(selected)}
+									>
+										Đổi ghế
+									</Button>
+								</Grow>
+							</Box>
+						)}
+
+						{selected.length === 1 && selected[0].id && (
+							<Box mr={2}>
+								<Grow in={true} timeout={500}>
+									<Button
+										className={globalStyles.buttonAlert}
+										variant="contained"
+										onClick={(e) => {
+											onConfirm(selected[0]);
+										}}
+									>
+										Hủy vé
+									</Button>
+								</Grow>
+							</Box>
+						)}
+
+						{selected.length >= 1 && (
+							<Box>
+								<Grow in={true} timeout={500}>
+									<Button
+										color={"default"}
+										onClick={(e) => setSelected([])}
+										variant="contained"
+									>
+										Hủy lựa chọn
+									</Button>
+								</Grow>
+							</Box>
+						)}
+					</Paper>
+				</Box>
+			</Grid>
+			<Grid item xs={12}>
+				<Paper>
+					<Box p={3}>
+						<Grid item xs={12}>
+							<TextField
+								fullWidth
+								size="small"
+								variant="outlined"
+								label="Tìm kiếm"
+								name="name"
+								// value={search}
+								onChange={(e) => onSearch(e.target.value)}
+							/>
+						</Grid>
+					</Box>
+				</Paper>
+			</Grid>
+
 			<Paper className={classes.content}>
 				<div style={{ display: "none" }}>
 					<PrintTicket ref={componentRef as any} ticket={selected[0]} trip={trip} />
@@ -391,12 +444,21 @@ export default function DiagramSaleTicket() {
 													{row.map((ticket: Ticket) => {
 														return Object.entries(ticket).length !==
 															0 ? (
-															<Box flex={1} overflow="hidden" p={1} height={110}>
+															<Box
+																flex={1}
+																overflow="hidden"
+																p={1}
+																height={110}
+															>
 																<DetailInfoTicket
+																	search={search || ""}
 																	ticketInfo={ticket}
-																	onDeleted = {onConfirm}
+																	onDeleted={onConfirm}
 																	// eslint-disable-next-line @typescript-eslint/no-unused-expressions
-																	onPrint = {()=>{ handlePrint}}
+																	onPrint={() => {
+																		// eslint-disable-next-line @typescript-eslint/no-unused-expressions
+																		handlePrint;
+																	}}
 																	onClick={onSelected}
 																	selected={
 																		!!selected.find(
@@ -434,4 +496,3 @@ export default function DiagramSaleTicket() {
 		</Grid>
 	);
 }
-

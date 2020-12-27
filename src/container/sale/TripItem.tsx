@@ -47,6 +47,7 @@ export default function TripItem(props: Props) {
 	return (
 		<Paper
 			elevation={2}
+			
 			className={classes.root}
 			onClick={() => history.push(`/sale/${props.trip.id}`)}
 		>

@@ -107,7 +107,7 @@ export default function AddOrEditDialog(props: Props) {
 					variant="contained"
 					color="primary"
 				>
-					Save
+					Lưu
 				</Button>
 			</DialogActions>
 		</Dialog>
