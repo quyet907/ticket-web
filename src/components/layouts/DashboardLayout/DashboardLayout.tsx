@@ -10,6 +10,7 @@ import StaffView from "../../../container/manager/Staff";
 import TripContainer from "../../../container/manager/TripContainer";
 import DiagramSaleTicket from "../../../container/sale/DiagramSaleTicket";
 import HomeSaleTicket from "../../../container/sale/HomeSaleTicket";
+import { PrintTicket } from "../../../container/sale/PrintTicket";
 import Statistic from "../../../container/statistic/Statistic";
 import { accountController } from "../../../service";
 import { useGlobalStyles } from "../../../styles/GlobalStyle";
@@ -73,6 +74,9 @@ function DashboardLayout() {
 							<Route exact path={`/ticket`} component={HomeSaleTicket} />
 							<Route exact path={`/car`} component={CarContainer} />
 							<Route exact path={`/role`} component={Role} />
+							<Route exact path={`/print`} component={PrintTicket} />
+
+							
 							<Route exact path={`/sale/:id`} component={DiagramSaleTicket} />
 							<Redirect exact from="*" to={"dashboard"} />
 

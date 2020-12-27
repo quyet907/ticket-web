@@ -1,4 +1,5 @@
 import {
+	Box,
 	Button,
 	Chip,
 	Dialog,
@@ -8,9 +9,11 @@ import {
 	FormControlLabel,
 	FormLabel,
 	Grid,
+	Grow,
 	InputLabel,
 	makeStyles,
 	MenuItem,
+	Paper,
 	Radio,
 	RadioGroup,
 	Select,
@@ -25,8 +28,12 @@ import * as Yup from "yup";
 import { useGlobalStyles } from "../../styles/GlobalStyle";
 import { Customer } from "../../submodules/base-ticket-team/base-carOwner/Customer";
 import { DetailLuggage } from "../../submodules/base-ticket-team/base-carOwner/DetailLuggage";
-import { StatusTicket, Ticket } from "../../submodules/base-ticket-team/base-carOwner/Ticket";
+import {
+	StatusTicket,
+	Ticket,
+} from "../../submodules/base-ticket-team/base-carOwner/Ticket";
 import { Trip } from "../../submodules/base-ticket-team/base-carOwner/Trip";
+import theme from "../../theme/MuiTheme";
 
 const useStyle = makeStyles((theme) => ({
 	box: {
@@ -96,13 +103,15 @@ export default function DialogSaleTicket(props: Props) {
 	});
 
 	useEffect(() => {
-		if(props.ticket){
+		if (props.ticket) {
 			setTicket({
 				...props.ticket,
 				localPickup:
-					props?.ticket?.localPickup || props?.trip?.route?.localStart,
-				localDrop: props?.ticket?.localDrop || props?.trip?.route?.localEnd,
-				statusTicket : props.ticket.statusTicket ||  StatusTicket.payed
+					props?.ticket?.localPickup ||
+					props?.trip?.route?.localStart,
+				localDrop:
+					props?.ticket?.localDrop || props?.trip?.route?.localEnd,
+				statusTicket: props.ticket.statusTicket || StatusTicket.payed,
 			});
 			if (props.ticket.localPickup !== props.trip.route?.localStart) {
 				setLocalOption({
@@ -115,7 +124,7 @@ export default function DialogSaleTicket(props: Props) {
 					localStart: "",
 				});
 			}
-	
+
 			if (props.ticket.localDrop !== props.trip.route?.localEnd) {
 				setLocalOption({
 					...localOption,
@@ -134,8 +143,8 @@ export default function DialogSaleTicket(props: Props) {
 		formikForCustomer.setValues({ ...props?.ticket?.customer } || {});
 	}, [props]);
 
-
 	function onSave(item: Ticket) {
+		setTicket(item)
 		formikForCustomer.handleSubmit();
 		formikForCustomer.setTouched({
 			name: true,
@@ -345,42 +354,49 @@ export default function DialogSaleTicket(props: Props) {
 										}
 									/>
 								</Grid>
-								
+
 								<Grid className={clsx(globalStyle.mt3)}>
-									<FormControl
-										variant="outlined"
-										fullWidth 
-									>
-										<InputLabel>{"Trang thái vé"}</InputLabel>
+									<FormControl variant="outlined" fullWidth>
+										<InputLabel>
+											{"Trang thái vé"}
+										</InputLabel>
 										<Select
 											name={"statusTicket"}
 											value={ticket.statusTicket}
 											labelWidth={80}
-											onChange={(e=>{
-												
-												const getTicket ={...ticket}
-												getTicket.statusTicket= e.target.value as StatusTicket;
-												setTicket(getTicket)
-											})}
+											onChange={(e) => {
+												const getTicket = { ...ticket };
+												getTicket.statusTicket = e
+													.target
+													.value as StatusTicket;
+												setTicket(getTicket);
+											}}
 										>
-											<MenuItem value={StatusTicket.payed}>
+											<MenuItem
+												value={StatusTicket.payed}
+											>
 												Đã đã tiền
 											</MenuItem>
-											<MenuItem value={StatusTicket.order}>
+											<MenuItem
+												value={StatusTicket.order}
+											>
 												Đặt trước
 											</MenuItem>
-											<MenuItem value={StatusTicket.welcomed}>
+											<MenuItem
+												value={StatusTicket.welcomed}
+											>
 												Đã đón
 											</MenuItem>
-											<MenuItem value={StatusTicket.cancel}>
+											<MenuItem
+												value={StatusTicket.cancel}
+											>
 												Không đón được
 											</MenuItem>
-											
 										</Select>
 									</FormControl>
 								</Grid>
 
-								<Grid className={clsx(globalStyle.mt3)}>
+								{/* <Grid className={clsx(globalStyle.mt3)}>
 									<Grid
 										container
 										direction="row"
@@ -424,7 +440,7 @@ export default function DialogSaleTicket(props: Props) {
 											}
 										}}
 									/>
-								</Grid>
+								</Grid> */}
 
 								<Grid className={clsx(globalStyle.mt3)}>
 									<TextField
@@ -451,7 +467,7 @@ export default function DialogSaleTicket(props: Props) {
 				</Grid>
 			</DialogContent>
 			<DialogActions>
-				<Button onClick={() => props.onCancel()} color="default">
+				{/* <Button onClick={() => props.onCancel()} color="default">
 					Close
 				</Button>
 
@@ -461,7 +477,106 @@ export default function DialogSaleTicket(props: Props) {
 					color="primary"
 				>
 					Đặt
-				</Button>
+				</Button> */}
+
+				<Box>
+					<Grid
+						style={{
+							backgroundColor: theme.palette.common.white,
+							padding: theme.spacing(1.5),
+							display: "flex",
+							width: "fit-content",
+							boxSizing: "border-box",
+							marginRight: theme.spacing(1),
+						}}
+					>
+						<Box mr={2}>
+							<Grow in={true} timeout={500}>
+								<Button
+									color="secondary"
+									variant="contained"
+									onClick={() => onSave(props.ticket)}
+									// onClick={(e) => onCreateOrUpdate()}
+								>
+									Lưu thông tin 
+								</Button>
+							</Grow>
+						</Box>
+
+						{
+							new Date(props.trip.timeStart|| 0).getTime() > new Date().getTime() &&<>
+							<Box mr={2}>
+								<Grow in={true} timeout={500}>
+									<Button
+										color="secondary"
+										variant="contained"
+										onClick={() => onSave({...props.ticket,statusTicket: StatusTicket.payed})}
+										// onClick={(e) => selectedAllTicket()}
+									>
+										Thanh toán
+									</Button>
+								</Grow>
+							</Box>
+
+						<Box mr={2}>
+							<Grow in={true} timeout={500}>
+								<Button
+									color="secondary"
+									variant="contained"
+									onClick={() => onSave({...props.ticket,statusTicket: StatusTicket.order})}
+								>
+									Đặt trước
+								</Button>
+							</Grow>
+						</Box>
+						</>
+						}
+
+						{
+							new Date(props.trip.timeStart|| 0).getTime() < new Date().getTime() &&<>
+								<Box mr={2}>
+							<Grow in={true} timeout={500}>
+								<Button
+									variant="contained"
+									onClick={() => onSave({...props.ticket,statusTicket: StatusTicket.welcomed})}
+									// onClick={(e) => onCreateOrUpdate()}
+								>
+									Đã đón
+								</Button>
+							</Grow>
+						</Box>
+
+						<Box mr={2}>
+							<Grow in={true} timeout={500}>
+								<Button
+									color={"secondary"}
+									variant="contained"
+									// onClick={(e) => changeChair(selected)}
+									onClick={() => onSave({...props.ticket,statusTicket: StatusTicket.cancel})}
+								>
+									Không đón được
+								</Button>
+							</Grow>
+						</Box>
+							</>
+						}
+
+						<Box mr={2}>
+							<Grow in={true} timeout={500}>
+								<Button
+									// className={globalStyles.buttonAlert}
+									variant="contained"
+									onClick={(e) => {
+										props.onCancel()
+									}}
+								>
+									Đóng
+								</Button>
+							</Grow>
+						</Box>
+
+					</Grid>
+				</Box>
 			</DialogActions>
 		</Dialog>
 	);

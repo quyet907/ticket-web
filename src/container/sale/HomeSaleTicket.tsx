@@ -45,7 +45,7 @@ export default function HomeSaleTicket() {
 		from: new Date(),
 		to: new Date(),
 		page: 1,
-		pageSize: 4,
+		pageSize: 6,
 		search: "",
 	});
 	useEffect(() => {
