@@ -1,26 +1,22 @@
-import React, { useCallback } from "react";
-import PropTypes from "prop-types";
-import clsx from "clsx";
 import {
 	Box,
 	Button,
-	Card,
 	CardContent,
-	TextField,
-	InputAdornment,
-	SvgIcon,
-	makeStyles,
-	withStyles,
 	InputBase,
+	makeStyles,
+	Paper,
+	TextField,
+	withStyles,
 } from "@material-ui/core";
-import { Search as SearchIcon } from "react-feather";
+import clsx from "clsx";
 import _ from "lodash";
+import React, { useCallback } from "react";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		backgroundColor : theme.palette.common.white,
+		backgroundColor: theme.palette.common.white,
 		background: "none",
-		borderRadius: 10,
+		borderRadius: 5,
 	},
 	importButton: {
 		marginRight: theme.spacing(1),
@@ -33,7 +29,6 @@ const useStyles = makeStyles((theme) => ({
 const TextFieldCustom = withStyles((theme) => ({
 	root: {
 		background: theme.palette.background.default,
-		padding: 10,
 		"&:focus": {
 			border: "1px solid",
 			borderColor: theme.palette.primary.main,
@@ -59,47 +54,33 @@ function SearchAndAdd<T>(props: Props<T>) {
 	);
 
 	return (
-		<Box>
-			<Card className={clsx(classes.root)}>
-				<CardContent
-					style={{
-						display: "flex",
-						justifyContent: "space-between",
-						alignItems: "center",
-					}}
-				>
-					<Box flexBasis={300}>
-						<TextField
-							fullWidth
-							// InputProps={{
-							// 	startAdornment: (
-							// 		<InputAdornment position="start">
-							// 			<SvgIcon fontSize="small" color="action">
-							// 				<SearchIcon />
-							// 			</SvgIcon>
-							// 		</InputAdornment>
-							// 	),
-							// }}
-							placeholder="Search"
-							onChange={(e) => {
-								onSearch(e.target.value);
-							}}
-						/>
-					</Box>
-					<Box display="flex" justifyContent="flex-end">
-						{/* <Button className={classes.importButton}>Import</Button> */}
-						{/* <Button className={classes.exportButton}>Export</Button> */}
-						<Button
-							color="primary"
-							variant="contained"
-							onClick={() => props.onCreate({} as T)}
-						>
-							Thêm mới
-						</Button>
-					</Box>
-				</CardContent>
-			</Card>
-		</Box>
+		<Paper className={clsx(classes.root)}>
+			<Box display="flex" padding={2} justifyContent="space-between">
+				<Box flexBasis={400}>
+					<TextField
+						fullWidth
+						label="Tìm kiếm"
+						// placeholder="Search"
+						onChange={(e) => {
+							onSearch(e.target.value);
+						}}
+						variant="outlined"
+						size="small"
+					/>
+				</Box>
+				<Box display="flex" justifyContent="flex-end">
+					{/* <Button className={classes.importButton}>Import</Button> */}
+					{/* <Button className={classes.exportButton}>Export</Button> */}
+					<Button
+						color="primary"
+						variant="contained"
+						onClick={() => props.onCreate({} as T)}
+					>
+						Thêm mới
+					</Button>
+				</Box>
+			</Box>
+		</Paper>
 	);
 }
 

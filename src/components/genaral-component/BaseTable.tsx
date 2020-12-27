@@ -1,12 +1,11 @@
 import {
 	Box,
-	Card,
+
 	FormControl,
 	Grid,
 	makeStyles,
 	MenuItem,
-	Select,
-	TableSortLabel,
+	Select
 } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
 import clsx from "clsx";
@@ -43,12 +42,12 @@ const useStyles = makeStyles((theme) => ({
 		backgroundColor: theme.palette.primary.main,
 		color: "white",
 		fontWeight: 500,
-		borderTopRightRadius: 10,
-		borderTopLeftRadius: 10,
+		borderTopRightRadius: 5,
+		borderTopLeftRadius: 5,
 	},
 	lastRow: {
-		borderBottomRightRadius: 10,
-		borderBottomLeftRadius: 10,
+		borderBottomRightRadius: 5,
+		borderBottomLeftRadius: 5,
 	},
 	rowFirst: {
 		background: "white",

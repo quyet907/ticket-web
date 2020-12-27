@@ -7,6 +7,7 @@ import {
 	Link,
 	makeStyles,
 	MenuItem,
+	Paper,
 	Select,
 	TextField,
 	Typography,
@@ -78,56 +79,63 @@ export default function HomeSaleTicket() {
 					</Breadcrumbs>
 				}
 			/>
-			<Grid className={globalStyle.mt3}>
-				<Grid container direction="row" spacing={6}>
-					<Grid item>
-						<TextField
-							fullWidth
-							variant="standard"
-							label={"Tìm theo địa điểm"}
-							value={search}
-							onChange={(e) => {
-								setSearch(e.target.value);
-								onSearch(e.target.value);
-							}}
-							style={{ width: 300 }}
-						/>
-					</Grid>
-					<Grid item>
-						<TextField
-							fullWidth
-							variant="standard"
-							label={"Ngày bắt đầu"}
-							type={"date"}
-							value={moment(query.from).format("YYYY-MM-DD")}
-							onChange={(e) => {
-								setQuery({
-									...query,
-									from: new Date(e.target.value),
-								});
-							}}
-							style={{ width: 300 }}
-						/>
-					</Grid>
+			<Paper>
+				<Box p={2}>
+					<Grid>
+						<Grid container direction="row" spacing={6}>
+							<Grid item>
+								<TextField
+									fullWidth
+									variant="outlined"
+									size="small"
+									label={"Tìm theo địa điểm"}
+									value={search}
+									onChange={(e) => {
+										setSearch(e.target.value);
+										onSearch(e.target.value);
+									}}
+									style={{ width: 300 }}
+								/>
+							</Grid>
+							<Grid item>
+								<TextField
+									fullWidth
+									variant="outlined"
+									size="small"
+									label={"Ngày khởi hành"}
+									type={"date"}
+									value={moment(query.from).format("YYYY-MM-DD")}
+									onChange={(e) => {
+										setQuery({
+											...query,
+											from: new Date(e.target.value),
+										});
+									}}
+									style={{ width: 300 }}
+								/>
+							</Grid>
 
-					<Grid item>
-						<TextField
-							fullWidth
-							variant="standard"
-							label={"Ngày kết thúc"}
-							type={"date"}
-							value={moment(query.to).format("YYYY-MM-DD")}
-							onChange={(e) => {
-								setQuery({
-									...query,
-									to: new Date(e.target.value),
-								});
-							}}
-							style={{ width: 300 }}
-						/>
+							<Grid item>
+								<TextField
+									fullWidth
+									variant="outlined"
+									size="small"
+									label={"Ngày kết thúc"}
+									type={"date"}
+									value={moment(query.to).format("YYYY-MM-DD")}
+									onChange={(e) => {
+										setQuery({
+											...query,
+											to: new Date(e.target.value),
+										});
+									}}
+									style={{ width: 300 }}
+								/>
+							</Grid>
+						</Grid>
 					</Grid>
-				</Grid>
-			</Grid>
+				</Box>
+			</Paper>
 
 			<Grid container direction="row" spacing={3} className={globalStyle.mt3}>
 				{tripHome?.rows?.map((item) => (
@@ -140,12 +148,11 @@ export default function HomeSaleTicket() {
 			<Grid container direction="row" justify="center">
 				<Grid className={clsx(globalStyle.pp3)}>
 					<Grid container direction="row" justify="center">
-						<Grid item xs >
+						<Grid item xs>
 							<Box>
 								<FormControl variant="outlined" size="small">
 									<Select
 										value={query.pageSize}
-										
 										onChange={(e) => {
 											var getValue: string = e.target.value as any;
 											var getValueNumber: number = parseInt(getValue);

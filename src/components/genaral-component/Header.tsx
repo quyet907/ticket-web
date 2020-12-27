@@ -47,6 +47,7 @@ export default function Header(props: Props) {
 					</Link>
 				</Breadcrumbs>
 			</Box>
+			{props.action}
 		</Grid>
 	);
 }
