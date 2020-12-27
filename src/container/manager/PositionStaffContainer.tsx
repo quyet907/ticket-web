@@ -12,6 +12,7 @@ import { Paging } from "../../submodules/base-ticket-team/query/Paging";
 import clsx from "clsx";
 import { useGlobalStyles } from "../../styles/GlobalStyle";
 import { getHighlightedText } from "../../helper/getHighlightedText";
+import Header from "../../components/genaral-component/Header";
 
 // import Page from 'src/components/Page';
 
@@ -99,9 +100,9 @@ export default function PositionStaffContainer() {
 
 		const getTable: IBaseTable<PositionStaff> = {
 			header: [
-				{ id: "name", label: "Tên chức vụ", sort : true },
-				{ id: "description", label: "Mô tả" , sort : true},
-				{ id: "", label: "Hành động", sort : false },
+				{ id: "name", label: "Tên chức vụ", sort: true },
+				{ id: "description", label: "Mô tả", sort: true },
+				{ id: "", label: "Hành động", sort: false },
 			],
 			paging: { ...object, rows: [] },
 			value: createValue,
@@ -112,9 +113,8 @@ export default function PositionStaffContainer() {
 	return (
 		// <Page className={classes.root} title="Customers">
 		<Grid>
-			<Grid>
-				<Typography variant={"h1"}>Chức vụ</Typography>
-			</Grid>
+			<Header title="Chức vụ" />
+
 			<PopUpConfirm isDisplay={showConfirm} onCancel={onCancelConfirm} onDelete={onDelete} />
 
 			<PopUpEditPositionStaff

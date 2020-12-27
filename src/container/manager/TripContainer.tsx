@@ -1,20 +1,19 @@
-import { makeStyles, Container, Box, Grid, Typography } from "@material-ui/core";
-import React, { useState, useEffect } from "react";
+import { Box, Grid, makeStyles, Typography } from "@material-ui/core";
+import moment from "moment";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { ActionHelper } from "../../comon/ActionHelper";
-import BaseDialogs from "../../components/dialogs/BaseDialogs";
 import PopUpConfirm from "../../components/dialogs/DialogConfirm";
+import PopUpEditTrip from "../../components/dialogs/PopUpEditTrip";
 import BaseTable, { IBaseTable } from "../../components/genaral-component/BaseTable";
+import Header from "../../components/genaral-component/Header";
 import SearchAndAdd from "../../components/genaral-component/SearchAndAdd";
 import { tripController } from "../../service";
+import { useGlobalStyles } from "../../styles/GlobalStyle";
 import { PositionStaff } from "../../submodules/base-ticket-team/base-carOwner/PositionStaff";
 import { Trip } from "../../submodules/base-ticket-team/base-carOwner/Trip";
 import { IList } from "../../submodules/base-ticket-team/query/IList";
 import { Paging } from "../../submodules/base-ticket-team/query/Paging";
-import clsx from "clsx";
-import { useGlobalStyles } from "../../styles/GlobalStyle";
-import { useParams } from "react-router-dom";
-import PopUpEditTrip from "../../components/dialogs/PopUpEditTrip";
-import moment from "moment";
 
 // import Page from 'src/components/Page';
 
@@ -124,9 +123,8 @@ export default function TripContainer() {
 
 	return (
 		<Grid item xs={12}>
-			<Grid>
-				<Typography variant={"h1"}>Chuyến đi</Typography>
-			</Grid>
+			<Header title="Chuyến đi"/>
+			
 			<PopUpConfirm isDisplay={showConfirm} onCancel={onCancelConfirm} onDelete={onDelete} />
 
 			<PopUpEditTrip

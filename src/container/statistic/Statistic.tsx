@@ -224,18 +224,18 @@ function Statistic() {
 	console.count("Rendering");
 	return (
 		<Grid container>
-			<Grid item xs={8} container alignItems="center">
-				<Typography variant={"h3"}>
+			<Grid item xs={8} container >
+				<Typography display="inline" variant={"h3"}>
 					<b>Tổng quan</b>
 				</Typography>
-				<Typography variant="h3">&nbsp;|&nbsp;</Typography>
+				<Typography display="inline" variant="h3">&nbsp;|&nbsp;</Typography>
 				<Link
-					style={{ display: "flex", alignItems: "center" }}
+					style={{  marginTop: theme.spacing(0.3) }}
 					color="inherit"
 					href="#"
-					onClick={() => {}}
+					// onClick={() => {history.push}}
 				>
-					<Home color="primary" />
+					<Home color="primary"  />
 				</Link>
 			</Grid>
 
@@ -364,7 +364,6 @@ function Statistic() {
 									},
 									responsive: true,
 									maintainAspectRatio: false,
-									
 								}}
 								// height={100}
 							/>

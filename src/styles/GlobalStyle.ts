@@ -14,7 +14,12 @@ export const useGlobalStyles = makeStyles((theme) => ({
 		// minHeight: "100vh",
 		borderLeft: `1px solid ${colors.grey[300]}`,
 	},
-
+	logoHome: {
+		marginTop: theme.spacing(0.3),
+		"&:hover": {
+			color: theme.palette.primary.main,
+		},
+	},
 	highlightSearchText: {
 		background: "yellow",
 	},

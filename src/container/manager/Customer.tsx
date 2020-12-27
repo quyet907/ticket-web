@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Container, Grid, makeStyles, Typography } from "@material-ui/core";
+import { Box, Breadcrumbs, Container, Grid, Link, makeStyles, Typography } from "@material-ui/core";
 import SearchAndAdd from "../../components/genaral-component/SearchAndAdd";
 import { customerController } from "../../service";
 import { ActionHelper } from "../../comon/ActionHelper";
@@ -14,6 +14,8 @@ import PopUpEditCustomer from "../../components/dialogs/PopUpEditCustomer";
 import clsx from "clsx";
 import { useGlobalStyles } from "../../styles/GlobalStyle";
 import { getHighlightedText } from "../../helper/getHighlightedText";
+import { Home } from "@material-ui/icons";
+import theme from "../../theme/MuiTheme";
 // import Page from 'src/components/Page';
 
 export default function Customers() {
@@ -84,27 +86,27 @@ export default function Customers() {
 	function convertDataToTable(data: Customer[]): IBaseTable<Customer> {
 		const createValue = data.map((item: Customer) => {
 			var value: any[] = [];
-			value.push(getHighlightedText(item.name || "", query.search) );
+			value.push(getHighlightedText(item.name || "", query.search));
 			value.push(getHighlightedText(item.CMND || "", query.search));
 			value.push(moment(item.birthAt).format("DD-MM-YYYY"));
 			value.push(getHighlightedText(item.email || "", query.search));
-			value.push(getHighlightedText( item.phoneNumber || "", query.search));
+			value.push(getHighlightedText(item.phoneNumber || "", query.search));
 			value.push(getHighlightedText(item.sex || ""));
-			value.push( getHighlightedText(item.description || "", query.search));  
+			value.push(getHighlightedText(item.description || "", query.search));
 			value.push(ActionHelper.getActionUpdateAndDelete(item, onCreateOrUpdate, onConfirm));
 			return value;
 		});
 
 		const getTable: IBaseTable<Customer> = {
 			header: [
-				{ id: "name", label: "Họ tên", sort : true },
-				{ id: "CMND", label: "CMND" , sort : true},
-				{ id: "birthAt", label: "Ngày sinh" , sort : true},
-				{ id: "email", label: "Email", sort : true },
-				{ id: "phoneNumber", label: "Số điện thoại", sort : true },
-				{ id: "sex", label: "Giới tính", sort : true },
-				{ id: "description", label: "Mô tả", sort : true },
-				{ id: "", label: "Thao tác" ,sort : false},
+				{ id: "name", label: "Họ tên", sort: true },
+				{ id: "CMND", label: "CMND", sort: true },
+				{ id: "birthAt", label: "Ngày sinh", sort: true },
+				{ id: "email", label: "Email", sort: true },
+				{ id: "phoneNumber", label: "Số điện thoại", sort: true },
+				{ id: "sex", label: "Giới tính", sort: true },
+				{ id: "description", label: "Mô tả", sort: true },
+				{ id: "", label: "Thao tác", sort: false },
 			],
 			paging: { ...object, rows: [] },
 			value: createValue,
@@ -114,8 +116,42 @@ export default function Customers() {
 
 	return (
 		<Grid>
-			<Grid>
-				<Typography variant={"h1"}>Khách hàng</Typography>
+			<Grid
+				item
+				container
+				alignItems="center"
+				direction="row"
+				style={{ marginBottom: theme.spacing(3) }}
+			>
+				<Typography variant={"h3"}>
+					<b>Khách hàng</b>
+				</Typography>
+				<Typography variant="h3">&nbsp;|&nbsp;</Typography>
+				<Box mb={-0.5}>
+					<Breadcrumbs separator="›" aria-label="breadcrumb">
+						<Link
+							color="inherit"
+							href="/dashboard"
+							// onClick={() => {history.push}}
+						>
+							<Home color="disabled" className={globalStyle.logoHome} />
+						</Link>
+						<Link
+							style={{ textDecoration: "none" }}
+							color="inherit"
+							href="#"
+							// onClick={() => {history.push}}
+						>
+							<Typography
+								style={{ display: "flex", alignItems: "flex-end" }}
+								variant="h6"
+								color="primary"
+							>
+								Khach hang
+							</Typography>
+						</Link>
+					</Breadcrumbs>
+				</Box>
 			</Grid>
 
 			<PopUpEditCustomer

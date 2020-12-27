@@ -391,7 +391,7 @@ export default function DiagramSaleTicket() {
 													{row.map((ticket: Ticket) => {
 														return Object.entries(ticket).length !==
 															0 ? (
-															<Box flex={1} overflow="hidden" p={1}>
+															<Box flex={1} overflow="hidden" p={1} height={110}>
 																<DetailInfoTicket
 																	ticketInfo={ticket}
 																	onDeleted = {onConfirm}

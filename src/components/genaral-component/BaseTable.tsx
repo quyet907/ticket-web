@@ -156,6 +156,8 @@ export default function BaseTable<T>(props: Props<T>) {
 											style={{
 												flexShrink: "initial",
 												width: 1000,
+												display: "flex",
+												alignItems: "center"
 											}}
 										>
 											{header.label}

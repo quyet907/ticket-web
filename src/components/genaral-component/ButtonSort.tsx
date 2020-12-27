@@ -23,13 +23,21 @@ const Sort = withStyles((theme) => ({
 		background: "none",
 		boxShadow: "none",
 		padding: 0,
-		minHeight: 10,
+		// minHeight: 10,
+		"&:hover": {
+			backgroundColor: "unset"
+		}
 	},
+	sizeSmall: {
+		// width: 30,
+		// height: 30
+	}
 }))(Fab);
 export default function ButtonSort(props: Props) {
 	const classes = usesStyle();
 	return (
 		<Sort
+		color="inherit"
 			size={"small"}
 			onClick={(e) => {
 				props.onClick();
@@ -37,10 +45,10 @@ export default function ButtonSort(props: Props) {
 		>
 			{
                 (props.active)? (props.direction === "asc") ? (
-                    <ArrowUpwardIcon className={classes.root} />
+                    <ArrowUpwardIcon fontSize="small" className={classes.root} />
                 ) : (
-                    <ArrowDownwardIcon className={classes.root} />
-                ) : <ImportExportIcon className={classes.root}/>
+                    <ArrowDownwardIcon fontSize="small" className={classes.root} />
+                ) : <ImportExportIcon fontSize="small" className={classes.root}/>
             }
 		</Sort>
 	);

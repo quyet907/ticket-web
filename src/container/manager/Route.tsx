@@ -15,6 +15,7 @@ import { Paging } from "../../submodules/base-ticket-team/query/Paging";
 import clsx from "clsx";
 import { useGlobalStyles } from "../../styles/GlobalStyle";
 import { getHighlightedText } from "../../helper/getHighlightedText";
+import Header from "../../components/genaral-component/Header";
 
 export default function RouteContainer() {
 	const globalStyle = useGlobalStyles();
@@ -98,8 +99,8 @@ export default function RouteContainer() {
 				{ id: "localStart", label: "Địa điểm xuất phát", sort : true },
 				{ id: "localEnd", label: "Địa điêm đích", sort : true },
 				{ id: "startAt", label: "Giờ khởi hành", sort : false },
-				{ id: "sumTimeRun", label: "Tổng thời gian chạy dự kiến", sort : true },
-				{ id: "", label: "Hanh dong", sort : false },
+				{ id: "sumTimeRun", label: "Thời gian dự kiến", sort : true },
+				{ id: "", label: "Hành động", sort : false },
 			],
 			paging: { ...object, rows: [] },
 			value: createValue,
@@ -110,9 +111,8 @@ export default function RouteContainer() {
 	return (
 		// <Page className={classes.root} title="Customers">
 		<Grid xs={12}>
-			<Grid>
-				<Typography variant={"h1"}>Tuyến đường</Typography>
-			</Grid>
+			<Header title="Tuyến đường" />
+			
 			<PopUpConfirm isDisplay={showConfirm} onCancel={onCancelConfirm} onDelete={onDelete} />
 
 			<PopUpEditRoute
