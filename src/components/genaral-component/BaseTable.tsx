@@ -15,6 +15,7 @@ import PerfectScrollbar from "react-perfect-scrollbar";
 import { useGlobalStyles } from "../../styles/GlobalStyle";
 import { IList } from "../../submodules/base-ticket-team/query/IList";
 import { Paging } from "../../submodules/base-ticket-team/query/Paging";
+import theme from "../../theme/MuiTheme";
 import ButtonSort from "./ButtonSort";
 
 const useStyles = makeStyles((theme) => ({
@@ -235,11 +236,11 @@ export default function BaseTable<T>(props: Props<T>) {
 			</PerfectScrollbar>
 
 			<Grid container direction="row" justify="center">
-				<Grid className={clsx(globalStyle.pp3)}>
+				<Grid className={clsx(globalStyle.pp3)} style={{marginLeft: -theme.spacing(2)}}>
 					<Grid container direction="row" justify="center">
-						<Grid item className={clsx(globalStyle.mr5)}>
+						<Grid item className={clsx(globalStyle.mr2)}>
 							<Grid>
-								<FormControl variant="outlined">
+								<FormControl variant="outlined" size="small">
 									<Select
 										value={props.query.pageSize}
 										onChange={(e) => {

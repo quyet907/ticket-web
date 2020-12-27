@@ -3,7 +3,7 @@
 import { Box, Container, Grid, makeStyles, Typography } from "@material-ui/core";
 import clsx from "clsx";
 import moment from "moment";
-import React, {  useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ActionHelper } from "../../comon/ActionHelper";
 import DialogChair from "../../components/chair/DialogChair";
 import PopUpConfirm from "../../components/dialogs/DialogConfirm";
@@ -19,6 +19,7 @@ import { useHistory } from "react-router-dom";
 import { getHighlightedText } from "../../helper/getHighlightedText";
 import { useRematchDispatch } from "../../rematch";
 import { Dispatch } from "../../rematch/store";
+import Header from "../../components/genaral-component/Header";
 const useStyles = makeStyles((theme) => ({
 	root: {
 		backgroundColor: theme.palette.background.default,
@@ -31,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 export default function CarContainer() {
 	const history = useHistory();
 	const globalStyle = useGlobalStyles();
-	const notification = useRematchDispatch((dispatch : Dispatch)=>dispatch.notification)
+	const notification = useRematchDispatch((dispatch: Dispatch) => dispatch.notification);
 	const [object, setObject] = useState<Paging<Car>>({
 		page: 1,
 		pageSize: 5,
@@ -100,10 +101,10 @@ export default function CarContainer() {
 	}
 
 	function onNextPageTrip(item: Car) {
-		if(item.totalChair){
+		if (item.totalChair) {
 			history.push(`trip/${item.id}`);
-		}else {
-			notification.error("Bạn cần tạo ghế cho xe đầu tiên")
+		} else {
+			notification.error("Bạn cần tạo ghế cho xe đầu tiên");
 		}
 	}
 
@@ -121,7 +122,7 @@ export default function CarContainer() {
 			value.push(getHighlightedText(item.origin, query.search));
 			value.push(moment(item.entryAt).format("DD-MM-YYYY"));
 			value.push(getHighlightedText(item.licensePlates, query.search));
-			value.push(getHighlightedText(item.totalChair as any, query.search )  );
+			value.push(getHighlightedText(item.totalChair as any, query.search));
 
 			value.push(
 				ActionHelper.getAllActionForCar(
@@ -155,7 +156,7 @@ export default function CarContainer() {
 		// <Page className={classes.root} title="Customers">
 		<Grid xs={12}>
 			<Grid>
-				<Typography variant={"h1"}>Xe</Typography>
+				<Header title="Xe" breadcrumbs={<div></div>} />
 			</Grid>
 			<PopUpConfirm isDisplay={showConfirm} onCancel={onCancelConfirm} onDelete={onDelete} />
 
