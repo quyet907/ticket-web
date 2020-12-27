@@ -104,7 +104,7 @@ export default function Customers() {
 				{ id: "phoneNumber", label: "Số điện thoại", sort : true },
 				{ id: "sex", label: "Giới tính", sort : true },
 				{ id: "description", label: "Mô tả", sort : true },
-				{ id: "", label: "Thao tác" ,sort : false},
+				{ id: "", label: "Hành động" ,sort : false},
 			],
 			paging: { ...object, rows: [] },
 			value: createValue,

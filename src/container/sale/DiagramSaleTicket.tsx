@@ -161,9 +161,9 @@ export default function DiagramSaleTicket() {
 					title="Sơ đồ ghế "
 					breadcrumbs={
 						<Breadcrumbs aria-label="breadcrumb">
-							<Link color="secondary" href="/ticket" onClick={() => {}}>
+							<Link color="secondary" href="/ticket" onClick={() => { }}>
 								<Typography variant="caption" color="primary">
-									Ban ve
+									Bán vé
 								</Typography>
 							</Link>
 							<Typography color="textSecondary" variant="caption">
@@ -209,7 +209,7 @@ export default function DiagramSaleTicket() {
 									<Box mr={2}>
 										<Grow in={true} timeout={500}>
 											<Button
-											color="secondary"
+												color="secondary"
 												variant="contained"
 												onClick={(e) => onCreateOrUpdate()}
 											>
@@ -325,35 +325,35 @@ export default function DiagramSaleTicket() {
 													{row.map((ticket: Ticket) => {
 														return Object.entries(ticket).length !==
 															0 ? (
-															<Box flex={1} overflow="hidden" p={1}>
-																<DetailInfoTicket
-																	ticketInfo={ticket}
-																	onDeleted = {onConfirm}
-																	// eslint-disable-next-line @typescript-eslint/no-unused-expressions
-																	onPrint = {()=>{ handlePrint}}
-																	onClick={onSelected}
-																	selected={
-																		!!selected.find(
-																			(item) =>
-																				(item?.chairCarId ||
-																					"") ===
-																				(ticket?.chairCarId ||
-																					"")
-																		)
-																	}
-																/>
-															</Box>
-														) : (
-															<Box flex={0.2} overflow="hidden" p={1}>
-																{/* <DetailInfoTicket
+																<Box flex={1} overflow="hidden" p={1}>
+																	<DetailInfoTicket
+																		ticketInfo={ticket}
+																		onDeleted={onConfirm}
+																		// eslint-disable-next-line @typescript-eslint/no-unused-expressions
+																		onPrint={() => { handlePrint }}
+																		onClick={onSelected}
+																		selected={
+																			!!selected.find(
+																				(item) =>
+																					(item?.chairCarId ||
+																						"") ===
+																					(ticket?.chairCarId ||
+																						"")
+																			)
+																		}
+																	/>
+																</Box>
+															) : (
+																<Box flex={0.2} overflow="hidden" p={1}>
+																	{/* <DetailInfoTicket
 																ticketInfo={{}}
 																onCreateOrEdit={
 																	onCreateOrUpdate
 																}
 															/> */}
-															</Box>
-															// <div></div>
-														);
+																</Box>
+																// <div></div>
+															);
 													})}
 												</Box>
 											);

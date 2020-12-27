@@ -103,18 +103,18 @@ export default function DialogChair(props: Props) {
 		setShowConfirm(false);
 	}
 
-	function onCancelAutoCreate(){
+	function onCancelAutoCreate() {
 		setShowFormAutoCreate(false);
 		props.onClose()
-		
-		
+
+
 	}
 
-	function onAutoCreate(data : CreateChairCar ){
+	function onAutoCreate(data: CreateChairCar) {
 		chairCarController.autoCreate({
 			...data,
-			carId : props.Car.id
-		}).then(res=>{
+			carId: props.Car.id
+		}).then(res => {
 			setShowFormAutoCreate(false);
 			setEventReload(!eventReload);
 
@@ -124,7 +124,7 @@ export default function DialogChair(props: Props) {
 	function onCancelConfirm() {
 		setShowConfirm(false);
 	}
-	function onConfirm(item: ChairCar ) {
+	function onConfirm(item: ChairCar) {
 		setSelected(item);
 		setShowConfirm(true);
 		setShowForm(false)
@@ -146,17 +146,17 @@ export default function DialogChair(props: Props) {
 	return (
 		<div>
 			<PopUpEditChairCar
-				onDelete = {onConfirm}
+				onDelete={onConfirm}
 				isDisplay={showForm}
 				onCancel={onCloseForm}
 				obj={selected}
 				onSave={onSave}
 			/>
 			<PopUpAutoCreateChair
-				onCancel ={onCancelAutoCreate}
-				onSave = {onAutoCreate}
-				isDisplay = {showFormAutoCreate}
-				titlePopup = {"Bạn cần tạo ghế cho xe"}
+				onCancel={onCancelAutoCreate}
+				onSave={onAutoCreate}
+				isDisplay={showFormAutoCreate}
+				titlePopup={"Bạn cần tạo ghế cho xe"}
 			></PopUpAutoCreateChair>
 			<PopUpConfirm isDisplay={showConfirm} onCancel={onCancelConfirm} onDelete={onDelete} />
 			<Dialog
@@ -170,21 +170,21 @@ export default function DialogChair(props: Props) {
 					Sơ đồ ghế của xe {props.Car.name}
 				</DialogTitle>
 				<DialogContent>
-					{diagramChair.dataListChar?.length !==0 ? (
+					{diagramChair.dataListChar?.length !== 0 ? (
 						<DiagramChair
 							onEdit={onCreateOrUpdate}
 							listChairDiagram={diagramChair}
 							onAddRows={onAddRows}
 						></DiagramChair>
 					) : (
-						<Grid>
-							<CircularProgress />
-						</Grid>
-					)}
+							<Grid>
+								<CircularProgress />
+							</Grid>
+						)}
 				</DialogContent>
 				<DialogActions>
 					<Button onClick={props.onClose} color="primary">
-						close
+						Đóng
 					</Button>
 				</DialogActions>
 			</Dialog>

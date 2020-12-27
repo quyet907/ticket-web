@@ -90,7 +90,7 @@ export function BaseDialogActions(props: DialogActionsProps) {
 							fullWidth
 							onClick={onCancel}
 						>
-							Cancel
+							Hủy
 						</Button>
 					</Grid>
 					<Grid item container xs={5} justify={"center"} alignItems={"center"}>
@@ -103,7 +103,7 @@ export function BaseDialogActions(props: DialogActionsProps) {
 							color="primary"
 							onClick={onSave}
 						>
-							Save
+							Lưu
 						</Button>
 					</Grid>
 				</Grid>

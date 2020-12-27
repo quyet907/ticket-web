@@ -57,7 +57,7 @@ export default function PopUpEditPositionStaff(props: Props) {
 		<form onSubmit={formik.handleSubmit}>
 			<Dialog open={props.isDisplay} fullWidth maxWidth="xs">
 				<BaseDialogTitle
-					title={props.obj.id ? "SỬa" : "Thêm"}
+					title={props.obj.id ? "Sửa" : "Thêm"}
 					onCancel={props.onCancel}
 				/>
 				<DialogContent>

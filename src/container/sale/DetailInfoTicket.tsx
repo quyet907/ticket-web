@@ -156,7 +156,7 @@ export default function DetailInfoTicket(props: Props) {
 				<Box display="flex" justifyContent="space-between" alignItems="center">
 					<Typography variant="h5">{props.ticketInfo.chair_car?.name}</Typography>
 					<Box>
-						<Tooltip title="In ve" enterDelay={0} leaveDelay={0} placement="top">
+						<Tooltip title="Gọi điện" enterDelay={0} leaveDelay={0} placement="top">
 							<IconButton size="small" onClick = {(e)=> props.onPrint()}>
 								<PhoneIcon fontSize="small" color="secondary" onClick ={()=>{
 									window.location.href = `tel:${ticketInfo?.customer?.phoneNumber}`
@@ -164,7 +164,7 @@ export default function DetailInfoTicket(props: Props) {
 								{/* <a href="tel:1-847-555-5555">Call</a> */}
 							</IconButton>
 						</Tooltip>
-						<Tooltip title="Xoa ve" enterDelay={0} leaveDelay={0} placement="top">
+						<Tooltip title="Xóa vé" enterDelay={0} leaveDelay={0} placement="top">
 							<IconButton size="small" onClick = {(e)=> props.onDeleted(props.ticketInfo)}>
 								<Close fontSize="small" style={{ color: "red" }} />
 							</IconButton>

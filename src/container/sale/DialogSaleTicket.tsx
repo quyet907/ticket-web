@@ -96,13 +96,13 @@ export default function DialogSaleTicket(props: Props) {
 	});
 
 	useEffect(() => {
-		if(props.ticket){
+		if (props.ticket) {
 			setTicket({
 				...props.ticket,
 				localPickup:
 					props?.ticket?.localPickup || props?.trip?.route?.localStart,
 				localDrop: props?.ticket?.localDrop || props?.trip?.route?.localEnd,
-				statusTicket : props.ticket.statusTicket ||  StatusTicket.payed
+				statusTicket: props.ticket.statusTicket || StatusTicket.payed
 			});
 			if (props.ticket.localPickup !== props.trip.route?.localStart) {
 				setLocalOption({
@@ -115,7 +115,7 @@ export default function DialogSaleTicket(props: Props) {
 					localStart: "",
 				});
 			}
-	
+
 			if (props.ticket.localDrop !== props.trip.route?.localEnd) {
 				setLocalOption({
 					...localOption,
@@ -153,7 +153,7 @@ export default function DialogSaleTicket(props: Props) {
 			fullWidth
 			maxWidth={"lg"}
 			open={props.open}
-			onClose={() => {}}
+			onClose={() => { }}
 			aria-labelledby="max-width-dialog-title"
 		>
 			<DialogContent>
@@ -345,26 +345,26 @@ export default function DialogSaleTicket(props: Props) {
 										}
 									/>
 								</Grid>
-								
+
 								<Grid className={clsx(globalStyle.mt3)}>
 									<FormControl
 										variant="outlined"
-										fullWidth 
+										fullWidth
 									>
 										<InputLabel>{"Trang thái vé"}</InputLabel>
 										<Select
 											name={"statusTicket"}
 											value={ticket.statusTicket}
 											labelWidth={80}
-											onChange={(e=>{
-												
-												const getTicket ={...ticket}
-												getTicket.statusTicket= e.target.value as StatusTicket;
+											onChange={(e => {
+
+												const getTicket = { ...ticket }
+												getTicket.statusTicket = e.target.value as StatusTicket;
 												setTicket(getTicket)
 											})}
 										>
 											<MenuItem value={StatusTicket.payed}>
-												Đã đã tiền
+												Đã trả tiền
 											</MenuItem>
 											<MenuItem value={StatusTicket.order}>
 												Đặt trước
@@ -375,7 +375,7 @@ export default function DialogSaleTicket(props: Props) {
 											<MenuItem value={StatusTicket.cancel}>
 												Không đón được
 											</MenuItem>
-											
+
 										</Select>
 									</FormControl>
 								</Grid>
@@ -452,7 +452,7 @@ export default function DialogSaleTicket(props: Props) {
 			</DialogContent>
 			<DialogActions>
 				<Button onClick={() => props.onCancel()} color="default">
-					Close
+					Đóng
 				</Button>
 
 				<Button
