@@ -99,7 +99,7 @@ export default function RouteContainer() {
 				{ id: "localEnd", label: "Địa điêm đích", sort : true },
 				{ id: "startAt", label: "Giờ khởi hành", sort : false },
 				{ id: "sumTimeRun", label: "Tổng thời gian chạy dự kiến", sort : true },
-				{ id: "", label: "Hanh dong", sort : false },
+				{ id: "", label: "Hành động", sort : false },
 			],
 			paging: { ...object, rows: [] },
 			value: createValue,

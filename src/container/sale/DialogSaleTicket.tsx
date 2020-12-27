@@ -162,7 +162,7 @@ export default function DialogSaleTicket(props: Props) {
 			fullWidth
 			maxWidth={"lg"}
 			open={props.open}
-			onClose={() => {}}
+			onClose={() => { }}
 			aria-labelledby="max-width-dialog-title"
 		>
 			<DialogContent>
@@ -355,7 +355,7 @@ export default function DialogSaleTicket(props: Props) {
 									/>
 								</Grid>
 
-								<Grid className={clsx(globalStyle.mt3)}>
+								{/* <Grid className={clsx(globalStyle.mt3)}>
 									<FormControl variant="outlined" fullWidth>
 										<InputLabel>
 											{"Trang thái vé"}
@@ -394,7 +394,7 @@ export default function DialogSaleTicket(props: Props) {
 											</MenuItem>
 										</Select>
 									</FormControl>
-								</Grid>
+								</Grid> */}
 
 								{/* <Grid className={clsx(globalStyle.mt3)}>
 									<Grid
@@ -508,7 +508,7 @@ export default function DialogSaleTicket(props: Props) {
 							<Box mr={2}>
 								<Grow in={true} timeout={500}>
 									<Button
-										color="secondary"
+										color="primary"
 										variant="contained"
 										onClick={() => onSave({...props.ticket,statusTicket: StatusTicket.payed})}
 										// onClick={(e) => selectedAllTicket()}

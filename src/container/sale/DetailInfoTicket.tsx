@@ -15,12 +15,14 @@ import React from "react";
 import { StatusTicket, Ticket } from "../../submodules/base-ticket-team/base-carOwner/Ticket";
 import clsx from "clsx";
 import PhoneIcon from '@material-ui/icons/Phone';
+import { getHighlightedText } from "../../helper/getHighlightedText";
 type Props = {
 	ticketInfo: Ticket;
 	onClick: (ticket: Ticket) => void;
 	selected: boolean;
 	onPrint :()=> void;
 	onDeleted: (ticket : Ticket) => void;
+	search : string
 
 };
 
@@ -154,9 +156,9 @@ export default function DetailInfoTicket(props: Props) {
 				style={{ background: props.selected ? materialTheme.palette.primary.main : "none" }}
 			>
 				<Box display="flex" justifyContent="space-between" alignItems="center">
-					<Typography variant="h5">{props.ticketInfo.chair_car?.name}</Typography>
+					<Typography variant="h5">{getHighlightedText(props.ticketInfo.chair_car?.name, props.search)}</Typography>
 					<Box>
-						<Tooltip title="In ve" enterDelay={0} leaveDelay={0} placement="top">
+						<Tooltip title="Gọi điện" enterDelay={0} leaveDelay={0} placement="top">
 							<IconButton size="small" onClick = {(e)=> props.onPrint()}>
 								<PhoneIcon fontSize="small" color="secondary" onClick ={()=>{
 									window.location.href = `tel:${ticketInfo?.customer?.phoneNumber}`
@@ -164,7 +166,7 @@ export default function DetailInfoTicket(props: Props) {
 								{/* <a href="tel:1-847-555-5555">Call</a> */}
 							</IconButton>
 						</Tooltip>
-						<Tooltip title="Xoa ve" enterDelay={0} leaveDelay={0} placement="top">
+						<Tooltip title="Xóa vé" enterDelay={0} leaveDelay={0} placement="top">
 							<IconButton size="small" onClick = {(e)=> props.onDeleted(props.ticketInfo)}>
 								<Close fontSize="small" style={{ color: "red" }} />
 							</IconButton>
@@ -182,7 +184,7 @@ export default function DetailInfoTicket(props: Props) {
 					>
 						
 
-						{ticketInfo?.customer?.phoneNumber}
+						{getHighlightedText(ticketInfo?.customer?.phoneNumber, props.search) }
 					</Typography>
 				</Box>
 				<Box display="flex" justifyContent="space-between" alignItems="center" mt={1}>
@@ -194,7 +196,7 @@ export default function DetailInfoTicket(props: Props) {
 							props.selected ? classes.activeText : ""
 						)}
 					>
-						{ticketInfo?.customer?.name}
+						{getHighlightedText(ticketInfo?.customer?.name, props.search)}
 					</Typography>
 					<Chip size="small" label={getStatus()} color={colorStatus()} />
 				</Box>

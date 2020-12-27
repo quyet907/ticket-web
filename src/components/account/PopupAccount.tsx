@@ -6,12 +6,12 @@ import {
 	DialogActions,
 	Button,
 	makeStyles,
-    Checkbox,
-    FormControl,
-    FormControlLabel,
-    FormGroup,
-    FormHelperText,
-    FormLabel,
+	Checkbox,
+	FormControl,
+	FormControlLabel,
+	FormGroup,
+	FormHelperText,
+	FormLabel,
 } from "@material-ui/core";
 import React from "react";
 import clsx from "clsx";
@@ -37,7 +37,7 @@ export default function PopupAccount() {
 			fullWidth
 			maxWidth={"lg"}
 			open={true}
-			onClose={() => {}}
+			onClose={() => { }}
 			aria-labelledby="max-width-dialog-title"
 		>
 			<DialogContent>
@@ -63,22 +63,22 @@ export default function PopupAccount() {
 								justify="space-evenly"
 								style={{ padding: 20 }}
 							>
-								
 
 
 
-								
+
+
 							</Grid>
 						</Grid>
 					</Grid>
 				</Grid>
 			</DialogContent>
 			<DialogActions>
-				<Button onClick={() => {}} color="default">
-					Close
+				<Button onClick={() => { }} color="default">
+					Đóng
 				</Button>
 
-				<Button type={"submit"} onClick={() => {}} color="primary">
+				<Button type={"submit"} onClick={() => { }} color="primary">
 					Đặt
 				</Button>
 			</DialogActions>

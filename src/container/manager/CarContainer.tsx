@@ -138,13 +138,13 @@ export default function CarContainer() {
 
 		const getTable: IBaseTable<Car> = {
 			header: [
-				{ id: "name", label: "Ten xe", sort: true },
-				{ id: "description", label: "Mô tả", sort: true },
-				{ id: "origin", label: "Xuất xứ", sort: true },
-				{ id: "entryAt", label: "Ngày nhập", sort: true },
-				{ id: "licensePlates", label: "Biển số xe", sort: true },
-				{ id: "totalChair" as any, label: "Tổng số ghế", sort: true },
-				{ id: "action" as any, label: "Hành động", sort: false },
+				{ id: "name", label: "Tên xe", sort : true },
+				{ id: "description", label: "Mô tả", sort : true },
+				{ id: "origin", label: "Xuất xứ", sort : true },
+				{ id: "entryAt", label: "Ngày nhập", sort : true },
+				{ id: "licensePlates", label: "Biển số xe", sort : true },
+				{ id: "totalChair" as any, label: "Tổng số ghế" , sort : true },
+				{ id: "action" as any, label: "Hành động", sort : false },
 			],
 			paging: { ...object, rows: [] },
 			value: createValue,
