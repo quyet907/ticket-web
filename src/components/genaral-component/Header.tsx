@@ -9,24 +9,16 @@ type Props = {
 
 export default function Header(props: Props) {
 	return (
-		<Grid>
-			<Box
-				mt={1}
-				mb={1}
-				display="flex"
-				justifyContent="space-between"
-				alignItems="center"
-			>
-				<Typography variant={"h3"}>
-					<b>{props.title}</b>
-				</Typography>
+		<Box mb={3}>
+			<Box   display="flex" justifyContent="space-between" alignItems="center">
+				<Box display="flex">
+					<Typography variant={"h3"}>
+						<b>{props.title}</b>
+					</Typography>
+					<Box>{props.breadcrumbs}</Box>
+				</Box>
 				{props.action}
 			</Box>
-
-			<Box mb={2}>
-				<Box>{props.breadcrumbs}</Box>
-			</Box>
-			<Divider />
-		</Grid>
+		</Box>
 	);
 }
