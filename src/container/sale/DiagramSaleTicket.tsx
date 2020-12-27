@@ -81,6 +81,7 @@ export default function DiagramSaleTicket() {
 			item.localPickup = ticket.localPickup;
 			item.customer = ticket.customer;
 			item.customerId = ticket.customerId;
+			item.statusTicket = ticket.statusTicket
 			return item;
 		});
 		ticketController.createMany(getSelected).then((res) => {
@@ -327,6 +328,9 @@ export default function DiagramSaleTicket() {
 															<Box flex={1} overflow="hidden" p={1}>
 																<DetailInfoTicket
 																	ticketInfo={ticket}
+																	onDeleted = {onConfirm}
+																	// eslint-disable-next-line @typescript-eslint/no-unused-expressions
+																	onPrint = {()=>{ handlePrint}}
 																	onClick={onSelected}
 																	selected={
 																		!!selected.find(

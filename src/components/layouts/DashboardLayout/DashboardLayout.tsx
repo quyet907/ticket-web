@@ -4,6 +4,7 @@ import { Redirect, Route, Switch, useRouteMatch } from "react-router";
 import CarContainer from "../../../container/manager/CarContainer";
 import Customers from "../../../container/manager/Customer";
 import PositionStaffContainer from "../../../container/manager/PositionStaffContainer";
+import Role from "../../../container/manager/Role";
 import RouteContainer from "../../../container/manager/Route";
 import StaffView from "../../../container/manager/Staff";
 import TripContainer from "../../../container/manager/TripContainer";
@@ -71,6 +72,7 @@ function DashboardLayout() {
 							<Route exact path={`/route`} component={RouteContainer} />
 							<Route exact path={`/ticket`} component={HomeSaleTicket} />
 							<Route exact path={`/car`} component={CarContainer} />
+							<Route exact path={`/role`} component={Role} />
 							<Route exact path={`/sale/:id`} component={DiagramSaleTicket} />
 							<Redirect exact from="*" to={"dashboard"} />
 
