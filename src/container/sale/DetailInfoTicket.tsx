@@ -14,10 +14,14 @@ import { Add, Close, Edit, Loop, Print } from "@material-ui/icons";
 import React from "react";
 import { StatusTicket, Ticket } from "../../submodules/base-ticket-team/base-carOwner/Ticket";
 import clsx from "clsx";
+import PhoneIcon from '@material-ui/icons/Phone';
 type Props = {
 	ticketInfo: Ticket;
 	onClick: (ticket: Ticket) => void;
 	selected: boolean;
+	onPrint :()=> void;
+	onDeleted: (ticket : Ticket) => void;
+
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -95,6 +99,32 @@ export default function DetailInfoTicket(props: Props) {
 	const classes = useStyles();
 	const materialTheme = useTheme();
 
+	function colorStatus ():"primary" | "default" | "secondary"{
+		if(props.ticketInfo.statusTicket=== StatusTicket.order){
+			return "secondary"
+		}
+		if(props.ticketInfo.statusTicket=== StatusTicket.payed){
+			return "primary"
+		}
+		return "default"
+	}
+
+	function getStatus() {
+		if(props.ticketInfo.statusTicket=== StatusTicket.order){
+			return "Đặt trước"
+		}
+		if(props.ticketInfo.statusTicket=== StatusTicket.payed){
+			return "Đã trả tiền"
+		}
+
+		if(props.ticketInfo.statusTicket === StatusTicket.welcomed){
+			return "Đã đón"
+		}
+
+		return "Khác"
+		
+	}
+
 	function statusUnset(): React.ReactElement {
 		return (
 			<Box
@@ -106,7 +136,7 @@ export default function DetailInfoTicket(props: Props) {
 				<Box display="flex" justifyContent="space-between" alignItems="center">
 					<Typography variant="h5">{props.ticketInfo.chair_car?.name}</Typography>
 					<Tooltip title="Doi ghe" enterDelay={0} leaveDelay={0} placement="top">
-						<IconButton size="small">
+						<IconButton size="small" >
 							{/* <Loop fontSize="small" color="secondary" /> */}
 						</IconButton>
 					</Tooltip>
@@ -127,12 +157,15 @@ export default function DetailInfoTicket(props: Props) {
 					<Typography variant="h5">{props.ticketInfo.chair_car?.name}</Typography>
 					<Box>
 						<Tooltip title="In ve" enterDelay={0} leaveDelay={0} placement="top">
-							<IconButton size="small">
-								<Print fontSize="small" color="secondary" />
+							<IconButton size="small" onClick = {(e)=> props.onPrint()}>
+								<PhoneIcon fontSize="small" color="secondary" onClick ={()=>{
+									window.location.href = `tel:${ticketInfo?.customer?.phoneNumber}`
+								}} />
+								{/* <a href="tel:1-847-555-5555">Call</a> */}
 							</IconButton>
 						</Tooltip>
 						<Tooltip title="Xoa ve" enterDelay={0} leaveDelay={0} placement="top">
-							<IconButton size="small">
+							<IconButton size="small" onClick = {(e)=> props.onDeleted(props.ticketInfo)}>
 								<Close fontSize="small" style={{ color: "red" }} />
 							</IconButton>
 						</Tooltip>
@@ -147,6 +180,8 @@ export default function DetailInfoTicket(props: Props) {
 							props.selected ? classes.activeText : ""
 						)}
 					>
+						
+
 						{ticketInfo?.customer?.phoneNumber}
 					</Typography>
 				</Box>
@@ -161,7 +196,7 @@ export default function DetailInfoTicket(props: Props) {
 					>
 						{ticketInfo?.customer?.name}
 					</Typography>
-					<Chip size="small" label="Đã trả tiền" color="secondary" />
+					<Chip size="small" label={getStatus()} color={colorStatus()} />
 				</Box>
 			</Box>
 		);

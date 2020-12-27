@@ -5,7 +5,7 @@ export interface IConfig {
 
 const localConfig: IConfig = {
 	apiGatewayUrl: "http://localhost:3344",
-	applicationUrl: "http://localhost:3001",
+	applicationUrl: "http://192.168.1.114:3001",
 };
 
 const developmentConfig: IConfig = {

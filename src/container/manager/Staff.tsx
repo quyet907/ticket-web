@@ -16,6 +16,7 @@ import { useGlobalStyles } from "../../styles/GlobalStyle";
 import { useRematchDispatch } from "../../rematch";
 import { Dispatch } from "../../rematch/store";
 import { getHighlightedText } from "../../helper/getHighlightedText";
+import PopupAccount from "../../components/account/PopupAccount";
 
 export default function StaffView() {
 	const noti = useRematchDispatch((dispatch: Dispatch) => dispatch.notification)
@@ -128,6 +129,8 @@ export default function StaffView() {
 				<Typography variant={"h1"}>Nhân viên</Typography>
 			</Grid>
 			<PopUpConfirm isDisplay={showConfirm} onCancel={onCancelConfirm} onDelete={onDelete} />
+
+			{/* <PopupAccount></PopupAccount> */}
 
 			<PopUpEditStaff
 				obj={selected}

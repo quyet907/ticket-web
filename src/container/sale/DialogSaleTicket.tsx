@@ -95,7 +95,6 @@ export default function DialogSaleTicket(props: Props) {
 		},
 	});
 
-	console.log(props?.ticket?.statusTicket)
 	useEffect(() => {
 		if(props.ticket){
 			setTicket({
@@ -134,6 +133,7 @@ export default function DialogSaleTicket(props: Props) {
 		formikForCustomer.setErrors({});
 		formikForCustomer.setValues({ ...props?.ticket?.customer } || {});
 	}, [props]);
+
 
 	function onSave(item: Ticket) {
 		formikForCustomer.handleSubmit();
@@ -358,8 +358,9 @@ export default function DialogSaleTicket(props: Props) {
 											labelWidth={80}
 											onChange={(e=>{
 												
-												console.log(e.target.value)
-												setTicket({...ticket,statusTicket:e.target.value as any })
+												const getTicket ={...ticket}
+												getTicket.statusTicket= e.target.value as StatusTicket;
+												setTicket(getTicket)
 											})}
 										>
 											<MenuItem value={StatusTicket.payed}>
