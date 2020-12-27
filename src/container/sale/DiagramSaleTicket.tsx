@@ -154,6 +154,51 @@ export default function DiagramSaleTicket() {
 		content: () => componentRef.current as any,
 	});
 
+	function checkCustomerUnique(selected: Ticket[]):boolean {
+		for (let i = 0; i < selected.length; i++) {
+			if(selected[i].customerId !== selected[0].customerId ){
+				return false
+			}
+		}
+		return true
+	}
+	function selectedAllTicket(){
+		var getSelected = [...selected];
+		diagram.dataListChair?.map(floor=>{
+			floor.map(row=>{
+				row.map(ticket=>{
+					if(getSelected[0].customerId=== ticket.customerId){
+						getSelected.push(ticket)
+					}
+				})
+			})
+		})
+		var newSelecdted:Ticket[] = []
+		for (let i = 0; i < getSelected.length; i++) {
+			var getIndex = getSelected.findIndex(item=> item.id === getSelected[i].id)
+			if((getIndex ===i)){
+				newSelecdted.push(getSelected[i])
+			}
+		}
+		setSelected(newSelecdted)
+	}
+	function CheckExistAll():boolean {
+		const getDiagram = diagram?.dataListChair ||[]
+		for (let i = 0; i < getDiagram.length ||0 ; i++) {
+			const floor = getDiagram[i]
+			for (let indexFloor = 0; indexFloor < floor.length; indexFloor++) {
+				const row = floor[indexFloor];
+				for (let indexRow = 0; indexRow < row.length; indexRow++) {
+					const ticket = row[indexRow];
+					if(ticket?.customerId === selected[0]?.customerId && ticket.id === selected[0]?.id ){
+						return true
+					}
+				}
+			}
+		}
+		return false ;
+	}
+
 	return (
 		<Grid container>
 			<Grid item xs>
@@ -195,6 +240,21 @@ export default function DiagramSaleTicket() {
 									border: "1px solid rgba(0, 0, 0, 0.05)"
 								}}
 							>
+
+								{(CheckExistAll()) && (
+									<Box mr={2}>
+										<Grow in={true} timeout={500}>
+											<Button
+											color="secondary"
+												variant="contained"
+												onClick={(e) => selectedAllTicket()}
+											>
+												Tất cả của khách
+											</Button>
+										</Grow>
+									</Box>
+								)}
+
 								{selected.length === 1 && selected[0].id && (
 									<Box mr={2}>
 										<Grow in={true}>
@@ -205,7 +265,7 @@ export default function DiagramSaleTicket() {
 									</Box>
 								)}
 
-								{selected.length === 1 && selected[0].id && (
+								{((selected.length === 1 && selected[0].id) ||(checkCustomerUnique(selected))) && (
 									<Box mr={2}>
 										<Grow in={true} timeout={500}>
 											<Button
