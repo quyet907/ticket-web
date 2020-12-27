@@ -1,7 +1,6 @@
 import { AxiosInstance } from "axios";
 import { dispatch } from "../rematch/store";
 import { Ticket } from "../submodules/base-ticket-team/base-carOwner/Ticket";
-import { CreateTicket } from "../submodules/base-ticket-team/controller.ts/CreateTicket";
 import { BaseController } from "./BaseController";
 
 export class TicketService extends BaseController<Ticket> {

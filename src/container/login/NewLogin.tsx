@@ -15,7 +15,7 @@ import * as Yup from "yup";
 import Facebook from "../../icons/Facebook";
 import Google from "../../icons/Google";
 import { useRematchDispatch } from "../../rematch";
-import { Dispatch } from "../../rematch/store";
+import { dispatch, Dispatch } from "../../rematch/store";
 import { accountController } from "../../service";
 
 const useStyles = makeStyles((theme) => ({
@@ -40,7 +40,7 @@ type LoginProps = {
 	password?: string;
 };
 export default function NewLogin() {
-	
+
 	const classes = useStyles();
 	const authenticationDispatch = useRematchDispatch((dispatch: Dispatch) => dispatch.authentication);
 	// const history = useHistory();
@@ -63,11 +63,10 @@ export default function NewLogin() {
 			accountController
 				.login(formik.values.username || "", formik.values.password || "")
 				.then((res) => {
-					authenticationDispatch.login(res);	
+					if (res) {
+						authenticationDispatch.login(res);
+					}
 				})
-				.catch((err) => {
-					console.log(err);
-				});
 		},
 	});
 
@@ -180,7 +179,7 @@ export default function NewLogin() {
 				</Box>
 				<Typography color="textSecondary" variant="body1">
 					{`Chưa có tài khoản?`}
-					
+
 				</Typography>
 			</Container>
 		</Box>
