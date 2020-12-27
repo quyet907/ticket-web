@@ -1,5 +1,16 @@
-import { Button, FormControl, Grid, InputLabel, MenuItem, Paper, Select } from "@material-ui/core";
-import { AttachMoney, Commute, Loyalty, People } from "@material-ui/icons";
+import {
+	Box,
+	Button,
+	FormControl,
+	Grid,
+	InputLabel,
+	Link,
+	MenuItem,
+	Paper,
+	Select,
+	Typography,
+} from "@material-ui/core";
+import { AttachMoney, Commute, Home, Loyalty, People } from "@material-ui/icons";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
@@ -7,6 +18,7 @@ import Header from "../../components/genaral-component/Header";
 import { statisticController } from "../../service";
 import { useGlobalStyles } from "../../styles/GlobalStyle";
 import { Summary } from "../../submodules/base-ticket-team/controller.ts/Statistical";
+import theme from "../../theme/MuiTheme";
 import SummaryGeneral from "./SummaryGeneral";
 
 let iconCustomer = <People fontSize="large" color="primary" />;
@@ -19,7 +31,7 @@ export enum Filter {
 	_30DAYS = "30 days",
 	WEEK = "This week",
 	MONTH = "This month",
-	ALL = "ALL",
+	ALL = "All",
 }
 
 const dayAgo = (number: number) => {
@@ -38,6 +50,7 @@ function Statistic() {
 	const globalStyle = useGlobalStyles();
 	const [startDate, setStartDate] = useState<Date | undefined>(dayAgo(6));
 	const [endDate, setEndDate] = useState<Date | undefined>(new Date());
+	const [filter, setFilter] = useState<Filter>(Filter._7DAYS);
 	const [titleChart, setTitleChart] = useState<string>("7 ngày");
 	const [summary, setSummary] = useState<Summary>({});
 
@@ -69,7 +82,6 @@ function Statistic() {
 		],
 	});
 
-	const onHandleChangeFilter = (filter: Filter) => {};
 	const all = () => {
 		setStartDate(undefined);
 		setEndDate(undefined);
@@ -109,6 +121,29 @@ function Statistic() {
 		setStartDate(firstDayOfThisMonth);
 		setEndDate(lastDayOfThisMonth);
 		setTitleChart("Tháng này");
+	};
+
+	const onHandleChangeFilter = (filter: Filter) => {
+		switch (filter) {
+			case Filter.ALL:
+				all();
+				break;
+
+			case Filter._7DAYS:
+				dataSevenDayAgo();
+				break;
+
+			case Filter._30DAYS:
+				dataThirtyDayAgo();
+				break;
+
+			case Filter.MONTH:
+				dataThisMonth();
+				break;
+			default:
+				dataThisWeek();
+				break;
+		}
 	};
 
 	useEffect(() => {
@@ -188,30 +223,54 @@ function Statistic() {
 
 	console.count("Rendering");
 	return (
-		<Grid>
-			<Header
-				title="Tổng quan"
-				breadcrumbs={<div></div>}
-				action={
+		<Grid container>
+			<Grid item xs={8} container alignItems="center">
+				<Typography variant={"h3"}>
+					<b>Tổng quan</b>
+				</Typography>
+				<Typography variant="h3">&nbsp;|&nbsp;</Typography>
+				<Link
+					style={{ display: "flex", alignItems: "center" }}
+					color="inherit"
+					href="#"
+					onClick={() => {}}
+				>
+					<Home color="primary" />
+				</Link>
+			</Grid>
+
+			<Grid
+				item
+				xs={4}
+				container
+				alignItems="center"
+				justify="flex-end"
+				style={{ position: "sticky", top: 0 }}
+			>
+				<Box>
 					<FormControl variant="outlined" size="small" style={{ minWidth: 150 }}>
-						<InputLabel id="demo">Thoi gian</InputLabel>
+						<InputLabel id="demo">Thời gian</InputLabel>
 						<Select
 							labelId="demo"
 							id="demo-simple-select-outlined"
-							// value={age}
-							onChange={() => {}}
-							label="Thoi gian"
+							value={filter}
+							onChange={(e) => {
+								onHandleChangeFilter(e.target.value as Filter);
+								setFilter(e.target.value as Filter);
+							}}
+							label="Thời gian"
 						>
-							<MenuItem value={10}>07 ngày</MenuItem>
-							<MenuItem value={20}>30 ngày</MenuItem>
-							<MenuItem value={30}>Tuần này</MenuItem>
-							<MenuItem value={1}>Tháng này</MenuItem>
-							<MenuItem value={8}>Tất cả</MenuItem>
+							<MenuItem value={Filter._7DAYS}>07 ngày</MenuItem>
+							<MenuItem value={Filter._30DAYS}>30 ngày</MenuItem>
+							<MenuItem value={Filter.WEEK}>Tuần này</MenuItem>
+							<MenuItem value={Filter.MONTH}>Tháng này</MenuItem>
+							<MenuItem value={Filter.ALL}>Tất cả</MenuItem>
 						</Select>
 					</FormControl>
-				}
-			/>
-			<Grid xs={12} container spacing={3}>
+				</Box>
+			</Grid>
+
+			<Grid container spacing={3} style={{ marginTop: theme.spacing(1) }}>
 				<Grid item xs={12} md={6} lg={3} xl={3}>
 					<SummaryGeneral
 						icon={iconCustomer}
@@ -242,71 +301,74 @@ function Statistic() {
 					/>
 				</Grid>
 
-				<Grid item xs={12} lg={9}>
+				<Grid item xs={12}>
 					<Paper elevation={3}>
-						<Button variant="contained" color="primary" onClick={() => all()}>
-							Tất cả
-						</Button>
-						<Button
-							variant="contained"
-							color="primary"
-							onClick={() => dataSevenDayAgo()}
-						>
-							07 ngày
-						</Button>
-						<Button variant="contained" color="primary" onClick={() => dataThisWeek()}>
-							Tuần này
-						</Button>
-						<Button
-							variant="contained"
-							color="primary"
-							onClick={() => dataThirtyDayAgo()}
-						>
-							30 ngày
-						</Button>
-						<Button variant="contained" color="primary" onClick={() => dataThisMonth()}>
-							Tháng này
-						</Button>
-						<Bar
-							data={dataTicket}
-							options={{
-								title: {
-									display: true,
-									text: "Vé được bán trong " + titleChart,
-									color: "white",
-								},
-								animation: {
-									duration: 3000,
-								},
-								tooltips: {
-									mode: "index",
-									axis: "x",
-								},
-								responsive: true,
-								maintainAspectRatio: true,
-							}}
-							// height={100}
-						/>
-						<Bar
-							data={dataRevenue}
-							options={{
-								title: {
-									display: true,
-									text: "Doanh thu trong " + titleChart,
-									color: "white",
-								},
-								animation: {
-									duration: 3000,
-								},
-								tooltips: {
-									mode: "index",
-									axis: "x",
-								},
-								responsive: true,
-								maintainAspectRatio: true,
-							}}
-							// height={100}
-						/>
+						<Box p={3} height={400}>
+							<Bar
+								data={dataTicket}
+								options={{
+									title: {
+										display: true,
+										text: "Vé được bán trong " + titleChart,
+										color: "white",
+									},
+									animation: {
+										duration: 3000,
+									},
+									tooltips: {
+										mode: "index",
+										axis: "x",
+									},
+									responsive: true,
+									maintainAspectRatio: false,
+									scales: {
+										yAxes: [
+											{
+												ticks: {
+													// maxTicksLimit: props.data.values.length / 2,
+													precision: 0,
+													beginAtZero: true,
+												},
+											},
+										],
+										xAxes: [
+											{
+												barPercentage: 0.4,
+											},
+										],
+									},
+								}}
+								// height={100}
+							/>
+						</Box>
+					</Paper>
+				</Grid>
+
+				<Grid item xs={12}>
+					<Paper elevation={3}>
+						<Box p={3} height={400}>
+							<Bar
+								data={dataRevenue}
+								options={{
+									title: {
+										display: true,
+										text: "Doanh thu trong " + titleChart,
+										color: "white",
+									},
+									animation: {
+										duration: 3000,
+									},
+									tooltips: {
+										mode: "index",
+										axis: "x",
+									},
+									responsive: true,
+									maintainAspectRatio: false,
+									
+								}}
+								// height={100}
+							/>
+						</Box>
 					</Paper>
 				</Grid>
 			</Grid>
