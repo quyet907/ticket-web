@@ -60,7 +60,7 @@ function Statistic() {
       ],
    });
 
-   const all=()=>{
+   const all = () => {
       setStartDate(undefined)
       setEndDate(undefined)
       setTitleChart("Tất cả")
@@ -79,8 +79,16 @@ function Statistic() {
    }
 
    const dataThisWeek = () => {
-      setStartDate(dayAgo(new Date().getDay() - 1))
-      setEndDate(nextDay(7 - new Date().getDay()))
+      let date = new Date()
+
+      if (date.getDay() !== 0) {
+         setStartDate(dayAgo(date.getDay() - 1))
+         setEndDate(nextDay(7 - date.getDay()))
+      } else {
+         setStartDate(dayAgo(6))
+         setEndDate(nextDay(0))
+      }
+
       setTitleChart("Tuần này")
    }
 
@@ -163,10 +171,12 @@ function Statistic() {
          })
          .catch((err) => console.log(err));
 
-         statisticController
-         .statisticalSummary({from: startDate,
+      statisticController
+         .statisticalSummary({
+            from: startDate,
             to: endDate,
-            interval: "day"})
+            interval: "day"
+         })
          .then((res) => {
             setSummary(res);
          })
@@ -246,6 +256,7 @@ function Statistic() {
                   }}
                // height={100}
                />
+               <Grid></Grid>
                <Bar
                   data={dataRevenue}
                   options={{

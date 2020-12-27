@@ -13,6 +13,7 @@ import {
 	Typography,
 	Menu,
 	MenuItem,
+	Tooltip,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import NotificationsIcon from "@material-ui/icons/NotificationsOutlined";
@@ -71,14 +72,18 @@ const TopBar: FC<Props> = (props) => {
 				</RouterLink>
 				<Box flexGrow={1} />
 				<Hidden mdDown>
-					<IconButton color="inherit">
-						<Badge badgeContent={notifications.length} color="primary" variant="dot">
-							<NotificationsIcon />
-						</Badge>
-					</IconButton>
-					<IconButton color="inherit">
-						<InputIcon onClick = {()=> Logout()} />
-					</IconButton>
+					<Tooltip title='Thông báo' arrow>
+						<IconButton color="inherit">
+							<Badge badgeContent={notifications.length} color="primary" variant="dot">
+								<NotificationsIcon />
+							</Badge>
+						</IconButton>
+					</Tooltip>
+					<Tooltip title='Đăng xuất' arrow>
+						<IconButton color="inherit">
+							<InputIcon onClick={() => Logout()} />
+						</IconButton>
+					</Tooltip>
 				</Hidden>
 				<Hidden lgUp>
 					<IconButton

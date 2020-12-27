@@ -114,7 +114,9 @@ export default function Customers() {
 
 	return (
 		<Grid>
-			<Grid>{/* <Typography variant={"h1"}>Khách hàng</Typography> */}</Grid>
+			<Grid>
+				<Typography variant={"h1"}>Khách hàng</Typography>
+			</Grid>
 
 			<PopUpEditCustomer
 				obj={selected}

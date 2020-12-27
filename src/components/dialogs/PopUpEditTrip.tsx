@@ -136,12 +136,12 @@ export default function PopUpEditTrip(props: Props) {
 								getOptionLabel={(option) => option?.name || ""}
 								fullWidth
 								value={listStaff.find(
-									(item) => item.id === formik.values.driveId
+									(item) => item.id === formik.values.driverId
 								)}
 								onChange={(e, v) => {
 									formik.setValues({
 										...formik.values,
-										driveId: v?.id,
+										driverId: v?.id,
 									});
 								}}
 								renderInput={(params) => (
