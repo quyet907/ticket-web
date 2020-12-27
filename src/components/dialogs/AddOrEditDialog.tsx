@@ -77,7 +77,7 @@ export default function AddOrEditDialog(props: Props) {
 
 	return (
 		<Dialog fullWidth maxWidth="sm" onClose={props.onClose} open={props.isDisplay}>
-			<DialogTitle onClose={props.onClose}>Sua chức vụ</DialogTitle>
+			<DialogTitle onClose={props.onClose}>Sửa chức vụ</DialogTitle>
 			<DialogContent dividers>
 				<TextField
 					fullWidth

@@ -14,12 +14,12 @@ let iconTicket = <Loyalty fontSize="large" color="primary" />;
 let iconTrip = <Commute fontSize="large" color="primary" />;
 let iconRevenue = <AttachMoney fontSize="large" color="primary" />;
 
-export enum Filter  {
+export enum Filter {
 	_7DAYS = "7 days",
 	_30DAYS = "30 days",
 	WEEK = "This week",
 	MONTH = "This month",
-	ALL = "ALL"
+	ALL = "ALL",
 }
 
 const dayAgo = (number: number) => {
@@ -69,9 +69,7 @@ function Statistic() {
 		],
 	});
 
-	const onHandleChangeFilter = (filter: Filter) => {
-		
-	}
+	const onHandleChangeFilter = (filter: Filter) => {};
 	const all = () => {
 		setStartDate(undefined);
 		setEndDate(undefined);
@@ -89,10 +87,17 @@ function Statistic() {
 		setEndDate(new Date());
 		setTitleChart("30 ngày");
 	};
-
 	const dataThisWeek = () => {
-		setStartDate(dayAgo(new Date().getDay() - 1));
-		setEndDate(nextDay(7 - new Date().getDay()));
+		let date = new Date();
+
+		if (date.getDay() !== 0) {
+			setStartDate(dayAgo(date.getDay() - 1));
+			setEndDate(nextDay(7 - date.getDay()));
+		} else {
+			setStartDate(dayAgo(6));
+			setEndDate(nextDay(0));
+		}
+
 		setTitleChart("Tuần này");
 	};
 
